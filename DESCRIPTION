@@ -1,0 +1,12 @@
+Package: stanApi
+Type: Package
+Title: functions for connecting to various APIs
+Version: 1.0
+Imports:
+    rjson,
+    RCurl
+Date: 2014-12-09
+Author: OECD STAN <stan.contact@oecd.org>
+Maintainer: Bo Werth <bo.werth@gmail.com>
+Description: connect to APIs of national statistics offices
+License: EUPL 1.1
