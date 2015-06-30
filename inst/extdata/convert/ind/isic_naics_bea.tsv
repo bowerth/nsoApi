@@ -1,0 +1,217 @@
+isic	ind	gdpbyindustry_industry_key	gdpbyindustry_industry_desc	nipa_185_seriescode	nipa_185_linedescription	nipa_189_seriescode	nipa_189_linedescription	nipa_193_seriescode	nipa_193_linedescription	nipa_197_seriescode	nipa_197_linedescription	nipa_209_seriescode	nipa_209_linedescription	fixedassets_seriescode	fixedassets_linedescription	fixedassets_57_seriescode	fixedassets_57_linedescription
+DTOTAL	NALL	GDP	"Gross domestic product (A,Q)"	A033RC	Compensation of employees	A034RC	Wages and salaries	A4201C	Full-time and part-time employees	A4301C	Full-time equivalent employees	A4601C	Persons engaged in production	ptotl1es00	Private fixed assets	ptotl1eq00	Private fixed assets
+	NII	II	"All industries (A,Q)"	A4002C	Domestic industries	A4102C	Domestic industries	A4202C	Domestic industries	A4302C	Domestic industries	A4602C	Domestic industries				
+	NPVT	PVT	"Private industries (A,Q)"	A4003C	Private industries	A4103C	Private industries	A4203C	Private industries	A4303C	Private industries	A4603C	Private industries				
+D01T03	N11	11	"Agriculture, forestry, fishing, and hunting (A,Q)"	N4004C	"Agriculture, forestry, fishing, and hunting"	N4104C	"Agriculture, forestry, fishing, and hunting"	N4204C	"Agriculture, forestry, fishing, and hunting"	N4304C	"Agriculture, forestry, fishing, and hunting"	N4604C	"Agriculture, forestry, fishing, and hunting"	n11001es00	"Agriculture, forestry, fishing, and hunting"	n11001eq00	"Agriculture, forestry, fishing, and hunting"
+D01	N111CA	111CA	Farms (A)	N4005C	Farms	N4105C	Farms	N4205C	Farms	N4305C	Farms	N4605C	Farms	n110c1es00	Farms	n110c1eq00	Farms
+D02	N113FF	113FF	"Forestry, fishing, and related activities (A)"	N4006C	"Forestry, fishing, and related activities"	N4106C	"Forestry, fishing, and related activities"	N4206C	"Forestry, fishing, and related activities"	N4306C	"Forestry, fishing, and related activities"	N4606C	"Forestry, fishing, and related activities"	n113f1es00	"Forestry, fishing, and related activities"	n113f1eq00	"Forestry, fishing, and related activities"
+D05T09	N21	21	"Mining (A,Q)"	N4007C	Mining	N4107C	Mining	N4207C	Mining	N4307C	Mining	N4607C	Mining	n21001es00	Mining	n21001eq00	Mining
+D06	N211	211	Oil and gas extraction (A)	N4008C	Oil and gas extraction	N4108C	Oil and gas extraction	N4208C	Oil and gas extraction	N4308C	Oil and gas extraction	N4608C	Oil and gas extraction	n21101es00	Oil and gas extraction	n21101eq00	Oil and gas extraction
+D07T08	N212	212	"Mining, except oil and gas (A)"	N4009C	"Mining, except oil and gas"	N4109C	"Mining, except oil and gas"	N4209C	"Mining, except oil and gas"	N4309C	"Mining, except oil and gas"	N4609C	"Mining, except oil and gas"	n21201es00	"Mining, except oil and gas"	n21201eq00	"Mining, except oil and gas"
+D09	N213	213	Support activities for mining (A)	N4010C	Support activities for mining	N4110C	Support activities for mining	N4210C	Support activities for mining	N4310C	Support activities for mining	N4610C	Support activities for mining	n21301es00	Support activities for mining	n21301eq00	Support activities for mining
+D35	N22	22	"Utilities (A,Q)"	N4011C	Utilities	N4111C	Utilities	N4211C	Utilities	N4311C	Utilities	N4611C	Utilities	n22001es00	Utilities	n22001eq00	Utilities
+D41T43	N23	23	"Construction (A,Q)"	N4012C	Construction	N4112C	Construction	N4212C	Construction	N4312C	Construction	N4612C	Construction	n23001es00	Construction	n23001eq00	Construction
+D10T33	N31G	31G	"Manufacturing (A,Q)"	N4013C	Manufacturing	N4113C	Manufacturing	N4213C	Manufacturing	N4313C	Manufacturing	N4613C	Manufacturing	n31gd1es00	Manufacturing	n31gd1eq00	Manufacturing
+	N33DG	33DG	"Durable goods (A,Q)"	N4014C	Durable goods	N4114C	Durable goods	N4214C	Durable goods	N4314C	Durable goods	N4614C	Durable goods	n33dg1es00	Durable goods	n33dg1eq00	Durable goods
+D16	N321	321	Wood products (A)	N4015C	Wood products	N4115C	Wood products	N4215C	Wood products	N4315C	Wood products	N4615C	Wood products	n32101es00	Wood products	n32101eq00	Wood products
+D23	N327	327	Nonmetallic mineral products (A)	N4016C	Nonmetallic mineral products	N4116C	Nonmetallic mineral products	N4216C	Nonmetallic mineral products	N4316C	Nonmetallic mineral products	N4616C	Nonmetallic mineral products	n32701es00	Nonmetallic mineral products	n32701eq00	Nonmetallic mineral products
+D24	N331	331	Primary metals (A)	N4017C	Primary metals	N4117C	Primary metals	N4217C	Primary metals	N4317C	Primary metals	N4617C	Primary metals	n33101es00	Primary metals	n33101eq00	Primary metals
+D25	N332	332	Fabricated metal products (A)	N4018C	Fabricated metal products	N4118C	Fabricated metal products	N4218C	Fabricated metal products	N4318C	Fabricated metal products	N4618C	Fabricated metal products	n33201es00	Fabricated metal products	n33201eq00	Fabricated metal products
+D28	N333	333	Machinery (A)	N4019C	Machinery	N4119C	Machinery	N4219C	Machinery	N4319C	Machinery	N4619C	Machinery	n33301es00	Machinery	n33301eq00	Machinery
+D26	N334	334	Computer and electronic products (A)	N4020C	Computer and electronic products	N4120C	Computer and electronic products	N4220C	Computer and electronic products	N4320C	Computer and electronic products	N4620C	Computer and electronic products	n33401es00	Computer and electronic products	n33401eq00	Computer and electronic products
+D27	N335	335	"Electrical equipment, appliances, and components (A)"	N4021C	"Electrical equipment, appliances, and components"	N4121C	"Electrical equipment, appliance, and components"	N4221C	"Electrical equipment, appliances, and components"	N4321C	"Electrical equipment, appliances, and components"	N4621C	"Electrical equipment, appliances, and components"	n33501es00	"Electrical equipment, appliances, and components"	n33501eq00	"Electrical equipment, appliances, and components"
+D29	N3361MV	3361MV	"Motor vehicles, bodies and trailers, and parts (A)"	N4022C	"Motor vehicles, bodies and trailers, and parts"	N4122C	"Motor vehicles, bodies and trailers, and parts"	N4222C	"Motor vehicles, bodies and trailers, and parts"	N4322C	"Motor vehicles, bodies and trailers, and parts"	N4622C	"Motor vehicles, bodies and trailers, and parts"	n336m1es00	"Motor vehicles, bodies and trailers, and parts"	n336m1eq00	"Motor vehicles, bodies and trailers, and parts"
+D30	N3364OT	3364OT	Other transportation equipment (A)	N4023C	Other transportation equipment	N4123C	Other transportation equipment	N4223C	Other transportation equipment	N4323C	Other transportation equipment	N4623C	Other transportation equipment	n336o1es00	Other transportation equipment	n336o1eq00	Other transportation equipment
+D31	N337	337	Furniture and related products (A)	N4024C	Furniture and related products	N4124C	Furniture and related products	N4224C	Furniture and related products	N4324C	Furniture and related products	N4624C	Furniture and related products	n33701es00	Furniture and related products	n33701eq00	Furniture and related products
+D32	N339	339	Miscellaneous manufacturing (A)	N4025C	Miscellaneous manufacturing	N4125C	Miscellaneous manufacturing	N4225C	Miscellaneous manufacturing	N4325C	Miscellaneous manufacturing	N4625C	Miscellaneous manufacturing	n338a1es00	Miscellaneous manufacturing	n338a1eq00	Miscellaneous manufacturing
+	N31ND	31ND	"Nondurable goods (A,Q)"	N4026C	Nondurable goods	N4126C	Nondurable goods	N4226C	Nondurable goods	N4326C	Nondurable goods	N4626C	Nondurable goods	n31nd1es00	Nondurable goods	n31nd1eq00	Nondurable goods
+D10T12	N311FT	311FT	Food and beverage and tobacco products (A)	N4027C	Food and beverage and tobacco products	N4127C	Food and beverage and tobacco products	N4227C	Food and beverage and tobacco products	N4327C	Food and beverage and tobacco products	N4627C	Food and beverage and tobacco products	n311a1es00	Food and beverage and tobacco products	n311a1eq00	Food and beverage and tobacco products
+D13	N313TT	313TT	Textile mills and textile product mills (A)	N4029C	Textile mills and textile product mills	N4129C	Textile mills and textile product mills	N4228C	Textile mills and textile product mills	N4328C	Textile mills and textile product mills	N4628C	Textile mills and textile product mills	n313t1es00	Textile mills and textile product mills	n313t1eq00	Textile mills and textile product mills
+D14	N315AL	315AL	Apparel and leather and allied products (A)	N4030C	Apparel and leather and allied products	N4130C	Apparel and leather and allied products	N4229C	Apparel and leather and allied products	N4329C	Apparel and leather and allied products	N4629C	Apparel and leather and allied products	n315a1es00	Apparel and leather and allied products	n315a1eq00	Apparel and leather and allied products
+D17	N322	322	Paper products (A)	N4032C	Paper products	N4132C	Paper products	N4230C	Paper products	N4330C	Paper products	N4630C	Paper products	n32201es00	Paper products	n32201eq00	Paper products
+D18	N323	323	Printing and related support activities (A)	N4033C	Printing and related support activities	N4133C	Printing and related support activities	N4231C	Printing and related support activities	N4331C	Printing and related support activities	N4631C	Printing and related support activities	n32301es00	Printing and related support activities	n32301eq00	Printing and related support activities
+D19	N324	324	Petroleum and coal products (A)	N4034C	Petroleum and coal products	N4134C	Petroleum and coal products	N4232C	Petroleum and coal products	N4332C	Petroleum and coal products	N4632C	Petroleum and coal products	n32401es00	Petroleum and coal products	n32401eq00	Petroleum and coal products
+D20T21	N325	325	Chemical products (A)	N4035C	Chemical products	N4135C	Chemical products	N4233C	Chemical products	N4333C	Chemical products	N4633C	Chemical products	n32501es00	Chemical products	n32501eq00	Chemical products
+D22	N326	326	Plastics and rubber products (A)	N4036C	Plastics and rubber products	N4136C	Plastics and rubber products	N4234C	Plastics and rubber products	N4334C	Plastics and rubber products	N4634C	Plastics and rubber products	n32601es00	Plastics and rubber products	n32601eq00	Plastics and rubber products
+D46	N42	42	"Wholesale trade (A,Q)"	N4037C	Wholesale trade	N4137C	Wholesale trade	N4235C	Wholesale trade	N4335C	Wholesale trade	N4635C	Wholesale trade	n42001es00	Wholesale trade	n42001eq00	Wholesale trade
+				N4038C	Durable goods	N4138C	Durable goods	N4236C	Durable goods	N4336C	Durable goods	N4636C	Durable goods				
+				N4039C	Nondurable goods	N4139C	Nondurable goods	N4237C	Nondurable goods	N4337C	Nondurable goods	N4637C	Nondurable goods				
+D47	N44RT	44RT	"Retail trade (A,Q)"	N4040C	Retail trade	N4140C	Retail trade	N4238C	Retail trade	N4338C	Retail trade	N4638C	Retail trade	n44RT1es00	Retail trade	n44RT1eq00	Retail trade
+	N441	441	Motor vehicle and parts dealers (A)	N4041C	Motor vehicle and parts dealers	N4141C	Motor vehicle and parts dealers	N4239C	Motor vehicle and parts dealers	N4339C	Motor vehicle and parts dealers	N4639C	Motor vehicle and parts dealers				
+	N445	445	Food and beverage stores (A)	N4042C	Food and beverage stores	N4142C	Food and beverage stores	N4240C	Food and beverage stores	N4340C	Food and beverage stores	N4640C	Food and beverage stores				
+	N452	452	General merchandise stores (A)	N4043C	General merchandise stores	N4143C	General merchandise stores	N4241C	General merchandise stores	N4341C	General merchandise stores	N4641C	General merchandise stores				
+	N4A0	4A0	Other retail (A)	N4044C	Other retail	N4144C	Other retail	N4242C	Other retail	N4342C	Other retail	N4642C	Other retail				
+	N48TW	48TW	"Transportation and warehousing (A,Q)"	N4045C	Transportation and warehousing	N4145C	Transportation and warehousing	N4243C	Transportation and warehousing	N4343C	Transportation and warehousing	N4643C	Transportation and warehousing	n48001es00	Transportation and warehousing	n48001eq00	Transportation and warehousing
+D51	N481	481	Air transportation (A)	N4046C	Air transportation	N4146C	Air transportation	N4244C	Air transportation	N4344C	Air transportation	N4644C	Air transportation	n48101es00	Air transportation	n48101eq00	Air transportation
+D49part	N482	482	Rail transportation (A)	N4047C	Rail transportation	N4147C	Rail transportation	N4245C	Rail transportation	N4345C	Rail transportation	N4645C	Rail transportation	n48201es00	Railroad transportation	n48201eq00	Railroad transportation
+D50	N483	483	Water transportation (A)	N4048C	Water transportation	N4148C	Water transportation	N4246C	Water transportation	N4346C	Water transportation	N4646C	Water transportation	n48301es00	Water transportation	n48301eq00	Water transportation
+D49part	N484	484	Truck transportation (A)	N4049C	Truck transportation	N4149C	Truck transportation	N4247C	Truck transportation	N4347C	Truck transportation	N4647C	Truck transportation	n48401es00	Truck transportation	n48401eq00	Truck transportation
+D49part	N485	485	Transit and ground passenger transportation (A)	N4050C	Transit and ground passenger transportation	N4150C	Transit and ground passenger transportation	N4248C	Transit and ground passenger transportation	N4348C	Transit and ground passenger transportation	N4648C	Transit and ground passenger transportation	n48501es00	Transit and ground passenger transportation	n48501eq00	Transit and ground passenger transportation
+D49part	N486	486	Pipeline transportation (A)	N4051C	Pipeline transportation	N4151C	Pipeline transportation	N4249C	Pipeline transportation	N4349C	Pipeline transportation	N4649C	Pipeline transportation	n48601es00	Pipeline transportation	n48601eq00	Pipeline transportation
+D52part	N487OS	487OS	Other transportation and support activities (A)	N4052C	Other transportation and support activities	N4152C	Other transportation and support activities	N4250C	Other transportation and support activities	N4350C	Other transportation and support activities	N4650C	Other transportation and support activities	n487S1es00	Other transportation and support activities	n487S1eq00	Other transportation and support activities
+D52part	N493	493	Warehousing and storage (A)	N4053C	Warehousing and storage	N4153C	Warehousing and storage	N4251C	Warehousing and storage	N4351C	Warehousing and storage	N4651C	Warehousing and storage	n49301es00	Warehousing and storage	n49301eq00	Warehousing and storage
+	N51	51	"Information (A,Q)"	N4054C	Information	N4154C	Information	N4252C	Information	N4352C	Information	N4652C	Information	n51001es00	Information	n51001eq00	Information
+D58	N511	511	"Publishing industries, except internet (includes software) (A)"	N4055C	Publishing industries (includes software)	N4155C	Publishing industries (includes software)	N4253C	Publishing industries (includes software)	N4353C	Publishing industries (includes software)	N4653C	Publishing industries (includes software)	n51101es00	Publishing industries (includes software)	n51101eq00	Publishing industries (includes software)
+D59	N512	512	Motion picture and sound recording industries (A)	N4056C	Motion picture and sound recording industries	N4156C	Motion picture and sound recording industries	N4254C	Motion picture and sound recording industries	N4354C	Motion picture and sound recording industries	N4654C	Motion picture and sound recording industries	n51201es00	Motion picture and sound recording industries	n51201eq00	Motion picture and sound recording industries
+D60	N513	513	Broadcasting and telecommunications (A)	N4057C	Broadcasting and telecommunications	N4157C	Broadcasting and telecommunications	N4255C	Broadcasting and telecommunications	N4355C	Broadcasting and telecommunications	N4655C	Broadcasting and telecommunications	n51301es00	Broadcasting and telecommunications	n51301eq00	Broadcasting and telecommunications
+D63	N514	514	"Data processing, internet publishing, and other information services (A)"	N4058C	Information and data processing services	N4158C	Information and data processing services	N4256C	Information and data processing services	N4356C	Information and data processing services	N4656C	Information and data processing services	n51401es00	Information and data processing services	n51401eq00	Information and data processing services
+	NFIRE	FIRE	"Finance, insurance, real estate, rental, and leasing (A,Q)"														
+	N52	52	"Finance and insurance (A,Q)"	N4059C	Finance and insurance	N4159C	Finance and insurance	N4257C	Finance and insurance	N4357C	Finance and insurance	N4657C	Finance and insurance	n52001es00	Finance and insurance	n52001eq00	Finance and insurance
+D64	N521CI	521CI	"Federal Reserve banks, credit intermediation, and related activities (A)"	N4060C	"Federal Reserve banks, credit intermediation, and related activities"	N4160C	"Federal Reserve banks, credit intermediation, and related activities"	N4258C	"Federal Reserve banks, credit intermediation, and related activities"	N4358C	"Federal Reserve banks, credit intermediation, and related activities"	N4658C	"Federal Reserve banks, credit intermediation, and related activities"	n52101es00	Federal Reserve banks	n52101eq00	Federal Reserve banks
+														n52201es00	Credit intermediation and related activities	n52201eq00	Credit intermediation and related activities
+D66	N523	523	"Securities, commodity contracts, and investments (A)"	N4061C	"Securities, commodity contracts, and investments"	N4161C	"Securities, commodity contracts, and investments"	N4259C	"Securities, commodity contracts, and investments"	N4359C	"Securities, commodity contracts, and investments"	N4659C	"Securities, commodity contracts, and investments"	n52301es00	"Securities, commodity contracts, and investments"	n52301eq00	"Securities, commodity contracts, and investments"
+D65part	N524	524	Insurance carriers and related activities (A)	N4062C	Insurance carriers and related activities	N4162C	Insurance carriers and related activities	N4260C	Insurance carriers and related activities	N4360C	Insurance carriers and related activities	N4660C	Insurance carriers and related activities	n52401es00	Insurance carriers and related activities	n52401eq00	Insurance carriers and related activities
+D65part	N525	525	"Funds, trusts, and other financial vehicles (A)"	N4063C	"Funds, trusts, and other financial vehicles"	N4163C	"Funds, trusts, and other financial vehicles"	N4261C	"Funds, trusts, and other financial vehicles"	N4361C	"Funds, trusts, and other financial vehicles"	N4661C	"Funds, trusts, and other financial vehicles"	n52501es00	"Funds, trusts, and other financial vehicles"	n52501eq00	"Funds, trusts, and other financial vehicles"
+	N53	53	"Real estate and rental and leasing (A,Q)"	N4064C	Real estate and rental and leasing	N4164C	Real estate and rental and leasing	N4262C	Real estate and rental and leasing	N4362C	Real estate and rental and leasing	N4662C	Real estate and rental and leasing	p53001es00	Real estate and rental and leasing	p53001eq00	Real estate and rental and leasing
+D68	N531	531	Real estate (A)	N4065C	Real estate	N4165C	Real estate	N4263C	Real estate	N4363C	Real estate	N4663C	Real estate	p53101es00	Real estate	p53101eq00	Real estate
+	NHS	HS	Housing (A)														
+	NORE	ORE	Other real estate (A)														
+D77	N532RL	532RL	Rental and leasing services and lessors of intangible assets (A)	N4066C	Rental and leasing services and lessors of intangible assets	N4166C	Rental and leasing services and lessors of intangible assets	N4264C	Rental and leasing services and lessors of intangible assets	N4364C	Rental and leasing services and lessors of intangible assets	N4664C	Rental and leasing services and lessors of intangible assets	n53201es00	Rental and leasing services and lessors of intangible assets	n53201eq00	Rental and leasing services and lessors of intangible assets
+	NPROF	PROF	"Professional and business services (A,Q)"														
+	N54	54	"Professional, scientific, and technical services (A,Q)"	N4067C	"Professional, scientific, and technical services"	N4167C	"Professional, scientific, and technical services"	N4265C	"Professional, scientific, and technical services"	N4365C	"Professional, scientific, and technical services"	N4665C	"Professional, scientific, and technical services"	n54001es00	"Professional, scientific, and technical services"	n54001eq00	"Professional, scientific, and technical services"
+D69	N5411	5411	Legal services (A)	N4068C	Legal services	N4168C	Legal services	N4266C	Legal services	N4366C	Legal services	N4666C	Legal services	n54111es00	Legal services	n54111eq00	Legal services
+D62	N5415	5415	Computer systems design and related services (A)	N4069C	Computer systems design and related services	N4169C	Computer systems design and related services	N4267C	Computer systems design and related services	N4367C	Computer systems design and related services	N4667C	Computer systems design and related services	n54151es00	Computer systems design and related services	n54151eq00	Computer systems design and related services
+D74	N5412OP	5412OP	"Miscellaneous professional, scientific, and technical services (A)"	N4070C	"Miscellaneous professional, scientific, and technical services"	N4170C	"Miscellaneous professional, scientific, and technical services"	N4268C	"Miscellaneous professional, scientific, and technical services"	N4368C	"Miscellaneous professional, scientific, and technical services"	N4668C	"Miscellaneous professional, scientific, and technical services"	n54121es00	"Miscellaneous professional, scientific, and technical services"	n54121eq00	"Miscellaneous professional, scientific, and technical services"
+D70	N55	55	"Management of companies and enterprises (A,Q)"	N4071C	Management of companies and enterprises	N4171C	Management of companies and enterprises	N4269C	Management of companies and enterprises	N4369C	Management of companies and enterprises	N4669C	Management of companies and enterprises	n55001es00	Management of companies and enterprises	n55001eq00	Management of companies and enterprises
+	N56	56	"Administrative and waste management services (A,Q)"	N4072C	Administrative and waste management services	N4172C	Administrative and waste management services	N4270C	Administrative and waste management services	N4370C	Administrative and waste management services	N4670C	Administrative and waste management services	n56001es00	Administrative and waste management services	n56001eq00	Administrative and waste management services
+D82	N561	561	Administrative and support services (A)	N4073C	Administrative and support services	N4173C	Administrative and support services	N4271C	Administrative and support services	N4371C	Administrative and support services	N4671C	Administrative and support services	n56101es00	Administrative and support services	n56101eq00	Administrative and support services
+D36T39	N562	562	Waste management and remediation services (A)	N4074C	Waste management and remediation services	N4174C	Waste management and remediation services	N4272C	Waste management and remediation services	N4372C	Waste management and remediation services	N4672C	Waste management and remediation services	n56201es00	Waste management and remediation services	n56201eq00	Waste management and remediation services
+	N6	6	"Educational services, health care, and social assistance (A,Q)"														
+D85	N61	61	"Educational services (A,Q)"	N4075C	Educational services	N4175C	Educational services	N4273C	Educational services	N4373C	Educational services	N4673C	Educational services	n61001es00	Educational services	n61001eq00	Educational services
+D86T88	N62	62	"Health care and social assistance (A,Q)"	N4076C	Health care and social assistance	N4176C	Health care and social assistance	N4274C	Health care and social assistance	N4374C	Health care and social assistance	N4674C	Heath care and social assistance	n62001es00	Health care and social assistance	n62001eq00	Health care and social assistance
+D86part	N621	621	Ambulatory health care services (A)	N4077C	Ambulatory health care services	N4177C	Ambulatory health care services	N4275C	Ambulatory health care services	N4375C	Ambulatory health care services	N4675C	Ambulatory health care services	n62101es00	Ambulatory health care services	n62101eq00	Ambulatory health care services
+D86part	N622	622	Hospitals (A)	N4078C	Hospitals	N4178C	Hospitals	N4290C	Hospitals	N4390C	Hospitals	N4690C	Hospitals	n622h1es00	Hospitals	n622h1eq00	Hospitals
+D87	N623	623	Nursing and residential care facilities (A)	N4079C	Nursing and residential care facilities	N4179C	Nursing and residential care facilities	N4291C	Nursing and residential care facilities	N4391C	Nursing and residential care facilities	N4691C	Nursing and residential care facilities	n62301es00	Nursing and residential care facilities	n62301eq00	Nursing and residential care facilities
+D88	N624	624	Social assistance (A)	N4080C	Social assistance	N4180C	Social assistance	N4292C	Social assistance	N4392C	Social assistance	N4692C	Social assistance	n62401es00	Social assistance	n62401eq00	Social assistance
+	N7	7	"Arts, entertainment, recreation, accommodation, and food services (A,Q)"														
+D90T93	N71	71	"Arts, entertainment, and recreation (A,Q)"	N4081C	"Arts, entertainment, and recreation"	N4181C	"Arts, entertainment, and recreation"	N4293C	"Arts, entertainment, and recreation"	N4393C	"Arts, entertainment, and recreation"	N4693C	"Arts, entertainment, and recreation"	n71001es00	"Arts, entertainment, and recreation"	n71001eq00	"Arts, entertainment, and recreation"
+	N711AS	711AS	"Performing arts, spectator sports, museums, and related activities (A)"	N4082C	"Performing arts, spectator sports, museums, and related activities"	N4182C	"Performing arts, spectator sports, museums, and related activities"	N4294C	"Performing arts, spectator sports, museums, and related activities"	N4394C	"Performing arts, spectator sports, museums, and related activities"	N4694C	"Performing arts, spectator sports, museums, and related activities"	n711a1es00	"Performing arts, spectator sports, museums, and related activities"	n711a1eq00	"Performing arts, spectator sports, museums, and related activities"
+	N713	713	"Amusements, gambling, and recreation industries (A)"	N4083C	"Amusements, gambling, and recreation industries"	N4183C	"Amusements, gambling, and recreation industries"	N4295C	"Amusements, gambling, and recreation industries"	N4395C	"Amusements, gambling, and recreation industries"	N4695C	"Amusements, gambling, and recreation industries"	n71301es00	"Amusements, gambling, and recreation industries"	n71301eq00	"Amusements, gambling, and recreation industries"
+	N72	72	"Accommodation and food services (A,Q)"	N4084C	Accommodation and food services	N4184C	Accommodation and food services	N4296C	Accommodation and food services	N4396C	Accommodation and food services	N4696C	Accommodation and food services	n72001es00	Accommodation and food services	n72001eq00	Accommodation and food services
+D55	N721	721	Accommodation (A)	N4085C	Accommodation	N4185C	Accommodation	N4297C	Accommodation	N4397C	Accommodation	N4697C	Accommodation	n72101es00	Accommodation	n72101eq00	Accommodation
+D56	N722	722	Food services and drinking places (A)	N4086C	Food services and drinking places	N4186C	Food services and drinking places	N4298C	Food services and drinking places	N4398C	Food services and drinking places	N4698C	Food services and drinking places	n72201es00	Food services and drinking places	n72201eq00	Food services and drinking places
+D90T99part	N81	81	"Other services, except government (A,Q)"	N4087C	"Other services, except government"	N4187C	"Other services, except government"	N4299C	"Other services, except government"	N4399C	"Other services, except government"	N4699C	"Other services, except government"	n81001es00	"Other services, except government"	n81001eq00	"Other services, except government"
+	NG	G	"Government (A,Q)"	A4076C	Government	A553RC	Government	A4276C	Government	A4376C	Government	A4376C	Government				
+	NGF	GF	"Federal (A,Q)"	B4077C	Federal	A4177C	Federal	A4277C	Federal	A4377C	Federal	A4377C	Federal				
+D84part	NGFG	GFG	General government (A)	B568RC	General government	A4178C	General government	A4278C	General government	A4378C	General government	A4378C	General government				
+	NGFGD	GFGD	National defense (A)														
+	NGFGN	GFGN	Nondefense (A)														
+				B4079C	Civilian	B4179C	Civilian	B4279C	Civilian	B4379C	Civilian	B4379C	Civilian				
+				W4080C	Military	B4180C	Military	B4280C	Military	B4380C	Military	B4380C	Military				
+D53	NGFE	GFE	Government enterprises (A)	A4081C	Government enterprises	B4181C	Government enterprises	B4281C	Government enterprises	B4381C	Government enterprises	B4381C	Government enterprises				
+	NGSL	GSL	"State and local (A,Q)"	B4082C	State and local	A4182C	State and local	A4282C	State and local	A4382C	State and local	A4382C	State and local				
+D84T88part	NGSLG	GSLG	General government (A)	B251RC	General government	A4183C	General government	A4283C	General government	A4383C	General government	A4383C	General government				
+				B4084C	Education	B4184C	Education	B4284C	Education	B4384C	Education	B4384C	Education				
+				B4085C	Other	B4185C	Other	B4285C	Other	B4385C	Other	B4385C	Other				
+D84part	NGSLE	GSLE	Government enterprises (A)	B4086C	Government enterprises	B4186C	Government enterprises	B4286C	Government enterprises	B4386C	Government enterprises	B4386C	Government enterprises				
+	NNABI	NABI	"Not allocated by industry [1] (A,Q)"														
+	NPGOOD	PGOOD	"Private goods-producing industries [2] (A,Q)"														
+	NPSERV	PSERV	"Private services-producing industries [3] (A,Q)"														
+	NICT	ICT	Information-communications-technology-producing industries [4] (A)														
+				A4187C	Rest of the world	A4187C	Rest of the world	A4287C	Rest of the world	A4387C	Rest of the world	A4387C	Rest of the world				
+	NGOV_tot			B4188C	Receipts from the rest of the world	B4188C	Receipts from the rest of the world							gtotl1es00	Government fixed assets		
+	NGOV_def			B4189C	Less: Payments to the rest of the world	B4189C	Less: Payments to the rest of the world							gdefn1es00	National defense		
+	NGOV_def_res													gdefn1sb10	Residential		
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
+																	
