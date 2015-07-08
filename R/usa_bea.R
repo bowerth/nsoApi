@@ -14,6 +14,9 @@
 #'
 #' @return The function creates an URL with with the specified
 #' parameters, retrieves the JSON string and transforms to R list
+#' @author Bo Werth <bo.werth@@gmail.com>
+#' @keywords JSON
+#' @export
 #' @examples
 #' api.param <- list(USERID = api.key,
 #'                   METHOD = "GETDATASETLIST",
