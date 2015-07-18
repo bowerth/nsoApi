@@ -3,7 +3,7 @@
 #' Information retrieval from Destatis Genesis webservices
 #'
 #' Retrieve information from Destatis Genesis \code{quader} in linearised XML format.
-#' The retrieval function requires a premium \link{login https://www-genesis.destatis.de/genesis/online}
+#' The retrieval function requires a premium login https://www-genesis.destatis.de/genesis/online
 #'
 #' @param api.param a list with parameters used to construct the query, see example
 #' @param service the webservice to use, e.g. \code{ExportService} or \code{RechercheService}
@@ -15,7 +15,6 @@
 #' Additional functions convert the returned list to data frame and xts objects.
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords API XML
-#' @import dplyr RCurl reshape2 stringr tidyr XML xts
 #' @export
 #' @examples
 #' api.param.datenexport <- list(
@@ -142,7 +141,7 @@ genesisXMLtoDF <- function(
 }
 
 #' @rdname genesisAPI
-#' @param data a data frame created with \link{\code{genesisXMLtoDF}}
+#' @param data a data frame created with \code{genesisXMLtoDF}
 #' @export
 genesisDFtoXTS <- function(
     data = stop("'data' must be provided")

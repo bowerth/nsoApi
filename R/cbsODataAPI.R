@@ -15,7 +15,6 @@
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords OData JSON
 #' @seealso \code{https://github.com/object/Simple.OData.Client}
-#' @import jsonlite RCurl reshape2
 #' @export
 #' @examples
 #' api <- "http://opendata.cbs.nl/ODataApi/OData/"
@@ -62,7 +61,7 @@ cbsODataAPI <- function(api=stop("'api' must be provided"),
 
 
 #' @rdname cbsODataAPI
-#' @param data a data frame created with \link{\code{cbsODataAPI}}
+#' @param data a data frame created with \code{cbsODataAPI}
 #' @export
 cbsOdataDFtoXTS <- function(
     data = stop("'data' must be provided")

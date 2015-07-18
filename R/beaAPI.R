@@ -3,9 +3,7 @@
 #'
 #' Connect to BEA datasets
 #'
-#' These functions allow connecting to BEA time series in JSON format
-#' with a valid user ID obtained from
-#' \link{http://www.bea.gov/API/signup/index.cfm}
+#' These functions allow connecting to BEA time series in JSON format with a valid user ID obtained from http://www.bea.gov/API/signup/index.cfm
 #'
 #' @param api.param
 #' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}
@@ -16,7 +14,6 @@
 #' parameters, retrieves the JSON string and transforms to R list
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords JSON
-#' @import RCurl rjson stringr
 #' @export
 #' @examples
 #' curl <- RCurl::getCurlHandle()

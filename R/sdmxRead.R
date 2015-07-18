@@ -13,8 +13,7 @@
 #'
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords OECD.Stat, SDMX
-#' @seealso \code{\link{https://data.oecd.org/api/sdmx-json-documentation/}}, \code{\link{http://cran.r-project.org/web/packages/jsonlite/index.html}}
-#' @import RCurl
+#' @seealso https://data.oecd.org/api/sdmx-json-documentation, http://cran.r-project.org/web/packages/jsonlite/index.html
 #' @export
 #' @examples
 #' ## list dimension members
