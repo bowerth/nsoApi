@@ -8,7 +8,7 @@
 #' \link{http://www.bea.gov/API/signup/index.cfm}
 #'
 #' @param api.param
-#' @param curl
+#' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}
 #' @param query
 #' @param raw
 #'
@@ -16,18 +16,19 @@
 #' parameters, retrieves the JSON string and transforms to R list
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords JSON
+#' @import RCurl rjson stringr
 #' @export
 #' @examples
-#' api.param <- list(USERID = api.key,
+#' curl <- RCurl::getCurlHandle()
+#' api.param <- list(USERID = "api.key",
 #'                   METHOD = "GETDATASETLIST",
 #'                   RESULTFORMAT = "JSON")
 #' List <- beaAPI(api.param = api.param, curl = curl)
-#' df <- beaJSONtoDF(List = List, third = 4)
+#' df <- beaJSONtoDF(List = List, third = 1)
 
-## req.uri <- "http://www.bea.gov/api/data/?&DATASETNAME=FIXEDASSETS&FREQUENCY=A&METHOD=GETDATA&RESULTFORMAT=JSON&USERID=7023E825-15FF-488D-B8D9-D70E6F67D439&TABLEID=91&YEAR=2008,2009&a"
 
 beaAPI <- function(api.param = stop("'api.param' must be specified"),
-                   curl = getCurlHandle(),
+                   curl = NULL,
                    query = FALSE,
                    raw = FALSE) {
     ##
@@ -42,7 +43,8 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
     req.uri <- paste0(req.uri, "&")
     if (query) return(req.uri)
     ##
-    tt <- getURL(req.uri, curl = curl)
+    if (is.null(curl)) curl <- RCurl::getCurlHandle()
+    tt <- RCurl::getURL(req.uri, curl = curl)
     if (raw) return(tt)
     ## if (tolower(api.param[["METHOD"]])=="getdata") {
     ##     if (tolower(api.param[["DATASETNAME"]])=="gdpbyindustry") {
@@ -55,20 +57,73 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
     ## filecon <- file(file.path(dlpath, "bea.json"))
     ## writeLines(text = tt, con = filecon)
     ## close(filecon)
-    result.list <- fromJSON(tt)
-    ##
+
+    ## result.list <- rjson::fromJSON(tt)
+    result.list <- jsonlite::fromJSON(tt)
+
     return(result.list)
 }
 
+
+## #' @rdname beaAPI
+## #' @param List
+## #' @param third
+## #' @export
+## beaJSONtoDF <- function(List=stop("'List' must be specified"),
+##                          third = 1) {
+
+##     temp <- lapply(List[[1]][[2]][[third]], function(x) data.frame(x))
+##     df <- NULL
+##     for (i in seq(along = temp)) {
+##         df <- rbind(df, temp[[i]])
+##     }
+##     return(df)
+## }
+
+
 #' @rdname beaAPI
-#' @param List
-#' @param third
-beaJSONtoDF <- function(List=stop("'List' must be specified"),
-                         third = 1) {
-    temp <- lapply(List[[1]][[2]][[third]], function(x) data.frame(x))
-    df <- NULL
-    for (i in seq(along = temp)) {
-        df <- rbind(df, temp[[i]])
-    }
-    return(df)
+#' @param data a data frame created with \link{\code{beaJSONtoDF}}
+#' @export
+beaDFtoXTS <- function(
+    data = stop("'data' must be provided")
+) {
+
+    distinct.var <- names(data)
+    ## if ("TimePeriod"%in%names(data)) setnames(data, "TimePeriod", "Year") # NIPA
+    if ("TimePeriod"%in%names(data)) names(data) <- sub("TimePeriod", "Year", names(data)) # NIPA
+    distinct.var <- distinct.var[!distinct.var%in%c("Year", "IndustrYDescription", "DataValue", "NoteRef")]
+    ## data.plots <- data
+    distinct.col <- data[, colnames(data)%in%distinct.var]
+    distinct.col2 <- data.frame(apply(distinct.col, 2, function(x) as.character(x)), stringsAsFactors = FALSE)
+    data$variable <-  apply(distinct.col2, 1, function(x) gsub(", ", ".", toString(x)))
+    data$DataValue <- as.numeric(as.character(data$DataValue))
+
+    data.d <- reshape2::dcast(data, Year ~ variable, value.var = "DataValue")
+
+    ## data.d$Year <- as.numeric(as.character(data.d$Year))
+
+    ## data.d$Year <- paste0(data.d$Year, '-01-01')
+    data.d$Year <- sapply(data.d$Year, beaChangeDates)
+    ## unique(data.d$Year)
+
+    rownames(data.d) <- data.d$Year
+    ## data.d <- data.d[, colnames(data.d)!="Year"]
+    ## need data frame
+    data.d <- subset(data.d, select = names(data.d)[names(data.d)!="Year"])
+
+    data.xts <- xts::as.xts(data.d, dateFormat = 'Date')
+    ## return(data.d)
+    return(data.xts)
+
+}
+
+
+#' @rdname beaAPI
+#' @param str a character string with BEA dates, e.g. \code{"2000"}, \code{"2000Q1"}, \code{"2000M01" }
+beaChangeDates <- function(str) {
+  str <- stringr::str_replace(str, "Q", "-0")
+  str <- stringr::str_replace(str, "M", "-")
+  str <- paste0(str, "-01")
+  if (nchar(str)==7) str <- paste0(str, "-01")
+  return(str)
 }
