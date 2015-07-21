@@ -1,5 +1,5 @@
 
-#' API Bureau of Economic Analysis
+x#' API Bureau of Economic Analysis
 #'
 #' Connect to BEA datasets
 #'
@@ -86,27 +86,28 @@ beaDFtoXTS <- function(
 ) {
 
     distinct.var <- names(data)
-    ## if ("TimePeriod"%in%names(data)) setnames(data, "TimePeriod", "Year") # NIPA
-    if ("TimePeriod"%in%names(data)) names(data) <- sub("TimePeriod", "Year", names(data)) # NIPA
-    distinct.var <- distinct.var[!distinct.var%in%c("Year", "IndustrYDescription", "DataValue", "NoteRef")]
+    ## if ("TimePeriod"%in%names(data)) setnames(data, "TimePeriod", "Date") # NIPA
+    if ("TimePeriod"%in%names(data)) names(data) <- sub("TimePeriod", "Date", names(data)) # NIPA, FixedAssets
+    if ("Year"%in%names(data)) names(data) <- sub("Year", "Date", names(data)) # GDPbyIndustry
+    distinct.var <- distinct.var[!distinct.var%in%c("Date", "IndustrYDescription", "DataValue", "NoteRef")]
     ## data.plots <- data
     distinct.col <- data[, colnames(data)%in%distinct.var]
     distinct.col2 <- data.frame(apply(distinct.col, 2, function(x) as.character(x)), stringsAsFactors = FALSE)
     data$variable <-  apply(distinct.col2, 1, function(x) gsub(", ", ".", toString(x)))
     data$DataValue <- as.numeric(as.character(data$DataValue))
 
-    data.d <- reshape2::dcast(data, Year ~ variable, value.var = "DataValue")
+    data.d <- reshape2::dcast(data, Date ~ variable, value.var = "DataValue")
 
-    ## data.d$Year <- as.numeric(as.character(data.d$Year))
+    ## data.d$Date <- as.numeric(as.character(data.d$Date))
 
-    ## data.d$Year <- paste0(data.d$Year, '-01-01')
-    data.d$Year <- sapply(data.d$Year, beaChangeDates)
-    ## unique(data.d$Year)
+    ## data.d$Date <- paste0(data.d$Date, '-01-01')
+    data.d$Date <- as.Date(sapply(data.d$Date, nsoApi:::beaChangeDates))
+    ## unique(data.d$Date)
 
-    rownames(data.d) <- data.d$Year
-    ## data.d <- data.d[, colnames(data.d)!="Year"]
+    rownames(data.d) <- data.d$Date
+    ## data.d <- data.d[, colnames(data.d)!="Date"]
     ## need data frame
-    data.d <- subset(data.d, select = names(data.d)[names(data.d)!="Year"])
+    data.d <- subset(data.d, select = names(data.d)[names(data.d)!="Date"])
 
     data.xts <- xts::as.xts(data.d, dateFormat = 'Date')
     ## return(data.d)
@@ -118,9 +119,17 @@ beaDFtoXTS <- function(
 #' @rdname beaAPI
 #' @param str a character string with BEA dates, e.g. \code{"2000"}, \code{"2000Q1"}, \code{"2000M01" }
 beaChangeDates <- function(str) {
-  str <- stringr::str_replace(str, "Q", "-0")
-  str <- stringr::str_replace(str, "M", "-")
-  str <- paste0(str, "-01")
-  if (nchar(str)==7) str <- paste0(str, "-01")
+
+  ## str <- "2000Q2"
+  if (stringr::str_detect(str, "Q")) {
+    str <- stringr::str_replace(str, "Q", "-")
+    str <- as.character(unname(as.Date(zoo::as.yearqtr(str)))) # same
+  } else if (stringr::str_detect(str, "M")) {
+    str <- stringr::str_replace(str, "M", "-")
+    str <- paste0(str, "-01")
+  } else { # year
+    ## if (nchar(str)==7) str <- paste0(str, "-01")
+    str <- paste0(str, "-01-01")
+  }
   return(str)
 }

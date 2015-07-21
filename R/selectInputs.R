@@ -28,25 +28,27 @@
 
 selectInputs <- function(list = stop("'list' must be provided"),
                          prefix = "",
+                         minsize = 4,
                          ...) {
 
-    ui.all <- NULL
-    ## if (is.null(names)) names <- names(data)
-    ## for (col in names) {
-    for (label in names(list)) {
-      ## choices <- as.character(unique(data[[col]]))
-      choices <- list[[label]]
-        ui <- shiny::selectInput(
-            inputId = paste0(prefix, label),
-            label = label,
-            choices = choices,
-            selected = choices[1],
-            multiple = TRUE,
-            selectize = FALSE,
-            ...)
+  ui.all <- NULL
+  ## if (is.null(names)) names <- names(data)
+  ## for (col in names) {
+  for (label in names(list)) {
+    ## choices <- as.character(unique(data[[col]]))
+    choices <- list[[label]]
+    ui <- shiny::selectInput(
+      inputId = paste0(prefix, label),
+      label = label,
+      choices = choices,
+      selected = choices[1],
+      multiple = TRUE,
+      selectize = FALSE,
+      size = min(length(choices), minsize),
+      ...)
 
-        ui.all <- list(ui.all, ui)
+    ui.all <- list(ui.all, ui)
 
-    }
-    return(ui.all)
+  }
+  return(ui.all)
 }

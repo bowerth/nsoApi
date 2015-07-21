@@ -7,7 +7,7 @@
 #' @param file
 #' @param password
 #'
-#' @return Creates decrypted file in the package installation folder
+#' @return Creates decrypted file in the package installation folder. The key file is gpg encryped. In Windows, use GPG Plugin Portable: http://portableapps.com/apps/security/gpg-plugin-portable
 #'
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords GPG
@@ -24,22 +24,27 @@
 
 
 nsoApiGPG <- function(file = system.file("apiKey.R.gpg", package = "nsoApi"),
+                      gpg = file.path("D:", "GPG", "gpg2.exe"),
                       passphrase = NULL,
+                      shell = file.path("C:", "Windows", "System32", "cmd.exe"),
                       keep = FALSE
   ) {
 
   file.dec <- sub("[.][gG][pP][gG]", "", file)
 
-  cmd <- "gpg"
+  if (is.null(gpg)) cmd <- "gpg" else cmd <- gpg
   if (!is.null(passphrase)) cmd <- paste(cmd, '--passphrase', passphrase)
   cmd <- paste(cmd, '-d', file, '>', file.dec)
-  
-  system(cmd)
+
+  if (Sys.info()[["sysname"]]=="Windows")
+      shell(cmd, shell = shell)
+  else
+      system(cmd)
 
   source(file.dec)
-  
+
   if (!keep) {
     if (file.exists(file.dec)) file.remove(file.dec)
   }
-  
+
 }

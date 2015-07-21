@@ -140,7 +140,7 @@ genesisXMLtoDF <- function(
     data.df.m[["UNIT"]] <- as.character(data.df.m[["UNIT"]])
     data.df.m[["ZI-WERT"]] <- as.numeric(data.df.m[["ZI-WERT"]])
     data.df.m[["WERT"]] <- as.numeric(data.df.m[["WERT"]])
-    
+
     return(data.df.m)
 }
 

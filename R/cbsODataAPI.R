@@ -55,19 +55,21 @@ cbsODataAPI <- function(api=stop("'api' must be provided"),
   tt <- RCurl::getURL(theurl, .mapUnicode = FALSE, curl = curl)
 
   data.list2 <- jsonlite::fromJSON(txt = tt)
-  return(data.list2$value)
+  return(data.list2$value) # returns a data frame
 
 }
 
 
 #' @rdname cbsODataAPI
-#' @param data a data frame created with \code{cbsODataAPI}
+#' @param xml.list a character string returned from
 #' @export
-cbsOdataDFtoXTS <- function(
+cbsOdataDFgather <- function(
     data = stop("'data' must be provided")
-    ) {
+) {
 
-
+    ## list.files(path = dlpath)
+    ## data <- read.csv(file.path(dlpath, "CBS_83068ENG.csv"))
+    ## h(data)
     ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
     ## find positon of "Periods" in column names vectors
     varcol.periods <- match("Periods", names(data))
@@ -77,15 +79,53 @@ cbsOdataDFtoXTS <- function(
     ## data <-
     ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
 
-    data.xts <-
+    data.m <-
         data %>%
             dplyr::select(-ID) %>%
-                tidyr::gather_(key_col = "TRANSACT", value_col = "VALUE", gather_cols = gather.cols) %>%
-                    tidyr::unite_(col = "COMBINE", from = c(id.cols, "TRANSACT"), sep = "_") %>%
+                tidyr::gather_(key_col = "TRANSACT", value_col = "VALUE", gather_cols = gather.cols) ## %>%
+                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TRANSACT"), sep = "_") %>%
+                    ##     tidyr::spread(COMBINE, VALUE) # %>% head()
+
+    data.m[["TRANSACT"]] <- as.character(data.m[["TRANSACT"]])
+
+    ## h(data.m)
+    return(data.m)
+}
+
+#' @rdname cbsODataAPI
+#' @param data a data frame created with \code{cbsODataAPI}
+#' @export
+cbsOdataDFtoXTS <- function(
+    data = stop("'data' must be provided")
+    ) {
+
+    ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
+    ## data <- data.m
+    ## ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
+    ## ## find positon of "Periods" in column names vectors
+    varcol.periods <- match("Periods", names(data))
+    ## gather.cols <- names(data)[(varcol.periods + 1):length(data)]
+    ## TRANSACT and VALU defined in cbsOdataDFgather
+
+    ## id.cols <- names(data)[1:varcol.periods]
+    ## id.cols <- id.cols[!id.cols%in%c("ID", "Periods")]
+    id.cols <- names(data)
+    id.cols <- id.cols[!id.cols%in%c("ID", "Periods", "VALUE")]
+
+    ## data <-
+    ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
+
+    data.xts <-
+        data %>%
+            ## dplyr::select(-ID) %>%
+            ##     tidyr::gather_(key_col = "TRANSACT", value_col = "VALUE", gather_cols = gather.cols) %>%
+                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TRANSACT"), sep = "_") %>%
+                    tidyr::unite_(col = "COMBINE", from = c(id.cols), sep = "_") %>%
                         tidyr::spread(COMBINE, VALUE) # %>% head()
 
     rownames(data.xts) <- sub("JJ00", "-01-01", data.xts$Periods)
-    data.xts <- data.xts[, !colnames(data.xts)%in%c("Periods")]
+    ## data.xts <- data.xts[, !colnames(data.xts)%in%c("Periods")]
+    data.xts <- subset(data.xts, select = names(data.xts)[!names(data.xts)%in%c("Periods")])
 
     data.xts <- as.xts(data.xts, dateFormat = "Date")
 
