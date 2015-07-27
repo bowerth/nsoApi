@@ -1,5 +1,4 @@
-
-x#' API Bureau of Economic Analysis
+#' API Bureau of Economic Analysis
 #'
 #' Connect to BEA datasets
 #'

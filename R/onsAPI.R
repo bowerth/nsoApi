@@ -5,149 +5,117 @@
 #' Retrieve information from Destatis Genesis \code{quader} in linearised XML format.
 #' The retrieval function requires a premium login https://www-genesis.destatis.de/genesis/online
 #'
-#' @param api.param a list with parameters used to construct the query, see example
-#' @param service the webservice to use, e.g. \code{ExportService} or \code{RechercheService}
-#' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}
-#' @param query logical, return the https query
+#' @param method
+#' @param context
+#' @param api.key
+#' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}.
 #'
-#' @return The main function creates an URL with with the specified
-#' parameters, retrieves the XML string and transforms into an R list.
-#' Additional functions convert the returned list to data frame and xts objects.
+#' @return The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts objects.
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords API XML
 #' @export
 #' @examples
-#' api.param.datenexport <- list(
-#'     method = "DatenExport",
-#'     kennung = "KENNUNG",
-#'     passwort = "PASSWORT",
-#'     namen = "81000BJ002",
-#'     bereich = "oeffentlich",
-#'     format = "csv",
-#'     werte = "true",
-#'     metadaten = "false",
-#'     zusatz = "false",
-#'     startjahr = "",
-#'     endjahr = "",
-#'     zeitscheiben = "",
-#'     regionalschluessel = "",
-#'     sachmerkmal = "",
-#'     sachschluessel = "",
-#'     stand = "01.01.2001",
-#'     sprache = "de"
-#' )
-#'
-#' curl <- RCurl::getCurlHandle()
-#' ## RCurl::curlSetOpt(.opts = list(proxy = ""), curl = curl)
-#'
-#' xml.list.datenexport <- genesisAPI(api.param = api.param.datenexport,
-#'                                    service = "ExportService",
-#'                                    curl = curl)
-#'
-#' ## convert to data frame
-#' data.df <- genesisXMLtoDF(xml.list = xml.list.datenexport)
-#'
-#' ## convert to xts object, e.g. for use in \code{dygraphs} package
-#' data.xts <- genesisDFtoXTS(data = data.df)
+#' onsAPI(method = "contexts", api.key = api.key)
+#' onsAPI(method = "collections", context = "Economic", api.key = api.key)
 
-genesisAPI <- function(
-    api.param = stop("'api.param' must be specified"),
-    service = stop("'service' must be specified"),
-    curl = NULL,
-    query = FALSE
+onsAPI <- function(
+    method = "collections",
+    context = "Economic",
+    api.key = stop("'api.key' must be provided")
 ) {
 
-    api.url <- "https://www-genesis.destatis.de/genesisWS/services"
+    base.url <- "http://data.ons.gov.uk/ons/api/data"
 
-    api.param.char <- paste(names(api.param), unlist(api.param), sep = "=")
-    api.param.str <- gsub(", ", "&", toString(api.param.char))
-
-    req.uri <- paste0(api.url, "/", service, "?", api.param.str)
-
-    if (query) return(req.uri)
-    if (is.null(curl)) curl <- RCurl::getCurlHandle()
-
-    tt <- RCurl::getURL(req.uri, curl = curl,
-                        .opts = list(ssl.verifypeer = FALSE))
-
-    file.xml <- tempfile()
-    filecon <- file(file.xml)
-    writeLines(text = tt, con = filecon)
-    close(filecon)
-
-    ## XML::xmlParse
-    result.xml <- XML::xmlParse(file = file.xml)
-    result.list <- XML::xmlToList(result.xml)
-
-    return(result.list)
-}
-
-
-#' @rdname genesisAPI
-#' @param xml.list a character string returned from
-#' @export
-genesisXMLtoDF <- function(
-    xml.list = stop("'xml.list' must be provided")
-) {
-
-    if (names(xml.list[[1]]) == "DatenExportResponse") {
-        data.str <- xml.list[["Body"]][["DatenExportResponse"]][["DatenExportReturn"]][["quader"]][["quader"]][["quaderDaten"]]
+    if (method == "contexts") {
+        query <- "contexts.json?apikey="
     } else {
-        stop("format not specified\n")
+        query <- paste0(method, '.json?context=', context, '&apikey=')
     }
 
-    data.char <- strsplit(data.str, "\n")[[1]]
-    namedim.begin <- match("K;DQA;NAME;RHF-BSR;RHF-ACHSE", data.char)
-    nametime.begin <- match("K;DQZ;NAME;ZI-RHF-BSR;ZI-RHF-ACHSE", data.char)
-    nameunit.begin <- match("K;DQI;NAME;ME-NAME;DST;TYP;NKM-STELLEN", data.char)
-    header.substr <- "K;QEI;"
-    header.begin <- match(header.substr, substr(data.char, 1, nchar(header.substr)))
+    req.uri <- file.path(base.url, paste0(query, api.key))
 
-    namedim.raw <- data.char[c((namedim.begin + 1):(nametime.begin - 1))]
-    namedim <- sapply(strsplit(namedim.raw, ";"), "[[", 2)
+    tt <- RCurl::getURL(req.uri)
+    list <- jsonlite::fromJSON(tt)
 
-    ## nametime.raw <- data.char[(nametime.begin + 1)]
-    ## nametime <- sapply(strsplit(nametime.raw, ";"), "[[", 2)
-
-    nameunit.raw <- data.char[c((nameunit.begin + 1):(header.begin - 1))]
-    nameunit <- sapply(strsplit(nameunit.raw, ";"), "[[", 2)
-
-    header.raw <- data.char[header.begin]
-    header <- strsplit(header.raw, ";")[[1]]
-    header <- header[!header%in%"QEI"]
-    for (dim in namedim) {
-        header[match("FACH-SCHL", header)] <- dim
+    if (list$ons$node$name=="Contexts") {
+        return(list$ons$contextList$statisticalContext)
+    } else if (list$ons$node$name=="Collections") {
+        return(list$ons$collectionList$collection[c("id", "names", "description")])
     }
 
-    data.raw <- data.char[c((header.begin + 1):length(data.char))]
-
-    ## adjust header for additional value fields according to nameunit
-    if (length(header) < length(strsplit(data.raw[1], split = ";")[[1]])) {
-        header <- c(header, tail(header, 4))
-    }
-
-    for (unit in nameunit) {
-        header[match("WERT", header)] <- unit
-    }
-
-    data.raw.df <- data.frame(data = data.raw)
-
-    data.df <- tidyr::separate(data = data.raw.df, col = data, into = header, sep = ";")
-
-    data.df <- data.df[, !colnames(data.df)%in%c("K", "QUALITAET", "GESPERRT", "WERT-VERFAELSCHT")]
-    data.df.m <- reshape2::melt(data.df, id.vars = c(namedim, "ZI-WERT"), variable.name = "UNIT", value.name = "WERT")
-
-    data.df.m[["UNIT"]] <- as.character(data.df.m[["UNIT"]])
-    data.df.m[["ZI-WERT"]] <- as.numeric(data.df.m[["ZI-WERT"]])
-    data.df.m[["WERT"]] <- as.numeric(data.df.m[["WERT"]])
-
-    return(data.df.m)
 }
 
-#' @rdname genesisAPI
-#' @param data a data frame created with \code{genesisXMLtoDF}
+
+#' @rdname onsAPI
+#' @param api.param a list with parameters used to construct the query, see examples.
+#' @param dataset the dataset to download.
+#' @param query logical, return the query containing the download link.
 #' @export
-genesisDFtoXTS <- function(
+#' @examples
+#' ## Within a group there is a series for each combination of dimension items in the segment. In a time series dataset there will be several observations within a series, but in the case of Census data there is only one time (Census Day 2011).
+#' api.param <- list(context = "Census",
+#'                   geog = "2011WARDH",
+#'                   totals = "false",
+#'                   apikey = "xPuqnMzZ01")
+#' data.QS208EW <- onsAPI(api.param = api.param, dataset = "QS208EW")
+#' data.QS104EW <- onsAPI(api.param = api.param, dataset = "QS104EW")
+
+onsCsvData <- function(
+  api.param = stop("'api.param' must be provided"),
+  dataset = stop("'dataset' must be provided"),
+  query = FALSE,
+  curl = NULL,
+  ...) {
+
+  ## ... additional parameters passed to download.file(), e.g method = "auto"
+
+  api.param.char <- paste(names(api.param), unlist(api.param), sep = "=")
+  api.param.str <- paste(api.param.char, collapse = "&")
+
+  req.uri <- "http://data.ons.gov.uk/ons/api/data/dataset"
+  req.uri <- file.path(req.uri, dataset, "dwn.csv")
+  req.uri <- paste0(req.uri, "?", api.param.str)
+
+  if (is.null(curl)) curl <- RCurl::getCurlHandle()
+
+  if (query==TRUE) return(download.uri)
+
+  tt <- RCurl::getURL(req.uri, curl = curl)
+
+  dl.list <- XML::xmlToList(tt)
+
+  download.uri <- dl.list$documents$document$href
+  download.uri <- sub("/slice", "", download.uri)
+  download.uri <- sub("_EN", "", download.uri)
+
+  tempfile <- tempfile(fileext = ".zip")
+  download.file(url = download.uri, destfile = tempfile, ...)
+
+  tempdir <- tempdir()
+  namefile <- unzip(zipfile = tempfile, list = TRUE)
+  namefile <- namefile[["Name"]]
+  csv.file <- namefile[tools::file_ext(namefile)=="csv"]
+
+  unzip(zipfile = tempfile, exdir = tempdir)
+
+  data <- read.csv(file.path(tempdir, csv.file), header = TRUE, skip = 7)
+
+  ## data.csv <- data
+  data <- data.csv
+  names(data) <- gsub("[.]+", "_", tolower(names(data)))
+  drop.col <- c("geographic_area")
+  data <- subset(data, select = names(data)[!names(data)%in%drop.col])
+  ## names(data)
+
+  for (file in list.files(tempdir)) unlink(file.path(tempdir, file))
+
+  return(data)
+}
+
+#' @rdname onsAPI
+#' @param data a data frame created with \code{onsAPI}
+#' @export
+onsDFtoXTS <- function(
     data = stop("'data' must be provided")
 ) {
 
@@ -165,3 +133,4 @@ genesisDFtoXTS <- function(
 
     return(data.xts)
 }
+

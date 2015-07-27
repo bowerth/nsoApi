@@ -60,7 +60,8 @@ genesisAPI <- function(
     api.url <- "https://www-genesis.destatis.de/genesisWS/services"
 
     api.param.char <- paste(names(api.param), unlist(api.param), sep = "=")
-    api.param.str <- gsub(", ", "&", toString(api.param.char))
+    ## api.param.str <- gsub(", ", "&", toString(api.param.char))
+    api.param.str <- paste(api.param.char, collapse = "&")
 
     req.uri <- paste0(api.url, "/", service, "?", api.param.str)
 
@@ -140,7 +141,7 @@ genesisXMLtoDF <- function(
     data.df.m[["UNIT"]] <- as.character(data.df.m[["UNIT"]])
     data.df.m[["ZI-WERT"]] <- as.numeric(data.df.m[["ZI-WERT"]])
     data.df.m[["WERT"]] <- as.numeric(data.df.m[["WERT"]])
-    
+
     return(data.df.m)
 }
 
@@ -164,4 +165,59 @@ genesisDFtoXTS <- function(
     data.xts <- xts::as.xts(data.d, dateFormate = "Date")
 
     return(data.xts)
+}
+
+#' @rdname genesisAPI
+#' @param namefilter numeric vector to filter dataset codes.
+#' @param fields character vector to select fields from entries.
+#' @param kennung user ID.
+#' @param passwort user password.
+#' @param curl handle created with `RCurl::getCurlHandle`.
+#' @export
+genesisTables <- function(
+    namefilter = c(11:14, 2, 3, 41:49, 5:9),
+    fields = c("code", "beschriftungstext"),
+    kennung = stop("'kennung' must be provided"),
+    passwort = stop("'passwort' must be provided"),
+    curl = NULL
+) {
+
+    entries.all <- NULL
+    for (f in namefilter) {
+
+        api.param.katalog <- list(
+            method = "DatenKatalog",
+            kennung = kennung,
+            passwort = passwort,
+            ## filter = "", # "81*"
+            filter = paste0(as.character(f), '*'),
+            bereich = "Alle",
+            listenLaenge = "500", # "500" max
+            sprache = "de")
+
+        if (is.null(curl)) curl <- RCurl::getCurlHandle()
+
+        xml.list <- nsoApi::genesisAPI(api.param = api.param.katalog,
+                                       service = "RechercheService",
+                                       curl = curl
+                                       )
+
+        entries <- xml.list[["Body"]][["DatenKatalogResponse"]][["DatenKatalogReturn"]][["objektKatalogEintraege"]]
+
+        entries.all <- c(entries.all, entries)
+        cat(paste0('"', f, '*" filter: ', length(entries), ' entries \n'))
+    }
+
+
+    mat <- NULL
+    for (field in fields) {
+        temp <- sapply(entries.all, function (x) ifelse(field%in%names(x), x[[field]], NA))
+        temp <- unname(unlist(temp))
+        temp <- iconv(temp, "latin1", "ASCII", sub="")
+        mat <- cbind(mat, temp)
+    }
+    df <- as.data.frame(mat)
+    names(df) <- fields
+
+    return(df)
 }

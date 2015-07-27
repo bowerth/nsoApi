@@ -2,6 +2,7 @@
 \name{genesisAPI}
 \alias{genesisAPI}
 \alias{genesisDFtoXTS}
+\alias{genesisTables}
 \alias{genesisXMLtoDF}
 \title{API Destatis Genesis}
 \usage{
@@ -12,6 +13,10 @@ genesisAPI(api.param = stop("'api.param' must be specified"),
 genesisXMLtoDF(xml.list = stop("'xml.list' must be provided"))
 
 genesisDFtoXTS(data = stop("'data' must be provided"))
+
+genesisTables(namefilter = c(11:14, 2, 3, 41:49, 5:9), fields = c("code",
+  "beschriftungstext"), kennung = stop("'kennung' must be provided"),
+  passwort = stop("'passwort' must be provided"), curl = NULL)
 }
 \arguments{
 \item{api.param}{a list with parameters used to construct the query, see example}
@@ -25,6 +30,16 @@ genesisDFtoXTS(data = stop("'data' must be provided"))
 \item{xml.list}{a character string returned from}
 
 \item{data}{a data frame created with \code{genesisXMLtoDF}}
+
+\item{namefilter}{numeric vector to filter dataset codes.}
+
+\item{fields}{character vector to select fields from entries.}
+
+\item{kennung}{user ID.}
+
+\item{passwort}{user password.}
+
+\item{curl}{handle created with `RCurl::getCurlHandle`.}
 }
 \value{
 The main function creates an URL with with the specified

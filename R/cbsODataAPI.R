@@ -132,3 +132,34 @@ cbsOdataDFtoXTS <- function(
     return(data.xts)
 
 }
+
+#' @rdname cbsODataAPI
+#' @param url location of table list XML document.
+#' @param fields character vector to extract content properties of entries.
+#' @export
+cbsODataTables <- function(
+    url = "http://opendata.cbs.nl/ODataCatalog/Tables",
+    fields = c("Identifier", "Title", "Frequency", "Period")
+    ) {
+
+    tt <- RCurl::getURL(url)
+    list <- XML::xmlToList(tt)
+
+    entries.idx <- seq(along = names(list))[names(list)=="entry"]
+    entries <- list[entries.idx]
+
+    fields <- c("Identifier", "Title", "Frequency", "Period")
+
+    data <- NULL
+    for (var in fields) {
+        temp <- sapply(entries, function (x) ifelse(is.null(x$content$properties[[var]]), NA, x$content$properties[[var]]))
+        temp <- unname(unlist(temp))
+        temp <- iconv(temp, "latin1", "ASCII", sub="")
+        data <- cbind(data, temp)
+    }
+    data.df <- as.data.frame(data)
+    names(data.df) <- fields
+
+    return(data.df)
+
+}
