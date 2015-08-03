@@ -91,11 +91,22 @@ genesisXMLtoDF <- function(
     xml.list = stop("'xml.list' must be provided")
 ) {
 
+    ## xml.list <- xml.list.datenexport
+
     if (names(xml.list[[1]]) == "DatenExportResponse") {
         data.str <- xml.list[["Body"]][["DatenExportResponse"]][["DatenExportReturn"]][["quader"]][["quader"]][["quaderDaten"]]
     } else {
         stop("format not specified\n")
     }
+
+    ## str(xml.list)
+    ## substr(data.str, 1, 100)
+    ## substr(data.str, 1, 500)
+    ## tempfile <- tempfile(fileext = ".txt")
+    ## filecon <- file(tempfile)
+    ## writeLines(text = data.str, con = filecon)
+    ## close(con = filecon)
+    ## system(paste("sublime_text", tempfile), wait = FALSE)
 
     data.char <- strsplit(data.str, "\n")[[1]]
     namedim.begin <- match("K;DQA;NAME;RHF-BSR;RHF-ACHSE", data.char)
@@ -124,7 +135,8 @@ genesisXMLtoDF <- function(
 
     ## adjust header for additional value fields according to nameunit
     if (length(header) < length(strsplit(data.raw[1], split = ";")[[1]])) {
-        header <- c(header, tail(header, 4))
+        nrep.header.tail <- length(nameunit) - 1 # number of additional units in data
+        header <- c(header, rep(tail(header, 4), nrep.header.tail))
     }
 
     for (unit in nameunit) {

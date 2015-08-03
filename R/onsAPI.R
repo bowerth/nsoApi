@@ -78,7 +78,7 @@ onsCsvData <- function(
 
   if (is.null(curl)) curl <- RCurl::getCurlHandle()
 
-  if (query==TRUE) return(download.uri)
+  if (query==TRUE) return(req.uri)
 
   tt <- RCurl::getURL(req.uri, curl = curl)
 
@@ -89,6 +89,7 @@ onsCsvData <- function(
   download.uri <- sub("_EN", "", download.uri)
 
   tempfile <- tempfile(fileext = ".zip")
+  ## include check: file already downloaded?
   download.file(url = download.uri, destfile = tempfile, ...)
 
   tempdir <- tempdir()
@@ -99,15 +100,14 @@ onsCsvData <- function(
   unzip(zipfile = tempfile, exdir = tempdir)
 
   data <- read.csv(file.path(tempdir, csv.file), header = TRUE, skip = 7)
+  for (file in list.files(tempdir)) unlink(file.path(tempdir, file))
 
   ## data.csv <- data
-  data <- data.csv
+  ## data <- data.csv
   names(data) <- gsub("[.]+", "_", tolower(names(data)))
   drop.col <- c("geographic_area")
   data <- subset(data, select = names(data)[!names(data)%in%drop.col])
   ## names(data)
-
-  for (file in list.files(tempdir)) unlink(file.path(tempdir, file))
 
   return(data)
 }
@@ -115,22 +115,18 @@ onsCsvData <- function(
 #' @rdname onsAPI
 #' @param data a data frame created with \code{onsAPI}
 #' @export
-onsDFtoXTS <- function(
+onsDFgather <- function(
     data = stop("'data' must be provided")
 ) {
 
-    data <- subset(data, select = names(data)[!names(data)%in%c("K", "QUALITAET", "GESPERRT", "WERT-VERFAELSCHT")])
+  gather_cols <- names(data)[!names(data)%in%c("geographic_id")]
+  data.gather <-
+      data %>%
+          tidyr::gather_(key_col = "TRANSACT", value = "VALUE", gather_cols = gather_cols)
 
-    names(data) <- sub("ZI-WERT", "ZEIT", names(data))
-    pivot.formula <- formula(paste("ZEIT ~", gsub(", ", " + ", toString(names(data)[!names(data)%in%c("ZEIT", "WERT")]))))
-    data.d <- reshape2::dcast(data, pivot.formula, value.var = "WERT")
+  data.gather$geographic_id <- as.character(data.gather$geographic_id)
+  data.gather$TRANSACT <- as.character(data.gather$TRANSACT)
+  data.gather$VALUE <- as.numeric(as.character(data.gather$VALUE))
 
-    rownames(data.d) <- paste0(as.character(data.d$ZEIT), '-01-01')
-    ## data.d <- data.d[, -1]
-    data.d <- subset(data.d, select = names(data.d)[names(data.d)!="ZEIT"])
-
-    data.xts <- xts::as.xts(data.d, dateFormate = "Date")
-
-    return(data.xts)
+    return(data.gather)
 }
-
