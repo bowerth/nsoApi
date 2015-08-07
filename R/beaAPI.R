@@ -122,7 +122,7 @@ beaChangeDates <- function(str) {
   ## str <- "2000Q2"
   if (stringr::str_detect(str, "Q")) {
     str <- stringr::str_replace(str, "Q", "-")
-    str <- as.character(unname(as.Date(zoo::as.yearqtr(str)))) # same
+    str <- as.character(unname(zoo::as.Date(zoo::as.yearqtr(str)))) # same
   } else if (stringr::str_detect(str, "M")) {
     str <- stringr::str_replace(str, "M", "-")
     str <- paste0(str, "-01")

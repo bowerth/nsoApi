@@ -78,7 +78,7 @@ onsCsvData <- function(
 
   if (is.null(curl)) curl <- RCurl::getCurlHandle()
 
-  if (query==TRUE) return(req.uri)
+  ## if (query==TRUE) return(req.uri)
 
   tt <- RCurl::getURL(req.uri, curl = curl)
 
@@ -88,9 +88,14 @@ onsCsvData <- function(
   download.uri <- sub("/slice", "", download.uri)
   download.uri <- sub("_EN", "", download.uri)
 
+  if (query==TRUE) return(download.uri)
+  ## download.uri = "http://data.statistics.gov.uk/ons/datasets/csv/CSV_QS208EW_2011WARDH_NAT_WD_REL_1.A.A.zip"
+
   tempfile <- tempfile(fileext = ".zip")
   ## include check: file already downloaded?
-  download.file(url = download.uri, destfile = tempfile, ...)
+  ## download.file(url = download.uri, destfile = tempfile, ...)
+  content <- RCurl::getBinaryURL(download.uri, curl = curl)
+  writeBin(content, con = tempfile)
 
   tempdir <- tempdir()
   namefile <- unzip(zipfile = tempfile, list = TRUE)
