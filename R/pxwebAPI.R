@@ -26,6 +26,8 @@ pxwebDFtoXTS <- function(
     data = stop("'data' must be provided")
 ) {
 
+    names(data) <- tolower(names(data))
+
     names(data) <- sub("year", "date", names(data))
     names(data) <- sub("quarter", "date", names(data))
     names(data) <- sub("month", "date", names(data))
@@ -41,7 +43,7 @@ pxwebDFtoXTS <- function(
     data.xts <-
         data.xts %>%
         dplyr::select(-date) %>%
-            xts::as.xts(dateFormate = "Date")
+            xts::as.xts(dateFormat = "Date")
 
     return(data.xts)
 }

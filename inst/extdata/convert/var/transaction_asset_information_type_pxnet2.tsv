@@ -1,0 +1,49 @@
+"var"	"transaction"	"asset"	"information"	"type"
+"PROD"	"P1R Output at basic prices"	NA	"Current prices"	NA
+"PKPY"	"P1R Output at basic prices"	NA	"Ar previous year's prices"	NA
+NA	"P11R Market output"	NA	"Current prices"	NA
+NA	"P11R Market output"	NA	"Ar previous year's prices"	NA
+NA	"P12R Output for own final use"	NA	"Current prices"	NA
+NA	"P12R Output for own final use"	NA	"Ar previous year's prices"	NA
+NA	"P119R Financial intermediation services indirectly measured (FISIM)"	NA	"Current prices"	NA
+NA	"P119R Financial intermediation services indirectly measured (FISIM)"	NA	"Ar previous year's prices"	NA
+NA	"P131R Sales of non-market products"	NA	"Current prices"	NA
+NA	"P131R Sales of non-market products"	NA	"Ar previous year's prices"	NA
+NA	"P132R Other non-market output"	NA	"Current prices"	NA
+NA	"P132R Other non-market output"	NA	"Ar previous year's prices"	NA
+"INTI"	"P2K Intermediate consumption"	NA	"Current prices"	NA
+"IKPY"	"P2K Intermediate consumption"	NA	"Ar previous year's prices"	NA
+"VALU"	"B1GPHT Value added, gross at basic prices"	NA	"Current prices"	NA
+"VKPY"	"B1GPHT Value added, gross at basic prices"	NA	"Ar previous year's prices"	NA
+"CFCC"	"P51CK Consumption of fixed capital"	NA	"Current prices"	NA
+NA	"P51CK Consumption of fixed capital"	NA	"Ar previous year's prices"	NA
+NA	"B1NPHT Value added, net at basic prices"	NA	"Current prices"	NA
+NA	"B1NPHT Value added, net at basic prices"	NA	"Ar previous year's prices"	NA
+"LABR"	"D1K Compensation of employees"	NA	"Current prices"	NA
+NA	"D1K Compensation of employees"	NA	"Ar previous year's prices"	NA
+NA	"D11K Wages and salaries"	NA	"Current prices"	NA
+"WAGE"	"D11K Wages and salaries"	NA	"Ar previous year's prices"	NA
+"CONTRIB"	"D12K Employers' social contributions"	NA	"Current prices"	NA
+NA	"D12K Employers' social contributions"	NA	"Ar previous year's prices"	NA
+"TAXES"	"D29K Other taxes on production"	NA	"Current prices"	NA
+NA	"D29K Other taxes on production"	NA	"Ar previous year's prices"	NA
+"SUBS"	"D39R Other subsidies on production"	NA	"Current prices"	NA
+NA	"D39R Other subsidies on production"	NA	"Ar previous year's prices"	NA
+"NOPS"	"B13NT Operating surplus + mixed income, net"	NA	"Current prices"	NA
+NA	"B13NT Operating surplus + mixed income, net"	NA	"Ar previous year's prices"	NA
+NA	"B2NT Operating surplus, net"	NA	"Current prices"	NA
+NA	"B2NT Operating surplus, net"	NA	"Ar previous year's prices"	NA
+NA	"B3NT Mixed income, net"	NA	"Current prices"	NA
+NA	"B3NT Mixed income, net"	NA	"Ar previous year's prices"	NA
+"EMPN"	"E1 Employment, domestic concept, 1000 persons"	NA	NA	NA
+"SELF"	"E11 Employment, self-employed"	NA	NA	NA
+"EMPE"	"E12 Employees, domestic"	NA	NA	NA
+"HRSN"	"E2 Total hours worked, domestic concept, (1 000 000 h)"	NA	NA	NA
+NA	"E21 Hours worked,  self-employed"	NA	NA	NA
+"HRSE"	"E22 Hours worked,  employees"	NA	NA	NA
+"GFCF"	NA	"TOT Gross fixed capital formation"	"Current prices"	NA
+"GKPY"	NA	"TOT Gross fixed capital formation"	"Ar previous year's prices"	NA
+NA	NA	"TOT Gross fixed capital formation"	"Current prices"	"B Gross stock"
+NA	NA	"TOT Gross fixed capital formation"	"Current prices"	"N Net stock"
+NA	NA	"TOT Gross fixed capital formation"	"Current prices"	"P51CK Consumption of fixed capital"
+NA	NA	"TOT Gross fixed capital formation"	"Current prices"	"P Retirement"
