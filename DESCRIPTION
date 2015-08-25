@@ -5,8 +5,10 @@ Version: 1.0
 Imports:
     dplyr,
     jsonlite,
+    magrittr,
     RCurl,
     reshape2,
+    rjstat,
     shiny,
     stringr,
     tidyr,

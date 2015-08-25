@@ -94,7 +94,7 @@ statatDFtoXTS <- function(
         dplyr::select(-date) %>%
             xts::as.xts(dateFormat = "Date")
 
-    dygraphs::dygraph(data.xts)
+    ## dygraphs::dygraph(data.xts)
 
     return(data.xts)
 }

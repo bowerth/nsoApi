@@ -2,6 +2,7 @@
 % Please edit documentation in R/cbsODataAPI.R
 \name{cbsODataAPI}
 \alias{cbsODataAPI}
+\alias{cbsODataChangeDates}
 \alias{cbsODataTables}
 \alias{cbsOdataDFgather}
 \alias{cbsOdataDFtoXTS}
@@ -17,6 +18,8 @@ cbsOdataDFtoXTS(data = stop("'data' must be provided"))
 
 cbsODataTables(url = "http://opendata.cbs.nl/ODataCatalog/Tables",
   fields = c("Identifier", "Title", "Frequency", "Period"))
+
+cbsODataChangeDates(str)
 }
 \arguments{
 \item{api}{an API address}
@@ -38,6 +41,8 @@ cbsODataTables(url = "http://opendata.cbs.nl/ODataCatalog/Tables",
 \item{url}{location of table list XML document.}
 
 \item{fields}{character vector to extract content properties of entries.}
+
+\item{str}{a character string with CBS OData dates, e.g. \code{"1995JJ00"}}
 
 \item{xml.list}{a character string returned from}
 }

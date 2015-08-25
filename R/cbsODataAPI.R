@@ -82,11 +82,11 @@ cbsOdataDFgather <- function(
     data.m <-
         data %>%
             dplyr::select(-ID) %>%
-                tidyr::gather_(key_col = "TRANSACT", value_col = "VALUE", gather_cols = gather.cols) ## %>%
-                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TRANSACT"), sep = "_") %>%
+                tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) ## %>%
+                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
                     ##     tidyr::spread(COMBINE, VALUE) # %>% head()
 
-    data.m[["TRANSACT"]] <- as.character(data.m[["TRANSACT"]])
+    data.m[["TOPIC"]] <- as.character(data.m[["TOPIC"]])
 
     ## h(data.m)
     return(data.m)
@@ -99,18 +99,19 @@ cbsOdataDFtoXTS <- function(
     data = stop("'data' must be provided")
     ) {
 
+    names(data) <- tolower(names(data))
     ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
     ## data <- data.m
     ## ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
     ## ## find positon of "Periods" in column names vectors
-    varcol.periods <- match("Periods", names(data))
+    varcol.periods <- match("periods", names(data))
     ## gather.cols <- names(data)[(varcol.periods + 1):length(data)]
-    ## TRANSACT and VALU defined in cbsOdataDFgather
+    ## TOPIC and VALU defined in cbsOdataDFgather
 
     ## id.cols <- names(data)[1:varcol.periods]
     ## id.cols <- id.cols[!id.cols%in%c("ID", "Periods")]
     id.cols <- names(data)
-    id.cols <- id.cols[!id.cols%in%c("ID", "Periods", "VALUE")]
+    id.cols <- id.cols[!id.cols%in%c("id", "periods", "value")]
 
     ## data <-
     ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
@@ -118,16 +119,18 @@ cbsOdataDFtoXTS <- function(
     data.xts <-
         data %>%
             ## dplyr::select(-ID) %>%
-            ##     tidyr::gather_(key_col = "TRANSACT", value_col = "VALUE", gather_cols = gather.cols) %>%
-                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TRANSACT"), sep = "_") %>%
-                    tidyr::unite_(col = "COMBINE", from = c(id.cols), sep = "_") %>%
-                        tidyr::spread(COMBINE, VALUE) # %>% head()
+            ##     tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) %>%
+                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
+                    tidyr::unite_(col = "combine", from = c(id.cols), sep = "_") %>%
+                        tidyr::spread(combine, value) # %>% head()
 
-    rownames(data.xts) <- sub("JJ00", "-01-01", data.xts$Periods)
+    ## rownames(data.xts) <- sub("JJ00", "-01-01", data.xts$Periods)
+    rownames(data.xts) <- sapply(data.xts$periods, cbsODataChangeDates)
+
     ## data.xts <- data.xts[, !colnames(data.xts)%in%c("Periods")]
     data.xts <- subset(data.xts, select = names(data.xts)[!names(data.xts)%in%c("Periods")])
 
-    data.xts <- as.xts(data.xts, dateFormat = "Date")
+    data.xts <- xts::as.xts(data.xts, dateFormat = "Date")
 
     return(data.xts)
 
@@ -161,5 +164,14 @@ cbsODataTables <- function(
     names(data.df) <- fields
 
     return(data.df)
+
+}
+
+#' @rdname cbsODataAPI
+#' @param str a character string with CBS OData dates, e.g. \code{"1995JJ00"}
+cbsODataChangeDates <- function(str) {
+
+    str <- sub("JJ00", "-01-01", str)
+    return(str)
 
 }
