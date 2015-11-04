@@ -1,4 +1,4 @@
-"ID"	"Label"
+"df.ID"	"flows.title"
 "24_84"	"Marriages - Indicators"
 "81_29"	"Interpersonal trust"
 "76_177"	"Protests"
@@ -13,8 +13,7 @@
 "32_31"	"Household assessment on their overall economic resources in the last 12 months - Percentage"
 "33_350"	"Housing costs for households with non national members"
 "32_32"	"Household assessment on their overall economic situation compared to previous year - Percentage"
-"163_144"	"Quarterly national accounts detailed breakdowns by industry (NACE Rev.1.1) (millions of euro) 
-- ...."
+"163_144"	"Quarterly national accounts detailed breakdowns by industry (NACE Rev.1.1) (millions of euro) - ...."
 "32_27"	"Households main income source"
 "163_296"	"Quarterly national accounts breakdown by industry (NACE Rev.2) (millions of euro)"
 "163_299"	"Costs and margins breakdown by industry (NACE Rev.2)"
@@ -24,8 +23,7 @@
 "32_38"	"Household income quintile"
 "77_47"	"Notarial deeds"
 "39_357_TER_EV"	"Mortality by place of registration"
-"92_143"	"Annual national accounts detailed breakdowns by industry (NACE Rev.1.1) (millions of euro) :
-- Ou...."
+"92_143"	"Annual national accounts detailed breakdowns by industry (NACE Rev.1.1) (millions of euro) :- Ou...."
 "270_301"	"Employment breakdown by industry (NACE Rev.2) - annual territorial data - editions prior to Octo...."
 "115_168"	"Production volume"
 "139_176_Q"	"Import and export by country and commodity Nace 2007 - quarterly data"
@@ -65,8 +63,7 @@
 "25_74"	"Live  births"
 "34_201"	"Absolute poverty indicators"
 "34_204"	"Household absolute poverty intensity"
-"163_257"	"Employment breakdown by industry (NACE Rev.1.1) - quarterly national data (thousands)
-- Full time...."
+"163_257"	"Employment breakdown by industry (NACE Rev.1.1) - quarterly national data (thousands)- Full time...."
 "152_146_ANN"	"Inactive population - annual data"
 "150_111_SR"	"Activity rate. Statistical back-recalculation - IV 1992 - IV 2003"
 "34_205"	"Household relative poverty intensity"

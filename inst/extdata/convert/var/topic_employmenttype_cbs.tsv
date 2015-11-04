@@ -1,0 +1,43 @@
+var	topic	employmenttype	title
+NA	SectorBranchesSIC2008	NA	Sector/branches (SIC 2008)
+NA	Periods	NA	Periods
+NA	NA	NA	Value added from the output
+NA	NA	NA	Value at current prices
+PROD	OutputBasicPrices_1	NA	Output basic prices
+INTI	IntermediateConsumption_2	NA	Intermediate consumption (-)
+VALU	GrossValueAddedBasicPrices_3	NA	Gross value added basic prices
+NA	NA	NA	Value at prices of 2010
+NA	OutputBasicPrices_4	NA	Output basic prices
+NA	IntermediateConsumption_5	NA	Intermediate consumption (-)
+NA	GrossValueAddedBasicPrices_6	NA	Gross value added basic prices
+NA	NA	NA	Volume changes on previous year
+NA	OutputBasicPrices_7	NA	Output basic prices
+NA	IntermediateConsumption_8	NA	Intermediate consumption (-)
+NA	GrossValueAddedBasicPrices_9	NA	Gross value added basic prices
+NA	NA	NA	Price indices
+PKOT	OutputBasicPrices_10	NA	Output basic prices
+IKOT	IntermediateConsumption_11	NA	Intermediate consumption (-)
+VKOT	GrossValueAddedBasicPrices_12	NA	Gross value added basic prices
+NA	NA	NA	Value added from generation of income
+NA	NA	NA	Value at current prices
+NA	NA	NA	Compensation of employees
+NA	Total_13	NA	Total
+WAGE	WagesAndSalaries_14	NA	Wages and salaries
+CONTRIB	EmployersSocialContributions_15	NA	Employers social contributions
+NA	NA	NA	Gross operating surplus
+GOPS	Gross_16	NA	Gross
+CFCC	ConsumptionOfFixedCapital_17	NA	Consumption of fixed capital (-)
+NOPS	Net_18	NA	Net
+NA	NA	NA	"Other taxes, subsidies on production"
+OTXS	TaxesLessSubsidies_19	NA	Taxes less subsidies
+NA	OtherTaxesOnProduction_20	NA	Other taxes on production
+NA	OtherSubsidiesOnProduction_21	NA	Other subsidies on production
+NA	GrossValueAddedBasicPrices_22	NA	Gross value added basic prices
+EMPN	EmployedPersons_1	T	"Employed persons, total engaged"
+JOBN	Jobs_2	T	"Jobs, total engaged"
+FTEN	FullTimeEquivalentFte_3	T	"Full-time equivalent (fte), total engaged"
+HRSN	HoursWorked_4	T	"HoursWorked, total engaged"
+EMPE	EmployedPersons_1	W	"Employed persons, employee"
+JOBE	Jobs_2	W	"Jobs, employee"
+FTEE	FullTimeEquivalentFte_3	W	"Full-time equivalent (fte), employee"
+HRSE	HoursWorked_4	W	"HoursWorked, employee"

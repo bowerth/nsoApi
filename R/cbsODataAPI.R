@@ -48,10 +48,22 @@ cbsODataAPI <- function(api=stop("'api' must be provided"),
   theurl <- gsub("//", "/", theurl)
   theurl <- sub("http:/", "http://", theurl)
 
+  ## filter <- list(Sex = c(3000, 1100))
+  if (length(filter) > 0) {
+
+      ## substring(Sex,0,4) eq'3000'
+      ## filter_str <- paste0('substring(', names(filter)[1], ',0,', nchar(filter[[1]]), ') eq \'', filter[[1]], '\'', collapse = ' or ')
+      filter_str <- paste0('substring(', names(filter)[1], ',0,', nchar(filter[[1]]), ')%20eq%20%27', filter[[1]], '%27', collapse = ' or ')
+      filter_str <- paste0('?$filter=', filter_str)
+      theurl <- paste0(theurl, filter_str)
+
+  }
+
   if (query==TRUE) return(theurl)
 
   if (is.null(curl)) curl <- RCurl::getCurlHandle()
 
+  ## theurl <- "http://opendata.cbs.nl/ODataApi/OData/82579ENG/UntypedDataSet?$filter=substring(Gender,0,4)%20eq%20%271100%27"
   tt <- RCurl::getURL(theurl, .mapUnicode = FALSE, curl = curl)
 
   data.list2 <- jsonlite::fromJSON(txt = tt)

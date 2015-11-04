@@ -4,7 +4,7 @@
 \alias{onsAPI}
 \alias{onsCsvData}
 \alias{onsDFgather}
-\title{API Destatis Genesis}
+\title{API ONS}
 \usage{
 onsAPI(method = "collections", context = "Economic",
   api.key = stop("'api.key' must be provided"))
@@ -33,14 +33,13 @@ onsDFgather(data = stop("'data' must be provided"))
 \item{data}{a data frame created with \code{onsAPI}}
 }
 \value{
-The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts objects.
+The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts object.
 }
 \description{
-Information retrieval from Destatis Genesis webservices
+Information retrieval from ONS webservices
 }
 \details{
-Retrieve information from Destatis Genesis \code{quader} in linearised XML format.
-The retrieval function requires a premium login https://www-genesis.destatis.de/genesis/online
+Retrieve information from ONS API in CSV format.
 }
 \examples{
 onsAPI(method = "contexts", api.key = api.key)
@@ -56,6 +55,5 @@ data.QS104EW <- onsAPI(api.param = api.param, dataset = "QS104EW")
 \author{
 Bo Werth <bo.werth@gmail.com>
 }
-\keyword{API}
-\keyword{XML}
+\keyword{csv}
 

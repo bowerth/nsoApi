@@ -15,9 +15,9 @@ NA	"output at basic prices"	"Volume change, percent"	NA
 NA	"intermediate consumption at purchasers prices"	"Volume change, percent"	NA
 "VKOT"	"value added at basic prices"	"Volume index year 2010=100"	NA
 NA	"value added at basic prices"	"Volume change, percent"	NA
-"EMPE"	NA	"Average number of persons employed, thousands"	NA
+"EMPN"	NA	"Average number of persons employed, thousands"	NA
 NA	NA	"Average number of persons employed, change in volume, percent"	NA
-"HRSE"	NA	"Hours worked, millions"	NA
+"HRSN"	NA	"Hours worked, millions"	NA
 NA	NA	"Hours worked, change in volume, percent"	NA
 "CAPN"	NA	"Current prices, SEK million"	"1 Total fixed assets"
 "CNOT"	NA	"Volume index year 2010=100"	"1 Total fixed assets"

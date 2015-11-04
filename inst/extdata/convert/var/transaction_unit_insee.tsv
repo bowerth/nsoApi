@@ -1,0 +1,20 @@
+var	transaction	transaction_label	unit	unit_label
+VALU	B1G	B1G - Gross value added	VAL	VAL - Current price
+VALK	B1G	B1G - Gross value added	PCH	PCH - Chained base year price (unbalanced)
+OTXS	B2A3N	B2A3N - Operating surplus and mixed income net	VAL	VAL - Current price
+LABR	D1	D1 - Compensation of employees	VAL	VAL - Current price
+WAGE	D11	D11 - Gross wages and salaries	VAL	VAL - Current price
+TAXES	D29	D29 - Taxes on production	VAL	VAL - Current price
+SUBS	D39	D39 - Operating subsidies	VAL	VAL - Current price
+CFCC	K1	K1 - Consumption of fixed capital	VAL	VAL - Current price
+PROD	P1	P1 - Output	VAL	VAL - Current price
+PRDK	P1	P1 - Output	PCH	PCH - Chained base year price (unbalanced)
+INTI	P2	P2 - Intermediate consumption (intermediate use)	VAL	VAL - Current price
+INTK	P2	P2 - Intermediate consumption (intermediate use)	PCH	PCH - Chained base year price (unbalanced)
+GFCF	P51	P51 - Gross fixed capital formation	VAL	VAL - Current price
+GFCK	P51	P51 - Gross fixed capital formation	PCH	PCH - Chained base year price (unbalanced)
+EMPN	E10	E10 - Total domestic employment	91	91 - Number of people in employment (headcount data)
+EMPE	E20	E20 - Domestic paid employment	91	91 - Number of people in employment (headcount data)
+SELF	E30	E30 - Domestic self-employment	91	91 - Number of people in employment (headcount data)
+FTEN	E10	E10 - Total domestic employment	93	93 - Number of people in full-time equivalent employment
+FTEE	E20	E20 - Domestic paid employment	93	93 - Number of people in full-time equivalent employment

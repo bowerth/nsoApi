@@ -1,18 +1,17 @@
-#' API Destatis Genesis
+#' API ONS
 #'
-#' Information retrieval from Destatis Genesis webservices
+#' Information retrieval from ONS webservices
 #'
-#' Retrieve information from Destatis Genesis \code{quader} in linearised XML format.
-#' The retrieval function requires a premium login https://www-genesis.destatis.de/genesis/online
+#' Retrieve information from ONS API in CSV format.
 #'
 #' @param method
 #' @param context
 #' @param api.key
 #' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}.
 #'
-#' @return The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts objects.
+#' @return The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts object.
 #' @author Bo Werth <bo.werth@@gmail.com>
-#' @keywords API XML
+#' @keywords csv
 #' @export
 #' @examples
 #' onsAPI(method = "contexts", api.key = api.key)

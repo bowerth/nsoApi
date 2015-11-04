@@ -922,41 +922,31 @@
 "NAHC3"	"Final consumption of households on the economic territory"
 "NAHI"	"Gross capital formation"
 "NAHB"	"Employment and population"
-"NABP10"	"1-2.1.1 Production
-and  generation of income (10a3-grouping)"
+"NABP10"	"1-2.1.1 Production and  generation of income (10a3-grouping)"
 "NABK10"	"Accumulation account and balance sheets, fixed assets (10a3-grouping)"
 "NABB10"	"Employment (10a3-grouping)"
-"NABP19"	"1-2.1.1 Production
-and  generation of income (19a2-grouping)"
+"NABP19"	"1-2.1.1 Production and  generation of income (19a2-grouping)"
 "NABK19"	"Accumulation account and balance sheets, fixed assets (19a2-grouping)"
 "NABB19"	"Employment (19a2-grouping)"
-"NABP36"	"1-2.1.1 Production
-and  generation of income (36a2-grouping)"
+"NABP36"	"1-2.1.1 Production and  generation of income (36a2-grouping)"
 "NABK36"	"Accumulation account and balance sheets, fixed assets (36a2-grouping)"
 "NABB36"	"Employment (36a2-grouping)"
-"NABP69"	"1-2.1.1 Production
- and generation of income (69-grouping)"
+"NABP69"	"1-2.1.1 Production  and generation of income (69-grouping)"
 "NABK69"	"Accumulation account and balance sheets, fixed assets (69-grouping)"
 "NABB69"	"Employment (69-grouping)"
-"NABP117"	"1-2.1.1 Production
-and  generation of income (117-grouping)"
+"NABP117"	"1-2.1.1 Production and  generation of income (117-grouping)"
 "NABB117"	"Employment (117-grouping)"
-"NASL1"	"1-2.1.1 Production and  generation 
-of income (main table)"
-"NASO1"	"1-2.1.1 Production and  generation 
-of income (summary table)"
+"NASL1"	"1-2.1.1 Production and  generation  of income (main table)"
+"NASO1"	"1-2.1.1 Production and  generation  of income (summary table)"
 "NASD11"	"1 Production (full sequence)"
 "NASD12"	"2.1.1 Generation of income (full sequence)"
-"NASL2"	"2.1.2-3.1 Allocation and 
-use of income (main table)"
-"NASO2"	"2.1.2-3.1 Allocation and 
-use of income (summary table)"
+"NASL2"	"2.1.2-3.1 Allocation and  use of income (main table)"
+"NASO2"	"2.1.2-3.1 Allocation and  use of income (summary table)"
 "NASD21"	"2.1.2 Allocation of primary income (full sequence)"
 "NASD22"	"2.2 Secondary distribution of income (full sequence)"
 "NASD23"	"2.4.1 Use of disposable income (full sequence)"
 "NASD24"	"3.1 Capital (full sequence)"
-"NAS3"	"2.3 + 2.4.2 Adjusted disposable 
-income (supplementary table)"
+"NAS3"	"2.3 + 2.4.2 Adjusted disposable  income (supplementary table)"
 "NASK"	"Accumulation account and balance sheets, fixed assets"
 "NASF"	"Financial accounts and balance sheet"
 "NKN1"	"Demand and supply"
@@ -971,19 +961,15 @@ income (supplementary table)"
 "NKHC3"	"Final consumption of households on the economic territory"
 "NKHI"	"Gross capital formation"
 "NKHB"	"Employment and population"
-"NKBP10"	"1-2.1.1 Production
-and  generation of income (10a3-grouping)"
+"NKBP10"	"1-2.1.1 Production and  generation of income (10a3-grouping)"
 "NKBB10"	"Employment (10a3-grouping)"
-"NKSO1"	"1-2.1.1 Production and  generation 
-of income (summary table)"
-"NKSO2"	"2.1.2-3.1 Allocation and 
-use of income (summary table)"
+"NKSO1"	"1-2.1.1 Production and  generation  of income (summary table)"
+"NKSO2"	"2.1.2-3.1 Allocation and  use of income (summary table)"
 "NKS3"	"2.3 + 2.4.2 Adjusted disposable income (supplementary table)"
 "DNFIK"	"Quarterly financial accounts"
 "NRHP"	"1-2.1.1 Production, GDP and generation of income"
 "NRHB"	"Population"
-"NRBP10"	"1-2.1.1 Production 
-and generation of income (10a3-grouping)"
+"NRBP10"	"1-2.1.1 Production  and generation of income (10a3-grouping)"
 "NRBI10"	"Gross fixed capital formation (10a3-grouping)"
 "NRBB10"	"Employment (10a3-grouping)"
 "NRS"	"Households' income"
