@@ -10,6 +10,7 @@
 #' @name pxwebAPI
 #' @export
 #' @examples
+#' \dontrun{
 #' dims_list <- list(SNI2007 = c('*'),
 #'                   Transaktionspost = c('*'),
 #'                   ContentsCode = c('*'),
@@ -19,6 +20,7 @@
 #'
 #' ## convert to xts object, e.g. for use in \code{dygraphs} package
 #' data.xts <- pxwebDFtoXTS(data = data.df)
+#' }
 
 #' @rdname pxwebAPI
 #' @param data a data frame created with \code{get_pxweb_data}

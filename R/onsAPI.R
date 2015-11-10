@@ -14,8 +14,10 @@
 #' @keywords csv
 #' @export
 #' @examples
+#' \dontrun{
 #' onsAPI(method = "contexts", api.key = api.key)
 #' onsAPI(method = "collections", context = "Economic", api.key = api.key)
+#' }
 
 onsAPI <- function(
     method = "collections",

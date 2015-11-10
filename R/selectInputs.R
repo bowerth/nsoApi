@@ -12,6 +12,7 @@
 #' @seealso \code{https://github.com/rstudio/shiny}
 #' @export
 #' @examples
+#' \dontrun{
 #' listexample <- list(fruits = c("mango", "apple"),
 #'                     color = c("orange", "green"))
 #' 
@@ -24,7 +25,7 @@
 #' list.df <- apply(df, 2, unique)
 #' 
 #' selectInputs(list = list.df, prefix = "dim_")
-
+#' }
 
 selectInputs <- function(list = stop("'list' must be provided"),
                          prefix = "",

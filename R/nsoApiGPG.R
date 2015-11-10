@@ -13,6 +13,7 @@
 #' @keywords GPG
 #' @export
 #' @examples
+#' \dontrun{
 #' nsoApiGPG(keep = TRUE)
 #' file.apiKey <- system.file("apiKey.R", package = "nsoApi")
 #'
@@ -21,7 +22,7 @@
 #'   cat(paste0(readLines(con = filecon), '\n'))
 #'   close(filecon)
 #' }
-
+#' }
 
 nsoApiGPG <- function(file = system.file("apiKey.R.gpg", package = "nsoApi"),
                       gpg = file.path("D:", "GPG", "gpg2.exe"),

@@ -10,11 +10,13 @@
 #' @name ssbAPI
 #' @export
 #' @examples
+#' \dontrun{
 #' req.uri <- "http://data.ssb.no/api/v0/dataset/44631.json?lang=en"
 #' data.df <- rjstat::fromJSONstat(x = req.uri)
 #'
 #' ## convert to xts object, e.g. for use in \code{dygraphs} package
 #' data.xts <- pxwebDFtoXTS(data = data.df)
+#' }
 
 ssbAPI <- function(dataset,
                    curl=NULL) {

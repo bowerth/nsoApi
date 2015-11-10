@@ -16,6 +16,7 @@
 #' @seealso https://data.oecd.org/api/sdmx-json-documentation, http://cran.r-project.org/web/packages/jsonlite/index.html
 #' @export
 #' @examples
+#' \dontrun{
 #' ## list dimension members
 #' test.codelist <- sdmxRead(DSD = "BTDIXE_I4", scheme = "codelist")
 #' ## retrieve data
@@ -27,6 +28,7 @@
 #'                     VAL = c("VALUE"))
 #' url.append <- paste0("/all?", paste("json-lang=en", "detail=Full", "dimensionAtObservation=AllDimensions", "startPeriod=1990", "endPeriod=2000", sep = "&"))
 #' test.data <- sdmxRead(DSD = "BTDIXE_I4", filter = filter.list)
+#' }
 
 sdmxRead <- function(api="http://stats.oecd.org/SDMX-JSON",
                      scheme="data",

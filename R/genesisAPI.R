@@ -17,6 +17,7 @@
 #' @keywords API XML
 #' @export
 #' @examples
+#' \dontrun{
 #' api.param.datenexport <- list(
 #'     method = "DatenExport",
 #'     kennung = "KENNUNG",
@@ -64,6 +65,7 @@
 #' 
 #' meta.df <- genesisXMLtoDF(xml.list = xml.list.datenexport.meta,
 #'                           meta = TRUE)
+#' }
 
 genesisAPI <- function(
     api.param = stop("'api.param' must be specified"),

@@ -15,12 +15,14 @@
 #' @keywords JSON
 #' @export
 #' @examples
+#' \dontrun{
 #' curl <- RCurl::getCurlHandle()
 #' api.param <- list(USERID = "api.key",
 #'                   METHOD = "GETDATASETLIST",
 #'                   RESULTFORMAT = "JSON")
 #' List <- beaAPI(api.param = api.param, curl = curl)
 #' df <- beaJSONtoDF(List = List, third = 1)
+#' }
 
 
 beaAPI <- function(api.param = stop("'api.param' must be specified"),

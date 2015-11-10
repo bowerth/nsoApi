@@ -13,8 +13,10 @@
 #' @seealso \code{http://http://data.statistik.gv.at/web}
 #' @export
 #' @examples
+#' \dontrun{
 #' dataset <- "OGD_vgr001_VGRJahresR_1"
 #' statatAPI(dataset = dataset)
+#' }
 
 statatAPI <- function(dataset=stop("'DSD' must be provided"),
                       query=FALSE,

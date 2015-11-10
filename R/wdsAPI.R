@@ -10,10 +10,12 @@
 #' @name wdsAPI
 #' @export
 #' @examples
+#' \dontrun{
 #' data.df <- wdsAPI(dataset = "2810027")
 #'
 #' ## convert to xts object, e.g. for use in \code{dygraphs} package
 #' data.xts <- wdsDFtoXTS(data = data.df)
+#' }
 
 wdsAPI <- function(
     ## dataset=stop("'dataset' must be provided")

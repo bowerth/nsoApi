@@ -17,12 +17,14 @@
 #' @seealso \code{https://github.com/object/Simple.OData.Client}
 #' @export
 #' @examples
+#' \dontrun{
 #' api <- "http://opendata.cbs.nl/ODataApi/OData/"
 #' DSD <- "82572ENG" # Input-Output: "83068ENG"
 #'
 #' cbsODataAPI(api=api, DSD=DSD, scheme = NULL)
 #' str(cbsODataAPI(api=api, DSD=DSD, scheme="SectorBranchesSIC2008", query=FALSE))
 #' str(cbsODataAPI(api=api, DSD=DSD, scheme="TypedDataSet"))
+#' }
 
 cbsODataAPI <- function(api=stop("'api' must be provided"),
                       DSD=stop("'DSD' must be provided"),
