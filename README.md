@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/bowerth/nsoApi.svg?branch=master)](https://travis-ci.org/bowerth/nsoApi)
+<!-- [![Travis-CI Build Status](https://travis-ci.org/bowerth/nsoApi.svg?branch=master)](https://travis-ci.org/bowerth/nsoApi) -->
 
 # nsoApiBrowser
 
