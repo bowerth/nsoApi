@@ -1,0 +1,23 @@
+provider,label,cou,api,date,access
+ISTAT,Statistics Italy,ITA,SDMX,2015-07-22,IP
+ABS,Australian Bureau of Statistics,AUS,SDMX,2015-07-22,free
+INEGI,Instituto Nacional de Estadistica y Geografia,MEX,SDMX,2015-07-22,free
+OECD,Organisation for Economic Co-operation and Development,IO,SDMX,2015-07-22,free
+WB,World Bank,IO,SDMX,2015-07-22,free
+ILO,International Labour Organisation,IO,SDMX,2015-07-22,free
+ECB,European Central Bank,IO,SDMX,2015-07-22,free
+UIS,UNESCO,IO,SDMX,2015-07-22,free
+EUROSTAT,Eurostat,IO,SDMX,2015-07-22,free
+IMF,International Monetary Fund,IO,SDMX,2015-07-22,free
+CBS,Statistics Netherlands,NLD,Statline-OData,2015-07-24,free
+WDS,Statistics Canada,CAN,SOAP,2015-07-09,IP
+GENESIS,Destatis,DEU,REST,2015-07-24,paid
+ONS,Office for National Statistics,GBR,REST,2015-07-27,register
+BEA,Bureau of Economic Analysis,USA,REST,2015-07-29,register
+SCB,Statistics Sweden,SWE,REST,2015-08-03,free
+PXNET2,Statistics Finland,FIN,REST,2015-08-03,free
+STATBANK,Statistics Denmark,DNK,REST,2015-08-03,free
+SSB,Statistics Norway,NOR,REST,2016-08-16,free
+STATAT,Statistics Austria,AUT,CSV,2015-08-18,free
+INSEE,Institut national de la statistique et des etudes economiques,FRA,SDMX,2015-08-27,free
+NBB,Belgostat,BEL,SDMX,2015-11-10,free

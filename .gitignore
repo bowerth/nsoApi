@@ -1,5 +1,13 @@
+# folders
+data-raw/
+
+# file extensions
 *.*~
-data-raw/*
 *.org
-apiKey.R
 *.*#
+
+# files
+R/*.Rhistory
+apiKey.R
+tests/testthat/test_beaAPI.R
+inst/doc

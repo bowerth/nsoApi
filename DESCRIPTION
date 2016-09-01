@@ -19,3 +19,7 @@ Author: Bo Werth <bo.werth@gmail.com>
 Maintainer: Bo Werth <bo.werth@gmail.com>
 Description: connect to data webservices of national statistics offices
 License: EUPL 1.1
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

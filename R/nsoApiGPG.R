@@ -4,8 +4,11 @@
 #'
 #' Source apiKey list PGP encrypted R script with keys for various webservices of National Statics Offices.
 #'
-#' @param file
-#' @param password
+#' @param file path to gpg key file
+#' @param gpg path to GnuPG executable
+#' @param passphrase character password used for decryption. suggested to store as environment variable and use with \code{Sys.getenv()}
+#' @param shell if on Windows, you may need to specify the path to cmd.exe
+#' @param keep boolean set to TRUE if you want to keep the decoded file
 #'
 #' @return Creates decrypted file in the package installation folder. The key file is gpg encryped. In Windows, use GPG Plugin Portable: http://portableapps.com/apps/security/gpg-plugin-portable
 #'
