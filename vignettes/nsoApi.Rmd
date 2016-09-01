@@ -1,0 +1,281 @@
+---
+title: "nsoApi"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+# Providers
+
+Some of the APIs require authentication:
+
+```{r provider-overview, eval=TRUE, echo=FALSE, results="asis"}
+## getwd()
+read.csv(file = file.path("..", "inst", "extdata", "api_overview_table_short.csv")) %>%
+  mutate(isIO = ifelse(cou == "IO", TRUE, FALSE)) %>%
+  arrange(desc(isIO), provider) %>%
+  select(cou, provider, label, access) %>%
+  filter(provider %in% c("BEA", "CBS", "GENESIS", "ONS", "STATAT", "SSB", "WDS")) %>%
+  knitr::kable()
+```
+
+# Setup
+
+Create an R script containing a list with your keys or just modify the the example script and save it with gpg encryption at `inst/apiKey.R.gpg`.
+
+```{r view-gpg-key, eval=FALSE, echo=TRUE}
+apiKey <- list(
+  BEA = list(
+    userid = "29UG8ZKT-JN9R5N2Q")
+  ,
+  GENESIS = list(
+    kennung = "8XXHKY78",
+    passwort = "3QYYTQ89")
+  ,
+  ONS = list(
+    apikey = "k647uahw")
+)
+```
+
+To prevent compromising the API keys, it is suggested to encrypt the file. If you are on Windows, you will need to install GnuPG first. The nsoApiGPG function allows to specify a directory to an executable using the `gpg` parameter.
+
+```{r read-gpg-key, eval=TRUE, messages=FALSE, echo=TRUE}
+file.apiKey.enc <- system.file("apiKey.R.gpg", package = "nsoApi")
+nsoApi::nsoApiGPG(file = file.apiKey.enc,
+                  gpg = NULL,
+                  passphrase = Sys.getenv("NSOAPIGPG"),
+                  keep = FALSE
+                  )
+```
+
+## BEA Bureau of Economic Analysis
+
+```{r beaapi-getparametervalues, eval=TRUE, echo=TRUE}
+api.param <- list(
+  DATASETNAME = "GDPbyIndustry",
+  METHOD = "GETPARAMETERVALUES",
+  RESULTFORMAT = "JSON",
+  USERID = apiKey$BEA$userid,
+  PARAMETERNAME = "TABLEID"
+)
+tablelist <- beaAPI(api.param = api.param, curl = curl)
+tablelist$BEAAPI$Request$RequestParam
+```
+
+Show first `r n_table` tables
+
+```{r beaapi-paramvalue, eval=TRUE, echo=FALSE, results="asis"}
+knitr::kable(tablelist$BEAAPI$Results$ParamValue[1:n_table, ])
+```
+
+```{r beaapi-getdata, echo=TRUE, eval=TRUE, results="asis"}
+api.param <- list(
+  DATASETNAME = "GDPBYINDUSTRY",
+  FREQUENCY = "A",
+  INDUSTRY = "11",
+  METHOD = "GETDATA",
+  RESULTFORMAT = "JSON",
+  USERID = apiKey$BEA$userid,
+  TABLEID = "1",
+  YEAR = paste(as.character(c(2008:2015)), collapse = ",")
+)
+datalist <- beaAPI(api.param = api.param, curl = curl)
+knitr::kable(datalist$BEAAPI$Results$Data)
+```
+
+```{r beaapi-data, eval=TRUE, results="asis"}
+knitr::kable(datalist$BEAAPI$Results$Data)
+```
+
+## CBS Statistics Netherlands
+
+First, we define the API URI and the dataset ID
+
+```{r cbs-init, eval=TRUE, echo=TRUE}
+api <- "http://opendata.cbs.nl/ODataApi/OData/"
+DSD <- "82572ENG" # Input-Output: "83068ENG"
+```
+
+### CBS Metadata
+
+Next, we return the members of a dimension
+
+```{r cbs-dimension, eval=TRUE, echo=TRUE, results="asis"}
+scheme <- "SectorBranchesSIC2008"
+## print query
+cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
+cbs_dimension <- cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=FALSE)
+knitr::kable(cbs_dimension[1:n_table, 1:2])
+```
+
+### CBS Data
+
+Finally, we return a dataset
+
+```{r cbs-data, eval=TRUE, echo=TRUE, results="asis"}
+scheme <- "TypedDataSet"
+# print query
+cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
+cbs_data <- cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=FALSE)
+knitr::kable(cbs_data[1:n_table, 1:6])
+```
+
+### CBS Tables
+
+List existing tables in CBS API. This takes 1-2 minutes to complete
+
+```{r cbs-tables, eval=TRUE, echo=TRUE, results="asis"}
+cbs_tables <- nsoApi::cbsODataTables()
+knitr::kable(cbs_tables[1:n_table, ])
+```
+
+## Destatis GENESIS
+
+### Genesis Metadata
+
+```{r genesis-metadata, eval=TRUE, echo=TRUE, results="asis"}
+api.param.datenexport <- list(
+    method = "DatenExport",
+    kennung = apiKey$GENESIS$kennung,
+    passwort = apiKey$GENESIS$passwort,
+    namen = "81000BJ002",
+    bereich = "oeffentlich",
+    format = "csv",
+    werte = "false",
+    metadaten = "false",
+    zusatz = "true",
+    startjahr = "2013",
+    endjahr = "2014",
+    zeitscheiben = "",
+    regionalschluessel = "",
+    sachmerkmal = "",
+    sachschluessel = "",
+    stand = "01.01.2001",
+    sprache = "de"
+)
+## retrieve metadata
+xml_list_datenexport_meta <- genesisAPI(api.param = api.param.datenexport,
+                                   service = "ExportService",
+                                   curl = curl)
+meta_df <- genesisXMLtoDF(xml.list = xml_list_datenexport_meta,
+                          meta = TRUE)
+knitr::kable(meta_df)
+```
+
+
+### Genesis Data
+
+```{r genesis-data, eval=TRUE, echo=TRUE, results="asis"}
+api.param.datenexport <- list(
+    method = "DatenExport",
+    kennung = apiKey$GENESIS$kennung,
+    passwort = apiKey$GENESIS$passwort,
+    namen = "81000BJ002",
+    bereich = "oeffentlich",
+    format = "csv",
+    werte = "true",
+    metadaten = "false",
+    zusatz = "false",
+    startjahr = "2013",
+    endjahr = "2014",
+    zeitscheiben = "",
+    regionalschluessel = "",
+    sachmerkmal = "",
+    sachschluessel = "",
+    stand = "01.01.2001",
+    sprache = "de"
+)
+## retrieve data
+xml_list_datenexport <- genesisAPI(api.param = api.param.datenexport,
+                                   service = "ExportService",
+                                   curl = curl)
+## convert to data frame
+data_df <- genesisXMLtoDF(xml.list = xml_list_datenexport)
+knitr::kable(data_df[1:n_table,])
+```
+
+### Genesis Tables
+
+```{r genesis-tables, eval=TRUE, echo=TRUE, results="asis"}
+genesis_tables <- nsoApi::genesisTables(
+                namefilter = 11, # for testing - takes a few minutes to complete
+                ## namefilter = c(11:14, 2, 3, 41:49, 5:9),
+                fields = c("code", "beschriftungstext"),
+                kennung = apiKey$GENESIS$kennung,
+                passwort = apiKey$GENESIS$passwort
+                )
+genesis_tables$beschriftungstext <- gsub("\n", " ", genesis_tables$beschriftungstext)
+knitr::kable(genesis_tables)
+```
+
+## ONS UK Office for National Statistics
+
+### ONS Data
+
+```{r ons-data, eval=TRUE, echo=TRUE, results="asis"}
+api.param <- list(context = "Census",
+                  geog = "2011WARDH",
+                  totals = "false",
+                  apikey = "xPuqnMzZ01")
+ons_data <- onsCsvData(api.param = api.param, dataset = "QS208EW")
+knitr::kable(ons_data[1:n_table, 1:7])
+```
+
+## ONS Tables ##
+
+```{r ons-tables, eval=TRUE, echo=TRUE, results="asis"}
+ons_tables <- onsAPI(method = "contexts", api.key = apiKey$ONS$apikey)
+knitr::kable(ons_tables)
+
+ons_collections <- onsAPI(method = "collections", context = "Economic", api.key = apiKey$ONS$apikey)
+titles <- sapply(ons_collections$name[, 1], function(x) x[1, 2])
+titles <- iconv(titles, "latin1", "ASCII", sub="")
+ons_collections_df <- data.frame(ID = ons_collections$id, Title = titles)
+knitr::kable(ons_collections_df[1:n_table, ])
+```
+
+## STATAT Statistics Austria
+
+### STATAT Data
+
+```{r statat-data, eval=TRUE, echo=TRUE, results="asis"}
+dataset <- "OGD_vgr001_VGRJahresR_1"
+statat_data <- statatAPI(dataset = dataset)
+knitr::kable(statat_data[1:n_table, ])
+```
+
+```{r statat-tables, eval=TRUE, echo=TRUE, results="asis"}
+baseURL <- "http://data.statistik.gv.at/web/catalog.jsp"
+dataset_title <-
+  baseURL %>%
+  RCurl::getURL() %>%
+  XML::htmlParse(baseURL) %>%
+  XML::readHTMLTable() %>%
+  lapply(function(x) x[["Title"]]) %>%
+  unlist %>%
+  stringr::str_replace(pattern = "\\n.+", replacement = "")
+## latin1 encoded - containing umlaute!!
+dataset_id <-
+  baseURL %>%
+  RCurl::getURL() %>%
+  stringr::str_match_all("meta.jsp[?]dataset=.+[\"\"]") %>% # only dataset ID
+  unlist() %>%
+  stringr::str_replace(pattern = "meta.jsp[?]dataset=", replacement = "") %>%
+  stringr::str_replace(pattern = "\"", replacement = "")
+df <- data.frame(ID = dataset_id, Title = dataset_title)
+knitr::kable(df[1:n_table, ])
+```
+

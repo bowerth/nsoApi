@@ -1,0 +1,14 @@
+var	tipo_aggr	tipo_aggr_label	tipprez	tipprez_label	val	val_label
+CFCC	P51C_D_W2_S1	consumption of fixed capital	B	basic prices	V	current prices
+GFCF	P51G_D_W0_S1	gross fixed capital formation	B	basic prices	V	current prices
+LABR	D1_D_W2_S1	domestic compensation of employees	B	basic prices	V	current prices
+PROD	P1_C_W2_S1	output at basic prices	B	basic prices	V	current prices
+PROD	P1_C_W2_S1	output at basic prices	B	basic prices	L_2010	chain linked - reference year 2010
+SUBS	D39_C_W2_S1	other  subsidies on production	B	basic prices	V	current prices
+TAX	D29_D_W2_S1	other taxes on production	B	basic prices	V	current prices
+VALU	B1G_B_W2_S1	gross value added	B	basic prices	V	current prices
+VALU	B1G_B_W2_S1	gross value added	B	basic prices	L_2010	chain linked - reference year 2010
+WAGE	D11_D_W2_S1	domestic wages and salaries	B	basic prices	V	current prices
+EMPN	PS	employment in persons (thousands)	NA	NA	NA	NA
+FTEN	FT	full time equivalent (thousands)	NA	NA	NA	NA
+HRSN	HW	hours worked (thousands)	NA	NA	NA	NA

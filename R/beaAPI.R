@@ -87,8 +87,13 @@ beaDFtoXTS <- function(
     distinct.var <- names(data)
     ## if ("TimePeriod"%in%names(data)) setnames(data, "TimePeriod", "Date") # NIPA
     if ("TimePeriod"%in%names(data)) names(data) <- sub("TimePeriod", "Date", names(data)) # NIPA, FixedAssets
-    if ("Year"%in%names(data)) names(data) <- sub("Year", "Date", names(data)) # GDPbyIndustry
-    distinct.var <- distinct.var[!distinct.var%in%c("Date", "IndustrYDescription", "DataValue", "NoteRef")]
+  if ("Year"%in%names(data)) {
+    ## names(data) <- sub("Year", "Date", names(data)) # GDPbyIndustry
+    ## ## now containing "Year" and "Quarter"
+    data[["Date"]] <- ifelse(data[["Frequency"]]=="Q", paste0(data[["Year"]], "Q", as.numeric(as.roman(data[["Quarter"]]))),
+                             data[["Year"]])    
+  }
+    distinct.var <- distinct.var[!distinct.var%in%c("Date", "Year", "Quarter", "IndustrYDescription", "DataValue", "NoteRef")]
     ## data.plots <- data
     distinct.col <- data[, colnames(data)%in%distinct.var]
     distinct.col2 <- data.frame(apply(distinct.col, 2, function(x) as.character(x)), stringsAsFactors = FALSE)
