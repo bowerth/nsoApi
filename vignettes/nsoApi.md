@@ -78,11 +78,11 @@ tablelist$BEAAPI$Request$RequestParam
 
 ```
 ##   ParameterName                       ParameterValue
-## 1  RESULTFORMAT                                 JSON
-## 2        METHOD                   GETPARAMETERVALUES
+## 1        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439
+## 2 PARAMETERNAME                              TABLEID
 ## 3   DATASETNAME                        GDPBYINDUSTRY
-## 4 PARAMETERNAME                              TABLEID
-## 5        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439
+## 4  RESULTFORMAT                                 JSON
+## 5        METHOD                   GETPARAMETERVALUES
 ```
 
 Show first 5 tables
@@ -109,24 +109,6 @@ api.param <- list(
   YEAR = paste(as.character(c(2008:2015)), collapse = ",")
 )
 datalist <- beaAPI(api.param = api.param, curl = curl)
-knitr::kable(datalist$BEAAPI$Results$Data)
-```
-
-
-
-|TableID |Frequency |Year |Quarter |Industry |IndustrYDescription                         |DataValue |NoteRef |
-|:-------|:---------|:----|:-------|:--------|:-------------------------------------------|:---------|:-------|
-|1       |A         |2008 |2008    |11       |Agriculture, forestry, fishing, and hunting |154.5     |1       |
-|1       |A         |2009 |2009    |11       |Agriculture, forestry, fishing, and hunting |137.7     |1       |
-|1       |A         |2010 |2010    |11       |Agriculture, forestry, fishing, and hunting |160.2     |1       |
-|1       |A         |2011 |2011    |11       |Agriculture, forestry, fishing, and hunting |197.2     |1       |
-|1       |A         |2012 |2012    |11       |Agriculture, forestry, fishing, and hunting |185.8     |1       |
-|1       |A         |2013 |2013    |11       |Agriculture, forestry, fishing, and hunting |225.4     |1       |
-|1       |A         |2014 |2014    |11       |Agriculture, forestry, fishing, and hunting |215.4     |1       |
-|1       |A         |2015 |2015    |11       |Agriculture, forestry, fishing, and hunting |196.0     |1       |
-
-
-```r
 knitr::kable(datalist$BEAAPI$Results$Data)
 ```
 

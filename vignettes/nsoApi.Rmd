@@ -96,10 +96,6 @@ datalist <- beaAPI(api.param = api.param, curl = curl)
 knitr::kable(datalist$BEAAPI$Results$Data)
 ```
 
-```{r beaapi-data, eval=TRUE, results="asis"}
-knitr::kable(datalist$BEAAPI$Results$Data)
-```
-
 ## CBS Statistics Netherlands
 
 First, we define the API URI and the dataset ID
