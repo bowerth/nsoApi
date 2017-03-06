@@ -22,7 +22,7 @@ n_table <- 5
 
 Some of the APIs require authentication:
 
-```{r provider-overview, eval=TRUE, echo=FALSE, results="asis"}
+```{r provider-overview, eval=TRUE, echo=FALSE, results='as.is'}
 ## getwd()
 read.csv(file = file.path("..", "inst", "extdata", "api_overview_table_short.csv")) %>%
   mutate(isIO = ifelse(cou == "IO", TRUE, FALSE)) %>%
@@ -71,17 +71,19 @@ api.param <- list(
   USERID = apiKey$BEA$userid,
   PARAMETERNAME = "TABLEID"
 )
+## req.uri <- beaAPI(api.param = api.param, curl = curl, query = TRUE)
+## tt <- RCurl::getURL(req.uri, curl = curl)
 tablelist <- beaAPI(api.param = api.param, curl = curl)
 tablelist$BEAAPI$Request$RequestParam
 ```
 
 Show first `r n_table` tables
 
-```{r beaapi-paramvalue, eval=TRUE, echo=FALSE, results="asis"}
+```{r beaapi-paramvalue, eval=TRUE, echo=FALSE, results='as.is'}
 knitr::kable(tablelist$BEAAPI$Results$ParamValue[1:n_table, ])
 ```
 
-```{r beaapi-getdata, echo=TRUE, eval=TRUE, results="asis"}
+```{r beaapi-getdata, echo=TRUE, eval=TRUE, results='as.is'}
 api.param <- list(
   DATASETNAME = "GDPBYINDUSTRY",
   FREQUENCY = "A",
@@ -109,7 +111,7 @@ DSD <- "82572ENG" # Input-Output: "83068ENG"
 
 Next, we return the members of a dimension
 
-```{r cbs-dimension, eval=TRUE, echo=TRUE, results="asis"}
+```{r cbs-dimension, eval=TRUE, echo=TRUE, results='as.is'}
 scheme <- "SectorBranchesSIC2008"
 ## print query
 cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
@@ -121,7 +123,7 @@ knitr::kable(cbs_dimension[1:n_table, 1:2])
 
 Finally, we return a dataset
 
-```{r cbs-data, eval=TRUE, echo=TRUE, results="asis"}
+```{r cbs-data, eval=TRUE, echo=TRUE, results='as.is'}
 scheme <- "TypedDataSet"
 # print query
 cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
@@ -133,7 +135,7 @@ knitr::kable(cbs_data[1:n_table, 1:6])
 
 List existing tables in CBS API. This takes 1-2 minutes to complete
 
-```{r cbs-tables, eval=TRUE, echo=TRUE, results="asis"}
+```{r cbs-tables, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 cbs_tables <- nsoApi::cbsODataTables()
 knitr::kable(cbs_tables[1:n_table, ])
 ```
@@ -142,7 +144,7 @@ knitr::kable(cbs_tables[1:n_table, ])
 
 ### Genesis Metadata
 
-```{r genesis-metadata, eval=TRUE, echo=TRUE, results="asis"}
+```{r genesis-metadata, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 api.param.datenexport <- list(
     method = "DatenExport",
     kennung = apiKey$GENESIS$kennung,
@@ -174,7 +176,7 @@ knitr::kable(meta_df)
 
 ### Genesis Data
 
-```{r genesis-data, eval=TRUE, echo=TRUE, results="asis"}
+```{r genesis-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 api.param.datenexport <- list(
     method = "DatenExport",
     kennung = apiKey$GENESIS$kennung,
@@ -205,7 +207,7 @@ knitr::kable(data_df[1:n_table,])
 
 ### Genesis Tables
 
-```{r genesis-tables, eval=TRUE, echo=TRUE, results="asis"}
+```{r genesis-tables, eval=TRUE, echo=TRUE, results='as.is'}
 genesis_tables <- nsoApi::genesisTables(
                 namefilter = 11, # for testing - takes a few minutes to complete
                 ## namefilter = c(11:14, 2, 3, 41:49, 5:9),
@@ -221,7 +223,7 @@ knitr::kable(genesis_tables)
 
 ### ONS Data
 
-```{r ons-data, eval=TRUE, echo=TRUE, results="asis"}
+```{r ons-data, eval=TRUE, echo=TRUE, results='as.is'}
 api.param <- list(context = "Census",
                   geog = "2011WARDH",
                   totals = "false",
@@ -230,9 +232,9 @@ ons_data <- onsCsvData(api.param = api.param, dataset = "QS208EW")
 knitr::kable(ons_data[1:n_table, 1:7])
 ```
 
-## ONS Tables ##
+## ONS Tables
 
-```{r ons-tables, eval=TRUE, echo=TRUE, results="asis"}
+```{r ons-tables, eval=TRUE, echo=TRUE, results='as.is'}
 ons_tables <- onsAPI(method = "contexts", api.key = apiKey$ONS$apikey)
 knitr::kable(ons_tables)
 
@@ -247,13 +249,13 @@ knitr::kable(ons_collections_df[1:n_table, ])
 
 ### STATAT Data
 
-```{r statat-data, eval=TRUE, echo=TRUE, results="asis"}
+```{r statat-data, eval=TRUE, echo=TRUE, results='as.is'}
 dataset <- "OGD_vgr001_VGRJahresR_1"
 statat_data <- statatAPI(dataset = dataset)
 knitr::kable(statat_data[1:n_table, ])
 ```
 
-```{r statat-tables, eval=TRUE, echo=TRUE, results="asis"}
+```{r statat-tables, eval=TRUE, echo=TRUE, results='as.is'}
 baseURL <- "http://data.statistik.gv.at/web/catalog.jsp"
 dataset_title <-
   baseURL %>%
@@ -275,3 +277,96 @@ df <- data.frame(ID = dataset_id, Title = dataset_title)
 knitr::kable(df[1:n_table, ])
 ```
 
+## Tilastokeskus Statistics Finland
+
+### Statistics Finland Tables
+
+Obtaining a list of tables for Finland is tedious due to the hierarchical structure of the API. At each of the four levels, we must call `pxweb::get_pxweb_levels` and interatively concstruct the tree of datasets. This tree is used as input when retrieving the datasets. We must know the path to a dataset a priori.
+
+```{r finstat-tables, results='as.is'}
+pxnet2_tables <- read.table(system.file("extdata", "content", "pxnet2_tables.tsv", package = "nsoApi"), header = TRUE)
+knitr::kable(pxnet2_tables[1:10,])
+```
+
+### Statistics Finland Data
+
+```{r finstat-data, eval=TRUE, message=FALSE, echo=TRUE, results='as.is'}
+flow <- "070_vtp_tau_071.px"
+baseURL <- "http://pxnet2.stat.fi/PXWEB/api/v1/en/StatFin"
+path <- as.character(pxnet2_tables$Path[pxnet2_tables$ID==flow])
+req.uri <- file.path(baseURL, path, flow)
+bottom_node <- pxweb::get_pxweb_metadata(req.uri)
+dims <- pxweb::get_pxweb_dims(bottom_node)
+## dims_list <- as.list(rep("*", length(names(dims))))
+## names(dims_list) <- names(dims)
+dims_list <- lapply(dims, function(x) sample(x$values, 3))
+pxweb_data <-                           # retrieve data
+  pxweb::get_pxweb_data(
+           url = req.uri,
+           dims = dims_list,
+           clean = TRUE)
+knitr::kable(pxweb_data[1:10,])
+```
+
+## SCB Statistics Sweden
+
+### Statistics Sweden Tables
+
+Same as Statistics Finland, SCB is using the pxweb standard for their API.
+
+```{r scb-tables, results='as.is'}
+scb_tables <- read.table(system.file("extdata", "content", "scb_tables.tsv", package = "nsoApi"), header = TRUE)
+knitr::kable(scb_tables[1:10,])
+```
+
+### Statistics Sweden Data
+
+```{r scb-data, message=FALSE, results='as.is'}
+baseURL <- "http://api.scb.se/OV0104/v1/doris/en/ssd"
+flow <- "NR0103ENS2010T08A"
+path <- as.character(scb_tables$Path[scb_tables$ID==flow])
+req.uri <- file.path(baseURL, path, flow)
+bottom_node <- pxweb::get_pxweb_metadata(req.uri)
+dims <- pxweb::get_pxweb_dims(bottom_node)
+## dims_list <- as.list(rep("*", length(names(dims))))
+## names(dims_list) <- names(dims)
+dims_list <- lapply(dims, function(x) sample(x$values, min(length(x$values), 3)))
+pxweb_data <-                           # retrieve data
+  pxweb::get_pxweb_data(
+           url = req.uri,
+           dims = dims_list,
+           clean = TRUE)
+knitr::kable(pxweb_data[1:10,])
+```
+
+## SBB StatBank Statistics Norway
+
+### Statistics Norway Tables
+
+In the latest version, the SSB API is compatible with the pxweb standard.
+
+```{r ssb-tables, results='as.is'}
+ssb_tables <- read.table(system.file("extdata", "content", "ssb_tables.tsv", package = "nsoApi"), header = TRUE)
+knitr::kable(ssb_tables[1:10,])
+```
+
+### Statistics Norway Data
+
+```{r ssb-data, message=FALSE, results='as.is'}
+baseURL <- "http://data.ssb.no/api/v0"
+## baseURL <- "http://data.ssb.no/api/v0/en/table"
+flow <- "OrgsatEksUlonn"
+req.uri <- as.character(ssb_tables$Statistic[ssb_tables$ID==flow])[1]
+## req.uri <- file.path(baseURL, path, flow)
+bottom_node <- pxweb::get_pxweb_metadata(req.uri)
+dims <- pxweb::get_pxweb_dims(bottom_node)
+## dims_list <- as.list(rep("*", length(names(dims))))
+## names(dims_list) <- names(dims)
+dims_list <- lapply(dims, function(x) sample(x$values, min(3, length(x$values))))
+pxweb_data <-                           # retrieve data
+  pxweb::get_pxweb_data(
+           url = req.uri,
+           dims = dims_list,
+           clean = TRUE)
+knitr::kable(pxweb_data[1:10,])
+```

@@ -4,10 +4,10 @@
 #'
 #' These functions allow connecting to BEA time series in JSON format with a valid user ID obtained from http://www.bea.gov/API/signup/index.cfm
 #'
-#' @param api.param
+#' @param api.param a list of parameters specific to the API
 #' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}
-#' @param query
-#' @param raw
+#' @param query the API query
+#' @param raw return unparsed API response
 #'
 #' @return The function creates an URL with with the specified
 #' parameters, retrieves the JSON string and transforms to R list
@@ -30,7 +30,7 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
                    query = FALSE,
                    raw = FALSE) {
     ##
-    api.url <- "http://www.bea.gov/api/data/?"
+    api.url <- "https://www.bea.gov/api/data/?"
     ##
     req.uri <- api.url
     for (i in seq(along = api.param)) {
@@ -42,7 +42,14 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
     if (query) return(req.uri)
     ##
     if (is.null(curl)) curl <- RCurl::getCurlHandle()
-    tt <- RCurl::getURL(req.uri, curl = curl)
+
+  ## tt <- RCurl::getURL(req.uri, curl = curl)
+
+  httr_get <- httr::GET(url = req.uri,
+                        config = c(add_headers(Connection = "keep-alive"),
+                                   accept_json()))
+  tt <- httr::content(res, "text")
+
     if (raw) return(tt)
     ## if (tolower(api.param[["METHOD"]])=="getdata") {
     ##     if (tolower(api.param[["DATASETNAME"]])=="gdpbyindustry") {
@@ -80,7 +87,7 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
 
 
 #' @rdname beaAPI
-#' @param data a data frame created with \link{\code{beaJSONtoDF}}
+#' @param data a data frame created with \code{beaJSONtoDF}
 #' @export
 beaDFtoXTS <- function(
     data = stop("'data' must be provided")
@@ -123,7 +130,7 @@ beaDFtoXTS <- function(
 
 
 #' @rdname beaAPI
-#' @param str a character string with BEA dates, e.g. \code{"2000"}, \code{"2000Q1"}, \code{"2000M01" }
+#' @param str a character string with BEA dates, e.g. \code{"2000"}, \code{"2000Q1"}, \code{"2000M01"}
 beaChangeDates <- function(str) {
 
   ## str <- "2000Q2"
