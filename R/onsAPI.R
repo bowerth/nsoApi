@@ -4,9 +4,9 @@
 #'
 #' Retrieve information from ONS API in CSV format.
 #'
-#' @param method
-#' @param context
-#' @param api.key
+#' @param method the API specific method, e.g. "collections"
+#' @param context the API specific context, e.g. "Economic"
+#' @param api.key the API key
 #' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}.
 #'
 #' @return The main function creates an URL with with the specified parameters, retrieves the zip file, extracts a csv file that is read into R and returned as data frame. Additional functions convert the returned data frame to an xts object.
