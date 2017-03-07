@@ -46,9 +46,9 @@ beaAPI <- function(api.param = stop("'api.param' must be specified"),
   ## tt <- RCurl::getURL(req.uri, curl = curl)
 
   httr_get <- httr::GET(url = req.uri,
-                        config = c(add_headers(Connection = "keep-alive"),
-                                   accept_json()))
-  tt <- httr::content(res, "text")
+                        config = c(httr::add_headers(Connection = "keep-alive"),
+                                   httr::accept_json()))
+  tt <- httr::content(httr_get, "text")
 
     if (raw) return(tt)
     ## if (tolower(api.param[["METHOD"]])=="getdata") {
@@ -100,7 +100,7 @@ beaDFtoXTS <- function(
     ## names(data) <- sub("Year", "Date", names(data)) # GDPbyIndustry
     ## ## now containing "Year" and "Quarter"
     data[["Date"]] <- ifelse(data[["Frequency"]]=="Q", paste0(data[["Year"]], "Q", as.numeric(as.roman(data[["Quarter"]]))),
-                             data[["Year"]])    
+                             data[["Year"]])
   }
     distinct.var <- distinct.var[!distinct.var%in%c("Date", "Year", "Quarter", "IndustrYDescription", "DataValue", "NoteRef")]
     ## data.plots <- data

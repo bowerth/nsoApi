@@ -2,18 +2,25 @@
 #'
 #' Query data from OECD.Stat using SDMX
 #'
-#' Helper function to efficiently query data from OECD.Stat Extracts using SDMX-JSON API.
+#' Helper function to efficiently query data from OECD.Stat Extracts using
+#' SDMX-JSON API.
 #'
 #' @param api an API address
 #' @param scheme an API scheme. Available schemes \code{data}, \code{codelist}.
-#' @param DSD a datastructure definition identified by the triplet \code{[collection; country; indicator]}.
-#' @param filter for scheme "data": a named list of filters passed to the API. The position of list items corresponds to the API filter dimensions. Each list item is either empty (no filter on dimension) or a character vector containing dimension members to be included in the results. Dimension members can be obtained from \code{scheme="codelist"} and a codelist item, e.g. "CL_ECO_ISIC4".
+#' @param DSD a datastructure definition identified by the triplet
+#'   \code{[collection; country; indicator]}.
+#' @param filter for scheme "data": a named list of filters passed to the API.
+#'   The position of list items corresponds to the API filter dimensions. Each
+#'   list item is either empty (no filter on dimension) or a character vector
+#'   containing dimension members to be included in the results. Dimension
+#'   members can be obtained from \code{scheme="codelist"} and a codelist item,
+#'   e.g. "CL_ECO_ISIC4".
 #' @param query logical to return SDMX http url only.
 #' @param append append string to the dimension url.
 #'
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords OECD.Stat, SDMX
-#' @seealso https://data.oecd.org/api/sdmx-json-documentation, http://cran.r-project.org/web/packages/jsonlite/index.html
+#' @seealso https://data.oecd.org/api/sdmx-json-documentation
 #' @export
 #' @examples
 #' \dontrun{
@@ -26,7 +33,11 @@
 #'                     EUC = c("TOTAL", "INT"),
 #'                     IND = c("DTOTAL", "D01T03"),
 #'                     VAL = c("VALUE"))
-#' url.append <- paste0("/all?", paste("json-lang=en", "detail=Full", "dimensionAtObservation=AllDimensions", "startPeriod=1990", "endPeriod=2000", sep = "&"))
+#' url.append <- paste0("/all?",
+#'                      paste("json-lang=en", "detail=Full",
+#'                            "dimensionAtObservation=AllDimensions",
+#'                            "startPeriod=1990", "endPeriod=2000",
+#'                            sep = "&"))
 #' test.data <- sdmxRead(DSD = "BTDIXE_I4", filter = filter.list)
 #' }
 
