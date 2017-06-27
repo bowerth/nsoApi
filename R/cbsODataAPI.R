@@ -18,7 +18,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' api <- "http://opendata.cbs.nl/ODataApi/OData/"
+#' api <- "https://opendata.cbs.nl/ODataApi/OData/"
 #' DSD <- "82572ENG" # Input-Output: "83068ENG"
 #'
 #' cbsODataAPI(api=api, DSD=DSD, scheme = NULL)
@@ -48,7 +48,7 @@ cbsODataAPI <- function(api=stop("'api' must be provided"),
   theurl <- file.path(api, DSD)
   if (!is.null(scheme)) theurl <- file.path(theurl, scheme)
   theurl <- gsub("//", "/", theurl)
-  theurl <- sub("http:/", "http://", theurl)
+  theurl <- sub("https:/", "https://", theurl)
 
   ## filter <- list(Sex = c(3000, 1100))
   if (length(filter) > 0) {
@@ -65,7 +65,7 @@ cbsODataAPI <- function(api=stop("'api' must be provided"),
 
   if (is.null(curl)) curl <- RCurl::getCurlHandle()
 
-  ## theurl <- "http://opendata.cbs.nl/ODataApi/OData/82579ENG/UntypedDataSet?$filter=substring(Gender,0,4)%20eq%20%271100%27"
+  ## theurl <- "https://opendata.cbs.nl/ODataApi/OData/82579ENG/UntypedDataSet?$filter=substring(Gender,0,4)%20eq%20%271100%27"
   tt <- RCurl::getURL(theurl, .mapUnicode = FALSE, curl = curl)
 
   data.list2 <- jsonlite::fromJSON(txt = tt)
@@ -155,7 +155,7 @@ cbsOdataDFtoXTS <- function(
 #' @param fields character vector to extract content properties of entries.
 #' @export
 cbsODataTables <- function(
-    url = "http://opendata.cbs.nl/ODataCatalog/Tables",
+    url = "https://opendata.cbs.nl/ODataCatalog/Tables",
     fields = c("Identifier", "Title", "Frequency", "Period")
     ) {
 
