@@ -1,0 +1,121 @@
+---
+title: "GENESIS Destatis"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{genesis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+```{r read-gpg-key, eval=TRUE, messages=FALSE, echo=TRUE}
+file.apiKey.enc <- system.file("apiKey.R.gpg", package = "nsoApi")
+nsoApi::nsoApiGPG(file = file.apiKey.enc,
+                  gpg = NULL,
+                  passphrase = Sys.getenv("NSOAPIGPG"),
+                  keep = FALSE
+                  )
+```
+
+
+```{r genesis-metadata, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+api.param.datenexport <- list(
+    method = "DatenExport",
+    kennung = apiKey$GENESIS$kennung,
+    passwort = apiKey$GENESIS$passwort,
+    namen = "73421BJ001",
+    bereich = "oeffentlich",
+    format = "csv",
+    werte = "false",
+    metadaten = "false",
+    zusatz = "true",
+    startjahr = "2013",
+    endjahr = "2014",
+    zeitscheiben = "",
+    regionalschluessel = "",
+    sachmerkmal = "",
+    sachschluessel = "",
+    stand = "01.01.2001",
+    sprache = "de"
+)
+## retrieve metadata
+xml_list_datenexport_meta <- genesisAPI(api.param = api.param.datenexport,
+                                   service = "ExportService",
+                                   curl = curl)
+meta_df <- genesisXMLtoDF(xml.list = xml_list_datenexport_meta,
+                          meta = TRUE)
+knitr::kable(meta_df)
+```
+
+
+### Genesis Data
+
+```{r genesis-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+api.param.datenexport <- list(
+    method = "DatenExport",
+    kennung = apiKey$GENESIS$kennung,
+    passwort = apiKey$GENESIS$passwort,
+    namen = "73421BJ001",
+    bereich = "oeffentlich",
+    format = "csv",
+    werte = "true",
+    metadaten = "false",
+    zusatz = "false",
+    startjahr = "1993",
+    endjahr = "2016",
+    zeitscheiben = "",
+    regionalschluessel = "",
+    sachmerkmal = "",
+    sachschluessel = "",
+    stand = "01.01.2001",
+    sprache = "de"
+)
+## retrieve data
+xml_list_datenexport <- genesisAPI(api.param = api.param.datenexport,
+                                   service = "ExportService",
+                                   curl = curl)
+## convert to data frame
+data_df <- genesisXMLtoDF(xml.list = xml_list_datenexport)
+knitr::kable(data_df[1:n_table,])
+```
+
+### Visualize
+
+```{r genesis-radar-plot, message=FALSE, warning=FALSE, fig.out="100%", fig.width=9, fig.height=5}
+library(ggplot2)
+library(ggradar)
+
+data_df %>%
+  left_join(meta_df$label, by = c("UNIT" = "code")) %>%
+  select(-DINSG, -UNIT) %>%
+  rename(year = `ZI-WERT`) %>%
+  spread(key = label, value = WERT) %>%
+  mutate_at(vars(-year), funs(scales::rescale)) %>%
+  ## gather(key = UNIT, value = WERT, -year) %>%
+  ## filter(year %in% c(min(year), max(year))) %>%
+  filter(year %in% c(1993, 2005, 2016)) %>%
+  ggradar(font.radar = "sans",
+          grid.label.size = 4,
+          axis.label.size = 4,
+          group.point.size = 1,
+          group.line.width = 1,
+          plot.extent.x.sf = 1.8) +
+  scale_color_manual(values = c("#d2223e", "#000000", "#ffc20e")) +
+theme(
+  legend.position = c(0.05, 0.95),
+  legend.justification = "left",
+  legend.direction = "horizontal",
+  legend.text = element_text(size = 8),
+  legend.background = element_rect(fill = NULL)
+)
+```

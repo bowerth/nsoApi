@@ -1,0 +1,8 @@
+base
+dplyr
+tidyr
+bitops
+RCurl
+httr
+nsoApi
+bindrcpp
