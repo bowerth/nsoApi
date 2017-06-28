@@ -4,7 +4,7 @@ author: "Bo Werth"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{nsoApi}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,13 +18,15 @@ curl <- getCurlHandle()
 n_table <- 5
 ```
 
-# Providers
+## Providers
 
 Some of the APIs require authentication:
 
 ```{r provider-overview, eval=TRUE, echo=FALSE, results='as.is'}
 ## getwd()
-read.csv(file = file.path("..", "inst", "extdata", "api_overview_table_short.csv")) %>%
+## read.csv(file = file.path("..", "inst", "extdata", "api_overview_table_short.csv")) %>%
+system.file("extdata", "api_overview_table_short.csv", package = "nsoApi") %>%
+  read.csv() %>%
   mutate(isIO = ifelse(cou == "IO", TRUE, FALSE)) %>%
   arrange(desc(isIO), provider) %>%
   select(cou, provider, label, access) %>%
@@ -32,7 +34,7 @@ read.csv(file = file.path("..", "inst", "extdata", "api_overview_table_short.csv
   knitr::kable()
 ```
 
-# Setup
+## Setup
 
 Create an R script containing a list with your keys or just modify the the example script and save it with gpg encryption at `inst/apiKey.R.gpg`.
 
@@ -63,7 +65,7 @@ nsoApi::nsoApiGPG(file = file.apiKey.enc,
 
 ## BEA Bureau of Economic Analysis
 
-```{r beaapi-getparametervalues, eval=TRUE, echo=TRUE}
+```{r beaapi-getparametervalues, eval=TRUE, echo=TRUE, cach=TRUE}
 api.param <- list(
   DATASETNAME = "GDPbyIndustry",
   METHOD = "GETPARAMETERVALUES",
@@ -83,7 +85,7 @@ Show first `r n_table` tables
 knitr::kable(tablelist$BEAAPI$Results$ParamValue[1:n_table, ])
 ```
 
-```{r beaapi-getdata, echo=TRUE, eval=TRUE, results='as.is'}
+```{r beaapi-getdata, echo=TRUE, eval=TRUE, results='as.is', cache=TRUE}
 api.param <- list(
   DATASETNAME = "GDPBYINDUSTRY",
   FREQUENCY = "A",
@@ -103,7 +105,7 @@ knitr::kable(datalist$BEAAPI$Results$Data)
 First, we define the API URI and the dataset ID
 
 ```{r cbs-init, eval=TRUE, echo=TRUE}
-api <- "http://opendata.cbs.nl/ODataApi/OData/"
+api <- "https://opendata.cbs.nl/ODataApi/OData/"
 DSD <- "82572ENG" # Input-Output: "83068ENG"
 ```
 
@@ -111,7 +113,7 @@ DSD <- "82572ENG" # Input-Output: "83068ENG"
 
 Next, we return the members of a dimension
 
-```{r cbs-dimension, eval=TRUE, echo=TRUE, results='as.is'}
+```{r cbs-dimension, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 scheme <- "SectorBranchesSIC2008"
 ## print query
 cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
@@ -123,7 +125,7 @@ knitr::kable(cbs_dimension[1:n_table, 1:2])
 
 Finally, we return a dataset
 
-```{r cbs-data, eval=TRUE, echo=TRUE, results='as.is'}
+```{r cbs-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 scheme <- "TypedDataSet"
 # print query
 cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
@@ -136,8 +138,9 @@ knitr::kable(cbs_data[1:n_table, 1:6])
 List existing tables in CBS API. This takes 1-2 minutes to complete
 
 ```{r cbs-tables, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
-cbs_tables <- nsoApi::cbsODataTables()
+cbs_tables <- nsoApi::cbsODataTables(url = "https://opendata.cbs.nl/ODataCatalog/Tables")
 knitr::kable(cbs_tables[1:n_table, ])
+## write.table(cbs_tables, file = "~/Downloads/cbs-tables.tsv", sep = "\t", row.names = FALSE)
 ```
 
 ## Destatis GENESIS
@@ -207,7 +210,7 @@ knitr::kable(data_df[1:n_table,])
 
 ### Genesis Tables
 
-```{r genesis-tables, eval=TRUE, echo=TRUE, results='as.is'}
+```{r genesis-tables, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 genesis_tables <- nsoApi::genesisTables(
                 namefilter = 11, # for testing - takes a few minutes to complete
                 ## namefilter = c(11:14, 2, 3, 41:49, 5:9),
@@ -221,9 +224,11 @@ knitr::kable(genesis_tables)
 
 ## ONS UK Office for National Statistics
 
+The provider has been taken offline
+
 ### ONS Data
 
-```{r ons-data, eval=TRUE, echo=TRUE, results='as.is'}
+```{r ons-data, eval=FALSE, echo=TRUE, results='as.is'}
 api.param <- list(context = "Census",
                   geog = "2011WARDH",
                   totals = "false",
@@ -232,9 +237,9 @@ ons_data <- onsCsvData(api.param = api.param, dataset = "QS208EW")
 knitr::kable(ons_data[1:n_table, 1:7])
 ```
 
-## ONS Tables
+### ONS Tables
 
-```{r ons-tables, eval=TRUE, echo=TRUE, results='as.is'}
+```{r ons-tables, eval=FALSE, echo=TRUE, results='as.is'}
 ons_tables <- onsAPI(method = "contexts", api.key = apiKey$ONS$apikey)
 knitr::kable(ons_tables)
 
@@ -249,31 +254,16 @@ knitr::kable(ons_collections_df[1:n_table, ])
 
 ### STATAT Data
 
-```{r statat-data, eval=TRUE, echo=TRUE, results='as.is'}
+```{r statat-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
 dataset <- "OGD_vgr001_VGRJahresR_1"
 statat_data <- statatAPI(dataset = dataset)
 knitr::kable(statat_data[1:n_table, ])
 ```
 
-```{r statat-tables, eval=TRUE, echo=TRUE, results='as.is'}
-baseURL <- "http://data.statistik.gv.at/web/catalog.jsp"
-dataset_title <-
-  baseURL %>%
-  RCurl::getURL() %>%
-  XML::htmlParse(baseURL) %>%
-  XML::readHTMLTable() %>%
-  lapply(function(x) x[["Title"]]) %>%
-  unlist %>%
-  stringr::str_replace(pattern = "\\n.+", replacement = "")
-## latin1 encoded - containing umlaute!!
-dataset_id <-
-  baseURL %>%
-  RCurl::getURL() %>%
-  stringr::str_match_all("meta.jsp[?]dataset=.+[\"\"]") %>% # only dataset ID
-  unlist() %>%
-  stringr::str_replace(pattern = "meta.jsp[?]dataset=", replacement = "") %>%
-  stringr::str_replace(pattern = "\"", replacement = "")
-df <- data.frame(ID = dataset_id, Title = dataset_title)
+### STATAT Tables
+
+```{r statat-tables, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+df <- statatTables()
 knitr::kable(df[1:n_table, ])
 ```
 
@@ -290,7 +280,7 @@ knitr::kable(pxnet2_tables[1:10,])
 
 ### Statistics Finland Data
 
-```{r finstat-data, eval=TRUE, message=FALSE, echo=TRUE, results='as.is'}
+```{r finstat-data, eval=TRUE, message=FALSE, echo=TRUE, results='as.is', cache=TRUE}
 flow <- "070_vtp_tau_071.px"
 baseURL <- "http://pxnet2.stat.fi/PXWEB/api/v1/en/StatFin"
 path <- as.character(pxnet2_tables$Path[pxnet2_tables$ID==flow])
@@ -321,7 +311,7 @@ knitr::kable(scb_tables[1:10,])
 
 ### Statistics Sweden Data
 
-```{r scb-data, message=FALSE, results='as.is'}
+```{r scb-data, message=FALSE, results='as.is', cache=TRUE}
 baseURL <- "http://api.scb.se/OV0104/v1/doris/en/ssd"
 flow <- "NR0103ENS2010T08A"
 path <- as.character(scb_tables$Path[scb_tables$ID==flow])
@@ -352,7 +342,7 @@ knitr::kable(ssb_tables[1:10,])
 
 ### Statistics Norway Data
 
-```{r ssb-data, message=FALSE, results='as.is'}
+```{r ssb-data, message=FALSE, results='as.is', cache=TRUE}
 baseURL <- "http://data.ssb.no/api/v0"
 ## baseURL <- "http://data.ssb.no/api/v0/en/table"
 flow <- "OrgsatEksUlonn"

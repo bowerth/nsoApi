@@ -1,0 +1,88 @@
+---
+title: "STATAT"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{statat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+## STATAT Statistics Austria
+
+### STATAT Data
+
+```{r statat-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+## dataset <- "OGD_vgr001_VGRJahresR_1"
+dataset <- "OGD_f1531neu_Aussenhandel_1"
+statat_data <- statatAPI(dataset = dataset)
+knitr::kable(statat_data[1:n_table, ])
+```
+
+### STATAT Tables
+
+```{r statat-tables-fun, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+df <- statatTables()
+knitr::kable(df[1:n_table, ])
+```
+
+### Statat Dimensions
+
+```{r statat-dimension, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+statat_dim <-
+  statatDimension(dataset = dataset,
+                  dimension = "C_UBL1531_0") %>%
+  select(code, en_name)
+knitr::kable(statat_dim[1:n_table, ])
+```
+
+```{r statat-plot}
+library(ggplot2)
+
+data_filter <-
+  statat_data %>%
+  left_join(statat_dim, by = c("C_UBL1531_0" = "code")) %>%
+  filter(variable == "F_AHG_EINWERT")
+
+data_top <-
+  data_filter %>%
+  group_by(en_name) %>%
+  summarize(SUM = sum(value)) %>%
+  arrange(-SUM) %>%
+  head(6)
+
+data_plot <- data_filter
+
+data_plot$en_name <- factor(data_plot$en_name, levels = as.character(data_top$en_name))
+
+p <-
+data_plot %>%
+  filter(en_name %in% data_top$en_name) %>%
+  ggplot(aes(x = date, y = value, fill = en_name)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_x_date(name = NULL, expand = c(0,0)) +
+  scale_y_continuous(name = "Imports to Austria, EUR", expand = c(0,0)) +
+  scale_fill_manual(values = c("#F92672", rep("transparent", 5))) +
+guides(fill = guide_legend(title = NULL)) +
+  theme_bw()
+p
+
+```
+
+```{r export-bar-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "statat-bar.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
+```

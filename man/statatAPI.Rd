@@ -2,14 +2,21 @@
 % Please edit documentation in R/statatAPI.R
 \name{statatAPI}
 \alias{statatAPI}
-\alias{statatChangeDates}
 \alias{statatDFtoXTS}
+\alias{statatTables}
+\alias{statatDimension}
+\alias{statatChangeDates}
 \title{Query Statistik Austria open.data}
 \usage{
-statatAPI(dataset = stop("'DSD' must be provided"), query = FALSE,
+statatAPI(dataset = stop("'dataset' must be provided"), query = FALSE,
   curl = NULL)
 
 statatDFtoXTS(data = stop("'data' must be provided"))
+
+statatTables(baseurl = "http://data.statistik.gv.at/web/catalog.jsp")
+
+statatDimension(dataset = stop("'dataset' must be provided"),
+  dimension = stop("'dimension' must be provided"))
 
 statatChangeDates(str)
 }
@@ -20,9 +27,15 @@ statatChangeDates(str)
 
 \item{data}{a data frame created with \code{get_pxweb_data}}
 
+\item{dimension}{dimension to be retrieved.}
+
 \item{str}{a character string with Statistik Austria open.data dates, e.g. \code{"A10-1976"}, \code{"197311"}, \code{"VPIZR-201101" }}
 
 \item{DSD}{a dataset identifier.}
+
+\item{url}{location of table list XML document.}
+
+\item{url}{location of table list XML document.}
 }
 \description{
 Retrieve information from Statistik Austria open.data
@@ -35,12 +48,16 @@ Retrieve information from Statistik Austria open.data using CSV format.
 dataset <- "OGD_vgr001_VGRJahresR_1"
 statatAPI(dataset = dataset)
 }
+\dontrun{
+dataset <- "OGD_f1531neu_Aussenhandel_1"
+dimension <- "C_UBL1531_0"
+statatDimension(dataset = dataset, dimension = dimension)
 }
-\author{
-Bo Werth <bo.werth@gmail.com>
 }
 \seealso{
 \code{http://http://data.statistik.gv.at/web}
 }
+\author{
+Bo Werth <bo.werth@gmail.com>
+}
 \keyword{JSON}
-

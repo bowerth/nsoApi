@@ -39,10 +39,28 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/provider-bea.html">BEA</a>
+    </li>
+    <li>
+      <a href="../articles/provider-cbs.html">CBS</a>
+    </li>
+    <li>
+      <a href="../articles/provider-databank.html">DATABANK</a>
+    </li>
+    <li>
       <a href="../articles/provider-genesis.html">GENESIS</a>
     </li>
     <li>
       <a href="../articles/provider-ine.html">INE</a>
+    </li>
+    <li>
+      <a href="../articles/provider-scb.html">SCB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-ssb.html">SSB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-statat.html">STATAT</a>
     </li>
   </ul>
 </li>
@@ -65,7 +83,7 @@
       <h1>nsoApi</h1>
                         <h4 class="author">Bo Werth</h4>
             
-            <h4 class="date">2017-06-27</h4>
+            <h4 class="date">2017-06-28</h4>
           </div>
 
     
@@ -167,11 +185,11 @@ nsoApi::<span class="kw"><a href="../reference/nsoApiGPG.html">nsoApiGPG</a></sp
 tablelist &lt;-<span class="st"> </span><span class="kw"><a href="../reference/beaAPI.html">beaAPI</a></span>(<span class="dt">api.param =</span> api.param, <span class="dt">curl =</span> curl)
 tablelist$BEAAPI$Request$RequestParam</code></pre></div>
 <pre><code>##   ParameterName                       ParameterValue
-## 1   DATASETNAME                        GDPBYINDUSTRY
-## 2        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439
-## 3  RESULTFORMAT                                 JSON
-## 4        METHOD                   GETPARAMETERVALUES
-## 5 PARAMETERNAME                              TABLEID</code></pre>
+## 1        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439
+## 2  RESULTFORMAT                                 JSON
+## 3   DATASETNAME                        GDPBYINDUSTRY
+## 4 PARAMETERNAME                              TABLEID
+## 5        METHOD                   GETPARAMETERVALUES</code></pre>
 <p>Show first 5 tables</p>
 <table class="table">
 <thead><tr class="header">
@@ -312,7 +330,7 @@ knitr::<span class="kw">kable</span>(datalist$BEAAPI$Results$Data)</code></pre><
 <h2 class="hasAnchor">
 <a href="#cbs-statistics-netherlands" class="anchor"></a>CBS Statistics Netherlands</h2>
 <p>First, we define the API URI and the dataset ID</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">api &lt;-<span class="st"> "http://opendata.cbs.nl/ODataApi/OData/"</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">api &lt;-<span class="st"> "https://opendata.cbs.nl/ODataApi/OData/"</span>
 DSD &lt;-<span class="st"> "82572ENG"</span> <span class="co"># Input-Output: "83068ENG"</span></code></pre></div>
 <div id="cbs-metadata" class="section level3">
 <h3 class="hasAnchor">
@@ -420,7 +438,7 @@ knitr::<span class="kw">kable</span>(cbs_data[<span class="dv">1</span>:n_table,
 <h3 class="hasAnchor">
 <a href="#cbs-tables" class="anchor"></a>CBS Tables</h3>
 <p>List existing tables in CBS API. This takes 1-2 minutes to complete</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbs_tables &lt;-<span class="st"> </span>nsoApi::<span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataTables</a></span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbs_tables &lt;-<span class="st"> </span>nsoApi::<span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataTables</a></span>(<span class="dt">url =</span> <span class="st">"https://opendata.cbs.nl/ODataCatalog/Tables"</span>)
 knitr::<span class="kw">kable</span>(cbs_tables[<span class="dv">1</span>:n_table, ])</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -462,6 +480,7 @@ knitr::<span class="kw">kable</span>(cbs_tables[<span class="dv">1</span>:n_tabl
 </tr>
 </tbody>
 </table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## write.table(cbs_tables, file = "~/Downloads/cbs-tables.tsv", sep = "\t", row.names = FALSE)</code></pre></div>
 </div>
 </div>
 <div id="destatis-genesis" class="section level2">
@@ -719,6 +738,7 @@ knitr::<span class="kw">kable</span>(genesis_tables)</code></pre></div>
 <div id="ons-uk-office-for-national-statistics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ons-uk-office-for-national-statistics" class="anchor"></a>ONS UK Office for National Statistics</h2>
+<p>The provider has been taken offline</p>
 <div id="ons-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ons-data" class="anchor"></a>ONS Data</h3>
@@ -729,10 +749,9 @@ knitr::<span class="kw">kable</span>(genesis_tables)</code></pre></div>
 ons_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/onsAPI.html">onsCsvData</a></span>(<span class="dt">api.param =</span> api.param, <span class="dt">dataset =</span> <span class="st">"QS208EW"</span>)
 knitr::<span class="kw">kable</span>(ons_data[<span class="dv">1</span>:n_table, <span class="dv">1</span>:<span class="dv">7</span>])</code></pre></div>
 </div>
-</div>
-<div id="ons-tables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ons-tables" class="anchor"></a>ONS Tables</h2>
+<div id="ons-tables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ons-tables" class="anchor"></a>ONS Tables</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ons_tables &lt;-<span class="st"> </span><span class="kw"><a href="../reference/onsAPI.html">onsAPI</a></span>(<span class="dt">method =</span> <span class="st">"contexts"</span>, <span class="dt">api.key =</span> apiKey$ONS$apikey)
 knitr::<span class="kw">kable</span>(ons_tables)
 
@@ -741,6 +760,7 @@ titles &lt;-<span class="st"> </span><span class="kw">sapply</span>(ons_collecti
 titles &lt;-<span class="st"> </span><span class="kw">iconv</span>(titles, <span class="st">"latin1"</span>, <span class="st">"ASCII"</span>, <span class="dt">sub=</span><span class="st">""</span>)
 ons_collections_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ID =</span> ons_collections$id, <span class="dt">Title =</span> titles)
 knitr::<span class="kw">kable</span>(ons_collections_df[<span class="dv">1</span>:n_table, ])</code></pre></div>
+</div>
 </div>
 <div id="statat-statistics-austria" class="section level2">
 <h2 class="hasAnchor">
@@ -797,24 +817,7 @@ statat_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 <div id="statat-tables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#statat-tables" class="anchor"></a>STATAT Tables</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">baseURL &lt;-<span class="st"> "http://data.statistik.gv.at/web/catalog.jsp"</span>
-dataset_title &lt;-
-<span class="st">  </span>baseURL %&gt;%
-<span class="st">  </span>RCurl::<span class="kw">getURL</span>() %&gt;%
-<span class="st">  </span>XML::<span class="kw">htmlParse</span>(baseURL) %&gt;%
-<span class="st">  </span>XML::<span class="kw">readHTMLTable</span>() %&gt;%
-<span class="st">  </span><span class="kw">lapply</span>(function(x) x[[<span class="st">"Title"</span>]]) %&gt;%
-<span class="st">  </span>unlist %&gt;%
-<span class="st">  </span>stringr::<span class="kw">str_replace</span>(<span class="dt">pattern =</span> <span class="st">"</span><span class="ch">\\</span><span class="st">n.+"</span>, <span class="dt">replacement =</span> <span class="st">""</span>)
-## latin1 encoded - containing umlaute!!
-dataset_id &lt;-
-<span class="st">  </span>baseURL %&gt;%
-<span class="st">  </span>RCurl::<span class="kw">getURL</span>() %&gt;%
-<span class="st">  </span>stringr::<span class="kw">str_match_all</span>(<span class="st">"meta.jsp[?]dataset=.+[</span><span class="ch">\"\"</span><span class="st">]"</span>) %&gt;%<span class="st"> </span><span class="co"># only dataset ID</span>
-<span class="st">  </span><span class="kw">unlist</span>() %&gt;%
-<span class="st">  </span>stringr::<span class="kw">str_replace</span>(<span class="dt">pattern =</span> <span class="st">"meta.jsp[?]dataset="</span>, <span class="dt">replacement =</span> <span class="st">""</span>) %&gt;%
-<span class="st">  </span>stringr::<span class="kw">str_replace</span>(<span class="dt">pattern =</span> <span class="st">"</span><span class="ch">\"</span><span class="st">"</span>, <span class="dt">replacement =</span> <span class="st">""</span>)
-df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ID =</span> dataset_id, <span class="dt">Title =</span> dataset_title)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw"><a href="../reference/statatAPI.html">statatTables</a></span>()
 knitr::<span class="kw">kable</span>(df[<span class="dv">1</span>:n_table, ])</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -822,14 +825,6 @@ knitr::<span class="kw">kable</span>(df[<span class="dv">1</span>:n_table, ])</c
 <th align="left">Title</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="left">OGD_konjidxhan10_Konjunktur_Handel_1</td>
-<td align="left">Konjunkturindizes Handel Basis 2010</td>
-</tr>
-<tr class="even">
-<td align="left">OGD_vgr101_VGRJahresR_2</td>
-<td align="left">VGR-Jahresrechnung, ESVG 2010</td>
-</tr>
 <tr class="odd">
 <td align="left">OGD_touextsai_Tour_HKL_1</td>
 <td align="left">Nächtigungsstatistik ab November 1973 - Nächtigungen nach Herkunftsländern und Bundesländern</td>
@@ -839,8 +834,16 @@ knitr::<span class="kw">kable</span>(df[<span class="dv">1</span>:n_table, ])</c
 <td align="left">Nächtigungsstatistik ab November 1973 - Nächtigungen nach Unterkunftsarten und Bundesländern</td>
 </tr>
 <tr class="odd">
+<td align="left">OGD_vpi15_VPI_2015_1</td>
+<td align="left">Verbraucherpreisindex Basis 2015</td>
+</tr>
+<tr class="even">
 <td align="left">OGD_vpi10_VPI_2010_1</td>
 <td align="left">Verbraucherpreisindex Basis 2010</td>
+</tr>
+<tr class="odd">
+<td align="left">OGD_vpi05_VPI_2005_1</td>
+<td align="left">Verbraucherpreisindex Basis 2005</td>
 </tr>
 </tbody>
 </table>
@@ -1382,7 +1385,6 @@ knitr::<span class="kw">kable</span>(pxweb_data[<span class="dv">1</span>:<span 
       <li><a href="#cbs-statistics-netherlands">CBS Statistics Netherlands</a></li>
       <li><a href="#destatis-genesis">Destatis GENESIS</a></li>
       <li><a href="#ons-uk-office-for-national-statistics">ONS UK Office for National Statistics</a></li>
-      <li><a href="#ons-tables">ONS Tables</a></li>
       <li><a href="#statat-statistics-austria">STATAT Statistics Austria</a></li>
       <li><a href="#tilastokeskus-statistics-finland">Tilastokeskus Statistics Finland</a></li>
       <li><a href="#scb-statistics-sweden">SCB Statistics Sweden</a></li>

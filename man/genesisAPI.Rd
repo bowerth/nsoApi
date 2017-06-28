@@ -2,10 +2,10 @@
 % Please edit documentation in R/genesisAPI.R
 \name{genesisAPI}
 \alias{genesisAPI}
+\alias{metaClean}
+\alias{genesisXMLtoDF}
 \alias{genesisDFtoXTS}
 \alias{genesisTables}
-\alias{genesisXMLtoDF}
-\alias{metaClean}
 \title{API Destatis Genesis}
 \usage{
 genesisAPI(api.param = stop("'api.param' must be specified"),
@@ -115,4 +115,3 @@ Bo Werth <bo.werth@gmail.com>
 }
 \keyword{API}
 \keyword{XML}
-

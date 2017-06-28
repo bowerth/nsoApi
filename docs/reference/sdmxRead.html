@@ -62,10 +62,28 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/provider-bea.html">BEA</a>
+    </li>
+    <li>
+      <a href="../articles/provider-cbs.html">CBS</a>
+    </li>
+    <li>
+      <a href="../articles/provider-databank.html">DATABANK</a>
+    </li>
+    <li>
       <a href="../articles/provider-genesis.html">GENESIS</a>
     </li>
     <li>
       <a href="../articles/provider-ine.html">INE</a>
+    </li>
+    <li>
+      <a href="../articles/provider-scb.html">SCB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-ssb.html">SSB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-statat.html">STATAT</a>
     </li>
   </ul>
 </li>
@@ -114,11 +132,17 @@
     </tr>
     <tr>
       <th>DSD</th>
-      <td><p>a datastructure definition identified by the triplet <code>[collection; country; indicator]</code>.</p></td>
+      <td><p>a datastructure definition identified by the triplet
+<code>[collection; country; indicator]</code>.</p></td>
     </tr>
     <tr>
       <th>filter</th>
-      <td><p>for scheme "data": a named list of filters passed to the API. The position of list items corresponds to the API filter dimensions. Each list item is either empty (no filter on dimension) or a character vector containing dimension members to be included in the results. Dimension members can be obtained from <code>scheme="codelist"</code> and a codelist item, e.g. "CL_ECO_ISIC4".</p></td>
+      <td><p>for scheme "data": a named list of filters passed to the API.
+The position of list items corresponds to the API filter dimensions. Each
+list item is either empty (no filter on dimension) or a character vector
+containing dimension members to be included in the results. Dimension
+members can be obtained from <code>scheme="codelist"</code> and a codelist item,
+e.g. "CL_ECO_ISIC4".</p></td>
     </tr>
     <tr>
       <th>append</th>
@@ -132,11 +156,12 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Helper function to efficiently query data from OECD.Stat Extracts using SDMX-JSON API.</p>
+    <p>Helper function to efficiently query data from OECD.Stat Extracts using
+SDMX-JSON API.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>https://data.oecd.org/api/sdmx-json-documentation, http://cran.r-project.org/web/packages/jsonlite/index.html</p>
+    <p>https://data.oecd.org/api/sdmx-json-documentation</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -150,7 +175,11 @@
                     <span class='kw'>EUC</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TOTAL"</span>, <span class='st'>"INT"</span>),
                     <span class='kw'>IND</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"DTOTAL"</span>, <span class='st'>"D01T03"</span>),
                     <span class='kw'>VAL</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"VALUE"</span>))
-<span class='no'>url.append</span> <span class='kw'>&lt;-</span> <span class='fu'>paste0</span>(<span class='st'>"/all?"</span>, <span class='fu'>paste</span>(<span class='st'>"json-lang=en"</span>, <span class='st'>"detail=Full"</span>, <span class='st'>"dimensionAtObservation=AllDimensions"</span>, <span class='st'>"startPeriod=1990"</span>, <span class='st'>"endPeriod=2000"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"&amp;"</span>))
+<span class='no'>url.append</span> <span class='kw'>&lt;-</span> <span class='fu'>paste0</span>(<span class='st'>"/all?"</span>,
+                     <span class='fu'>paste</span>(<span class='st'>"json-lang=en"</span>, <span class='st'>"detail=Full"</span>,
+                           <span class='st'>"dimensionAtObservation=AllDimensions"</span>,
+                           <span class='st'>"startPeriod=1990"</span>, <span class='st'>"endPeriod=2000"</span>,
+                           <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"&amp;"</span>))
 <span class='no'>test.data</span> <span class='kw'>&lt;-</span> <span class='fu'>sdmxRead</span>(<span class='kw'>DSD</span> <span class='kw'>=</span> <span class='st'>"BTDIXE_I4"</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='no'>filter.list</span>)
 <span class='co'># }</span></pre>
   </div>

@@ -1,0 +1,104 @@
+---
+title: "DATABANK"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{databank}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+## devtools::install_github("rOpenGov/dkstat")
+library(dkstat)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+## Databank
+
+### Databank Tables
+
+```{r databank-tables, cache=TRUE}
+df_tables <- dkstat::dst_get_tables(lang = "en")
+knitr::kable(df_tables[1:n_table,])
+## write.table(df_tables, file = "~/Downloads/databank-tables.tsv", sep = "\t", row.names = FALSE)
+```
+
+### Getting Data
+
+```{r databank-data, cache=TRUE}
+table <- "camp1"
+
+folk1_meta <- dkstat::dst_meta(table = table, lang = "en")
+
+my_query <-
+  list(
+    OMRÅDE = "All Denmark",
+    NATION1 = "*",
+    OVERNAT1 = "Nights stay",
+    PERIODE = "Whole year",
+    Tid = "*"
+  )
+df_data <- dkstat::dst_get_data(table = table, query = my_query, lang = "en")
+## head(df_data)
+## str(df_data)
+knitr::kable(df_data[1:n_table, ])
+```
+
+
+```{r databank-plot, cache=FALSE}
+library(ggplot2)
+
+## table(df_data$NATION1)
+
+## nations <- sample(unique(df_data$NATION1), 5)
+
+df_bottom <-
+  df_data %>%
+  filter(!NATION1 %in% c("Total", "Denmark", "World outside Denmark")) %>%
+  group_by(NATION1) %>%
+  summarize(SUM = sum(value)) %>%
+  arrange(-SUM) # %>%
+  ## head(10)
+
+df_plot <-
+  df_data %>%
+  filter(!TID == "2017-01-01")
+## head(df_data)
+## head(df_plot)
+
+df_plot$NATION1 <- factor(df_plot$NATION1,
+                          ## levels = rev(as.character(df_bottom$NATION1))
+                          levels = as.character(df_bottom$NATION1)
+                          )
+
+## number of countries
+m <- 5
+
+p <-
+  df_plot %>%
+  filter(NATION1 %in% df_bottom$NATION1[1:m]) %>%
+  ggplot(aes(x = TID, y = value, fill = NATION1)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_x_date(name = NULL, expand = c(0,0)) +
+  scale_y_continuous(name = "Foreign National Campers in Denmark, Number",
+                     expand = c(0,0)) +
+  guides(fill = guide_legend(title = NULL)) +
+  theme_bw() +
+  scale_fill_manual(values = c("#F92672", rep("transparent", m)))
+p
+```
+
+```{r export-bar-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "databank-bar.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
+```

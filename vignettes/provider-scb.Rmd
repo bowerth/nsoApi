@@ -1,0 +1,99 @@
+---
+title: "SCB"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{scb}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+## SCB Statistics Sweden
+
+### Statistics Sweden Data
+
+```{r scb-data, message=FALSE, results='as.is', cache=TRUE}
+baseURL <- "http://api.scb.se/OV0104/v1/doris/en/ssd"
+## flow <- "NR0103ENS2010T08A"
+## path <- as.character(scb_tables$Path[scb_tables$ID==flow])
+flow <- "LE0101F73"
+path <- "LE/LE0101/LE0101F"
+req.uri <- file.path(baseURL, path, flow)
+bottom_node <- pxweb::get_pxweb_metadata(req.uri)
+dims <- pxweb::get_pxweb_dims(bottom_node)
+## dims_list <- as.list(rep("*", length(names(dims))))
+## names(dims_list) <- names(dims)
+dims_list <- lapply(dims, function(x) sample(x$values, min(length(x$values), 3)))
+pxweb_data <-                           # retrieve data
+  pxweb::get_pxweb_data(
+           url = req.uri,
+           dims = dims_list,
+           clean = TRUE)
+knitr::kable(pxweb_data[1:10,])
+```
+
+```{r scb-plot}
+library(ggplot2)
+
+unique(pxweb_data$observations)
+## unique(pxweb_data$`type of activity`)
+## dput(unique(pxweb_data$`how often during the last 12 months`))
+
+data_plot <- pxweb_data
+
+data_plot$`how often during the last 12 months` <-
+  factor(data_plot$`how often during the last 12 months`,
+         levels =
+           ## c(
+           ##   "not at all",
+           ##   "a few times during the last three months or less often", 
+           ##   "every day (by and large)"
+           ## )
+           ## c(
+           ##   "a few times during the last three months or less often",
+           ##   "every week but not every day",
+           ##   "several times a week or every day"
+           ## )
+           c(
+             "not at all",
+             "several times a week or every day",
+             "every day (by and large)"
+           )
+         )
+
+p <-
+  data_plot %>%
+  filter((sex %in% c("men and women"))) %>%
+  filter(!(`level of education` %in% c("total"))) %>%
+  ## filter(observations %in% c("Estimated numbers in thousands")) %>%
+  filter(observations %in% c("Proportion of persons in percent")) %>%
+  ggplot(aes(x = period, y = values, fill = `how often during the last 12 months`)) +
+  ## geom_point() +
+  geom_bar(position = "stack", stat = "identity", color = "black") +
+  facet_grid(`level of education` ~ `type of activity`) +
+  scale_fill_manual(values = c("black", "transparent", "#F92672")) +
+scale_x_discrete(name = NULL, expand = c(0,0)) +
+  scale_y_continuous(name = "Percent", expand = c(0,0)) +
+  theme_bw() +
+  theme(legend.position = "top")
+p
+
+```
+
+```{r export-bar-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "scb-bar-2.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
+```

@@ -44,4 +44,3 @@ if (file.exists(file.apiKey)) {
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{GPG}
-

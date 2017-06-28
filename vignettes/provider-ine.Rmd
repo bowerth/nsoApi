@@ -1,0 +1,49 @@
+---
+title: "INE Statistics Spain"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ine}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(httr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+```{r functions, echo=FALSE}
+ine_api <- function(path) {
+  url <- modify_url("http://servicios.ine.es", path = path)
+  GET(url)
+}
+```
+
+## Get Datasets
+
+- [API JSON des INE](http://www.ine.es/dyngs/DataLab/en/manual.html?cid=45)
+
+```{r ine_operaciones_disponibles, echo=TRUE}
+resp <- ine_api("/wstempus/js/EN/OPERACIONES_DISPONIBLES")
+dat <- jsonlite::fromJSON(content(resp, "text"))
+## write.table(dat, file = "/home/xps13/src/R/stanData/data-raw/API/ESP/list_datasets.tsv", sep = "\t", row.names = FALSE)
+knitr::kable(head(dat, n = n_table))
+```
+
+### Spanish
+
+- [Banco de series temporales: Buscador](http://www.ine.es/consul/inicio.do)
+
+INEbase / Economía / Cuentas económicas / Contabilidad Nacional Anual de España. Base 2010
+:   - [Resultados detallados](http://www.ine.es/en/daco/daco42/cne10/dacocne_resultados_en.htm)  
+        - [Agregados por ramas de actividad (xlsx)](http://www.ine.es/daco/daco42/cne10/agr_x_ramas95_15.xls)
+
+### English
+
+INEbase / Economy / National Accounts / Annual Spanish National Accounts. Base 2010
+:   - [Detailed results](http://www.ine.es/en/daco/daco42/cne10/dacocne_resultados_en.htm)  
+        - [Aggregates by industry (xlsx)](http://www.ine.es/en/daco/daco42/cne10/agr_x_ramas95_15_en.xls)

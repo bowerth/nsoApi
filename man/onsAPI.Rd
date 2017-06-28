@@ -58,4 +58,3 @@ data.QS104EW <- onsAPI(api.param = api.param, dataset = "QS104EW")
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{csv}
-

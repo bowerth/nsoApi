@@ -2,8 +2,8 @@
 % Please edit documentation in R/pxwebAPI.R
 \name{pxwebAPI}
 \alias{pxwebAPI}
-\alias{pxwebChangeDates}
 \alias{pxwebDFtoXTS}
+\alias{pxwebChangeDates}
 \title{API PX-Web}
 \usage{
 pxwebDFtoXTS(data = stop("'data' must be provided"))
@@ -41,4 +41,3 @@ data.xts <- pxwebDFtoXTS(data = data.df)
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{PC-Axis}
-

@@ -14,7 +14,8 @@ Imports:
     tidyr,
     XML
 Date: 2014-12-09
-Author: Bo Werth <bo.werth@gmail.com>
+Authors@R: c(person(given="Bo", family="Werth",
+    email="bo.werth@gmail.com", role=c("aut", "cre")))
 Maintainer: Bo Werth <bo.werth@gmail.com>
 Description: connect to data webservices of national statistics offices
 License: EUPL 1.1
@@ -24,4 +25,4 @@ Suggests:
     testthat,
     xts
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

@@ -12,6 +12,7 @@
 #' @param append append string to the dimension url.
 #' @param curl optional, \code{CURL} handle created with \code{RCurl::getCurlHandle()}
 #'
+#' @importFrom stringr str_detect
 #' @author Bo Werth <bo.werth@@gmail.com>
 #' @keywords OData JSON
 #' @seealso \code{https://github.com/object/Simple.OData.Client}
@@ -81,29 +82,38 @@ cbsOdataDFgather <- function(
     data = stop("'data' must be provided")
 ) {
 
-    ## list.files(path = dlpath)
-    ## data <- read.csv(file.path(dlpath, "CBS_83068ENG.csv"))
-    ## h(data)
-    ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
-    ## find positon of "Periods" in column names vectors
-    varcol.periods <- match("Periods", names(data))
-    gather.cols <- names(data)[(varcol.periods + 1):length(data)]
-    id.cols <- names(data)[!names(data)%in%c("ID", "Periods", gather.cols)]
+  ## list.files(path = dlpath)
+  ## data <- read.csv(file.path(dlpath, "CBS_83068ENG.csv"))
+  ## h(data)
+  ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
+  ## find positon of "Periods" in column names vectors
+  varcol.periods <- match("Periods", names(data))
+  gather.cols <- names(data)[(varcol.periods + 1):length(data)]
+  id.cols <- names(data)[!names(data)%in%c("ID", "Periods", gather.cols)]
 
-    ## data <-
-    ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
+  ## data <-
+  ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
 
-    data.m <-
-        data %>%
-            dplyr::select(-ID) %>%
-                tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) ## %>%
-                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
-                    ##     tidyr::spread(COMBINE, VALUE) # %>% head()
+  data.m <-
+    data %>%
+    dplyr::select(-ID) %>%
+    tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) ## %>%
+  ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
+  ##     tidyr::spread(COMBINE, VALUE) # %>% head()
 
-    data.m[["TOPIC"]] <- as.character(data.m[["TOPIC"]])
+  ## JJ and MM appearing in same dataset where JJ are annual totals
+  if (any(stringr::str_detect(data.m$Periods, "MM"))) {
+    isAnnual <- stringr::str_detect(data.m$Periods, "JJ")
+    data.m <- data.m[!isAnnual,]
+  }
 
-    ## h(data.m)
-    return(data.m)
+  data.m$Periods <- sapply(data.m$Periods, cbsODataChangeDates)
+  data.m$Periods <- as.Date(data.m$Periods)
+
+  data.m[["TOPIC"]] <- as.character(data.m[["TOPIC"]])
+
+  ## h(data.m)
+  return(data.m)
 }
 
 #' @rdname cbsODataAPI
@@ -113,41 +123,48 @@ cbsOdataDFtoXTS <- function(
     data = stop("'data' must be provided")
     ) {
 
-    names(data) <- tolower(names(data))
-    ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
-    ## data <- data.m
-    ## ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
-    ## ## find positon of "Periods" in column names vectors
-    varcol.periods <- match("periods", names(data))
-    ## gather.cols <- names(data)[(varcol.periods + 1):length(data)]
-    ## TOPIC and VALU defined in cbsOdataDFgather
+  names(data) <- tolower(names(data))
+  ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
+  ## data <- data.m
+  ## ## data <- read.csv(file.path(dlpath, "CBS_82572ENG.csv"))
+  ## ## find positon of "Periods" in column names vectors
+  varcol.periods <- match("periods", names(data))
+  ## gather.cols <- names(data)[(varcol.periods + 1):length(data)]
+  ## TOPIC and VALU defined in cbsOdataDFgather
 
-    ## id.cols <- names(data)[1:varcol.periods]
-    ## id.cols <- id.cols[!id.cols%in%c("ID", "Periods")]
-    id.cols <- names(data)
-    id.cols <- id.cols[!id.cols%in%c("id", "periods", "value")]
+  ## id.cols <- names(data)[1:varcol.periods]
+  ## id.cols <- id.cols[!id.cols%in%c("ID", "Periods")]
+  id.cols <- names(data)
+  id.cols <- id.cols[!id.cols%in%c("id", "periods", "value")]
 
-    ## data <-
-    ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
+  ## data <-
+  ##     data %>% dplyr::filter(SectorBranchesSIC2008 %in% c("300025"))
 
-    data.xts <-
-        data %>%
-            ## dplyr::select(-ID) %>%
-            ##     tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) %>%
-                    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
-                    tidyr::unite_(col = "combine", from = c(id.cols), sep = "_") %>%
-                        tidyr::spread(combine, value) # %>% head()
+  data.xts <-
+    data %>%
+    ## dplyr::select(-ID) %>%
+    ##     tidyr::gather_(key_col = "TOPIC", value_col = "VALUE", gather_cols = gather.cols) %>%
+    ## tidyr::unite_(col = "COMBINE", from = c(id.cols, "TOPIC"), sep = "_") %>%
+    tidyr::unite_(col = "combine", from = c(id.cols), sep = "_") %>%
+    tidyr::spread(combine, value) # %>% head()
 
-    ## rownames(data.xts) <- sub("JJ00", "-01-01", data.xts$Periods)
-    rownames(data.xts) <- sapply(data.xts$periods, cbsODataChangeDates)
+  ## ## JJ and MM appearing in same dataset where JJ are annual totals
+  ## if (any(stringr::str_detect(data.xts$periods, "MM"))) {
+  ##   isAnnual <- stringr::str_detect(data.xts$periods, "JJ")
+  ##   data.xts <- data.xts[!isAnnual,]
+  ## }
 
-    ## data.xts <- data.xts[, !colnames(data.xts)%in%c("Periods")]
-    data.xts <- subset(data.xts, select = names(data.xts)[!names(data.xts)%in%c("Periods")])
+  ## rownames(data.xts) <- sub("JJ00", "-01-01", data.xts$Periods)
+  ## rownames(data.xts) <- sapply(data.xts$periods, cbsODataChangeDates)
+  ## rownames(data.xts) <- sapply(data.xts$periods, cbsODataChangeDates)
+  rownames(data.xts) <- data.xts$periods
 
-    data.xts <- xts::as.xts(data.xts, dateFormat = "Date")
+  ## data.xts <- data.xts[, !colnames(data.xts)%in%c("Periods")]
+  data.xts <- subset(data.xts, select = names(data.xts)[!names(data.xts)%in%c("Periods")])
 
-    return(data.xts)
+  data.xts <- xts::as.xts(data.xts, dateFormat = "Date")
 
+  return(data.xts)
 }
 
 #' @rdname cbsODataAPI
@@ -185,7 +202,15 @@ cbsODataTables <- function(
 #' @param str a character string with CBS OData dates, e.g. \code{"1995JJ00"}
 cbsODataChangeDates <- function(str) {
 
-    str <- sub("JJ00", "-01-01", str)
-    return(str)
+  if(stringr::str_detect(str, "JJ")) {
+    str_out <- sub("JJ00", "-01-01", str)
+  } else if(stringr::str_detect(str, "MM")) {
+    str_out <- paste0(sub("MM", "-", str), "-01")
+  } else {
+    str_out <- str
+  }
+
+  return(str_out)
+  ## return(as.Date(str_out))
 
 }

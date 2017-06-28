@@ -2,10 +2,10 @@
 % Please edit documentation in R/cbsODataAPI.R
 \name{cbsODataAPI}
 \alias{cbsODataAPI}
-\alias{cbsODataChangeDates}
-\alias{cbsODataTables}
 \alias{cbsOdataDFgather}
 \alias{cbsOdataDFtoXTS}
+\alias{cbsODataTables}
+\alias{cbsODataChangeDates}
 \title{Query CBS OData API}
 \usage{
 cbsODataAPI(api = stop("'api' must be provided"),
@@ -16,7 +16,7 @@ cbsOdataDFgather(data = stop("'data' must be provided"))
 
 cbsOdataDFtoXTS(data = stop("'data' must be provided"))
 
-cbsODataTables(url = "http://opendata.cbs.nl/ODataCatalog/Tables",
+cbsODataTables(url = "https://opendata.cbs.nl/ODataCatalog/Tables",
   fields = c("Identifier", "Title", "Frequency", "Period"))
 
 cbsODataChangeDates(str)
@@ -54,7 +54,7 @@ Retrieve information from CBS Netherlands Statline Open Data API using JSON form
 }
 \examples{
 \dontrun{
-api <- "http://opendata.cbs.nl/ODataApi/OData/"
+api <- "https://opendata.cbs.nl/ODataApi/OData/"
 DSD <- "82572ENG" # Input-Output: "83068ENG"
 
 cbsODataAPI(api=api, DSD=DSD, scheme = NULL)
@@ -62,12 +62,11 @@ str(cbsODataAPI(api=api, DSD=DSD, scheme="SectorBranchesSIC2008", query=FALSE))
 str(cbsODataAPI(api=api, DSD=DSD, scheme="TypedDataSet"))
 }
 }
-\author{
-Bo Werth <bo.werth@gmail.com>
-}
 \seealso{
 \code{https://github.com/object/Simple.OData.Client}
 }
+\author{
+Bo Werth <bo.werth@gmail.com>
+}
 \keyword{JSON}
 \keyword{OData}
-

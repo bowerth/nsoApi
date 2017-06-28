@@ -62,10 +62,28 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/provider-bea.html">BEA</a>
+    </li>
+    <li>
+      <a href="../articles/provider-cbs.html">CBS</a>
+    </li>
+    <li>
+      <a href="../articles/provider-databank.html">DATABANK</a>
+    </li>
+    <li>
       <a href="../articles/provider-genesis.html">GENESIS</a>
     </li>
     <li>
       <a href="../articles/provider-ine.html">INE</a>
+    </li>
+    <li>
+      <a href="../articles/provider-scb.html">SCB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-ssb.html">SSB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-statat.html">STATAT</a>
     </li>
   </ul>
 </li>
@@ -94,10 +112,15 @@
     <p>Retrieve information from Statistik Austria open.data</p>
     
 
-    <pre class="usage"><span class='fu'>statatAPI</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"'DSD' must be provided"</span>), <span class='kw'>query</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>statatAPI</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"'dataset' must be provided"</span>), <span class='kw'>query</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>curl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>statatDFtoXTS</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"'data' must be provided"</span>))
+
+<span class='fu'>statatTables</span>(<span class='kw'>baseurl</span> <span class='kw'>=</span> <span class='st'>"http://data.statistik.gv.at/web/catalog.jsp"</span>)
+
+<span class='fu'>statatDimension</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"'dataset' must be provided"</span>),
+  <span class='kw'>dimension</span> <span class='kw'>=</span> <span class='fu'>stop</span>(<span class='st'>"'dimension' must be provided"</span>))
 
 <span class='fu'>statatChangeDates</span>(<span class='no'>str</span>)</pre>
     
@@ -117,12 +140,24 @@
       <td><p>a data frame created with <code>get_pxweb_data</code></p></td>
     </tr>
     <tr>
+      <th>dimension</th>
+      <td><p>dimension to be retrieved.</p></td>
+    </tr>
+    <tr>
       <th>str</th>
       <td><p>a character string with Statistik Austria open.data dates, e.g. <code>"A10-1976"</code>, <code>"197311"</code>, <code>"VPIZR-201101" </code></p></td>
     </tr>
     <tr>
       <th>DSD</th>
       <td><p>a dataset identifier.</p></td>
+    </tr>
+    <tr>
+      <th>url</th>
+      <td><p>location of table list XML document.</p></td>
+    </tr>
+    <tr>
+      <th>url</th>
+      <td><p>location of table list XML document.</p></td>
     </tr>
     </table>
     
@@ -139,6 +174,10 @@
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='st'>"OGD_vgr001_VGRJahresR_1"</span>
 <span class='fu'>statatAPI</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='no'>dataset</span>)
+<span class='co'># }</span><span class='co'># NOT RUN {</span>
+<span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='st'>"OGD_f1531neu_Aussenhandel_1"</span>
+<span class='no'>dimension</span> <span class='kw'>&lt;-</span> <span class='st'>"C_UBL1531_0"</span>
+<span class='fu'>statatDimension</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='no'>dataset</span>, <span class='kw'>dimension</span> <span class='kw'>=</span> <span class='no'>dimension</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

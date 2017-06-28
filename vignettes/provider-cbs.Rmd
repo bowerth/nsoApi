@@ -1,0 +1,106 @@
+---
+title: "CBS Statistics Netherlands"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cbs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+n_table <- 5
+```
+
+## CBS Statistics Netherlands
+
+First, we define the API URI and the dataset ID
+
+```{r cbs-init, eval=TRUE, echo=TRUE}
+api <- "https://opendata.cbs.nl/ODataApi/OData/"
+## DSD <- "82572ENG" # Input-Output: "83068ENG"
+DSD <- "7425eng"
+```
+
+### CBS Data
+
+Finally, we return a dataset
+
+```{r cbs-data, eval=TRUE, echo=TRUE, results='as.is', cache=TRUE}
+scheme <- "TypedDataSet"
+# print query
+cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=TRUE)
+cbs_data <- cbsODataAPI(api=api, DSD=DSD, scheme=scheme, query=FALSE)
+## knitr::kable(cbs_data[1:n_table, 1:6])
+knitr::kable(cbs_data[1:n_table,1:7])
+cbs_df <- cbsOdataDFgather(cbs_data)
+```
+
+
+```{r cbs-plot}
+library(ggplot2)
+library(hrbrthemes)
+
+ggthemr::ggthemr('flat', spacing = 0.5, type = 'inner')
+
+p <-
+cbs_df %>%
+  dplyr::filter(!TOPIC %in% c("Volume_1", "FatContent_2", "ProteinContent_3",
+                              "WholeMilkPowder_7", "SkimmedMilkPowder_8")) %>%
+  ggplot(aes(x = Periods, y = VALUE, fill = TOPIC, color = factor(0))) +
+  geom_area(
+    # position="identity",
+    ## alpha = 0.5
+  ) +
+  ## scale_fill_ipsum() +
+  scale_fill_manual(values = c(
+        ## '#3498db',                      # blue
+        'transparent',                      # blue
+        ## '#f1c40f',                      # yellow
+        "#F92672",                      # pink
+        ## '#e74c3c',                      # red
+        'transparent',                      # red
+
+        ## '#2ecc71'                       # green
+        'transparent'                       # green
+        )) +
+  scale_x_date(expand=c(0,0)) +
+  scale_y_comma() +
+  ## labs(title="Milk supply and dairy production",
+  ##      subtitle="Monthly, January 1995 - May 2015",
+  ##      caption="Source: https:/opendata.cbs.nl/ODataApi/OData/7425eng/TypedDataSet") +
+  theme_ipsum_rc(grid="XY") +
+  theme(axis.text.x=element_text(hjust=c(0, 0.5, 0.5, 0.5, 1))) +
+  ## theme(legend.position="right") +
+  ## guides(color = guide_legend(show = FALSE)) +
+  scale_color_manual(guide = FALSE, values = "black") +
+  theme(legend.position=c(0.30, 0.95),
+        legend.direction = "horizontal") # +
+  ## annotate("text", x = as.Date("2005-01-01"), y = 70000,
+  ##          label = "CHEESE", size = 12, color = "blue")
+p
+
+## head(cbs_df)
+
+## cbs_xts <-
+##   cbs_df %>%
+##   dplyr::filter(!TOPIC %in% c("Volume_1")) %>%
+##   cbsOdataDFtoXTS()
+
+## cbs_xts %>%
+##   dygraphs::dygraph()
+
+```
+
+```{r export-area-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "cbs-area.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
+```

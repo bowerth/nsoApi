@@ -1,0 +1,88 @@
+---
+title: "SSB"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ssb}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, eval=TRUE, message=FALSE, echo=FALSE}
+library(nsoApi)
+library(dplyr)
+library(tidyr)
+library(RCurl)
+curl <- getCurlHandle()
+n_table <- 5
+```
+
+## SBB StatBank Statistics Norway
+
+### Statistics Norway Data
+
+```{r ssb-data, eval=TRUE, message=FALSE, results='as.is', cache=TRUE}
+baseURL <- "http://data.ssb.no/api/v0"
+## flow <- "OrgsatEksUlonn"
+## req_uri <- as.character(ssb_tables$Statistic[ssb_tables$ID==flow])[1]
+## flow <- "SnusUtdKj"
+req_uri <- "http://data.ssb.no/api/v0/en/table/he/he03/royk/SnusUtdKj"
+
+## req_uri <- file.path(baseURL, path, flow)
+bottom_node <- pxweb::get_pxweb_metadata(req_uri)
+dims <- pxweb::get_pxweb_dims(bottom_node)
+## dims_list <- as.list(rep("*", length(names(dims))))
+## names(dims_list) <- names(dims)
+dims_list <- lapply(dims, function(x) sample(x$values, min(3, length(x$values))))
+pxweb_data <-                           # retrieve data
+  pxweb::get_pxweb_data(
+           url = req_uri,
+           dims = dims_list,
+           clean = TRUE)
+knitr::kable(pxweb_data[1:10,])
+```
+
+```{r scb-plot, eval=TRUE}
+library(ggplot2)
+
+## unique(pxweb_data$`type of activity`)
+## unique(pxweb_data$`level of education`)
+## dput(unique(pxweb_data$`how often during the last 12 months`))
+## str(pxweb_data)
+data_plot <- pxweb_data
+
+## data_plot$`how often during the last 12 months` <-
+##   factor(data_plot$`how often during the last 12 months`,
+##          levels = c(
+##            "not at all",
+##            "a few times during the last three months or less often", 
+##            "every day (by and large)"
+##          ))
+
+p <-
+  data_plot %>%
+  filter(!(sex %in% c("Both sexes"))) %>%
+  ## filter(!(`level of education` %in% c("total"))) %>%
+  ## filter(observations %in% c("Estimated numbers in thousands")) %>%
+  ggplot(aes(x = year, y = values, fill = contents)) +
+  ## geom_point() +
+  geom_bar(position = "dodge", stat = "identity") +
+    ## facet_grid(`level of education` ~ `sex`) +
+    facet_grid(sex ~ `level of education`) +
+  scale_fill_manual(values = c("#F92672", "black")) +
+scale_x_discrete(name = NULL, expand = c(0,0)) +
+  scale_y_continuous(name = "Estimated Numbers", expand = c(0,0)) +
+  theme_bw() +
+  theme(legend.position = "top")
+p
+```
+
+```{r export-bar-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "ssb-bar.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
+```
+

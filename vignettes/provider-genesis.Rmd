@@ -95,7 +95,8 @@ knitr::kable(data_df[1:n_table,])
 library(ggplot2)
 library(ggradar)
 
-data_df %>%
+p <-
+  data_df %>%
   left_join(meta_df$label, by = c("UNIT" = "code")) %>%
   select(-DINSG, -UNIT) %>%
   rename(year = `ZI-WERT`) %>%
@@ -110,12 +111,27 @@ data_df %>%
           group.point.size = 1,
           group.line.width = 1,
           plot.extent.x.sf = 1.8) +
-  scale_color_manual(values = c("#d2223e", "#000000", "#ffc20e")) +
+  scale_color_manual(values = c(
+                       ## "#d2223e", # red
+                                "#000000", # black
+                                "gold", # black
+                                ## "#ffc20e",  # yellow
+                                "#F92672"
+                                )) +
 theme(
-  legend.position = c(0.05, 0.95),
-  legend.justification = "left",
+  legend.position = c(0.5, 0),
+  legend.justification = "center",
   legend.direction = "horizontal",
-  legend.text = element_text(size = 8),
+  legend.text = element_text(size = 10),
   legend.background = element_rect(fill = NULL)
 )
+p
+```
+
+```{r export-radar-plot, echo=FALSE, eval=FALSE}
+fig_path <- "../../../html/slides/nsoapi/assets/"
+svg(file = file.path(fig_path, "genesis-radar.svg"),
+    height=4.5, width = 8.5)
+print(p)
+dev.off()
 ```

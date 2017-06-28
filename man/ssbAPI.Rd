@@ -28,4 +28,3 @@ data.xts <- pxwebDFtoXTS(data = data.df)
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{JSON-Stat}
-

@@ -1,0 +1,40 @@
+template:
+  params:
+    bootswatch: yeti
+
+reference:
+  - title: Provider API Functions
+    desc:  Individual provider functions.
+    contents:
+    - ends_with("API")
+  - title: Helper Functions
+    contents:
+    - nsoApiGPG
+    - sdmxRead
+    - selectInputs
+
+navbar:
+  left:
+  - text: Intro
+    href: articles/nsoApi.html
+  - text: APIs
+    menu:
+      - text: "BEA"
+        href: articles/provider-bea.html
+      - text: "CBS"
+        href: articles/provider-cbs.html
+      - text: "DATABANK"
+        href: articles/provider-databank.html
+      - text: "GENESIS"
+        href: articles/provider-genesis.html
+      - text: "INE"
+        href: articles/provider-ine.html
+      - text: "SCB"
+        href: articles/provider-scb.html
+      - text: "SSB"
+        href: articles/provider-ssb.html
+      - text: "STATAT"
+        href: articles/provider-statat.html
+
+  - text: Reference
+    href: reference/index.html

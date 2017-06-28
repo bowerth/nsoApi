@@ -39,10 +39,28 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/provider-bea.html">BEA</a>
+    </li>
+    <li>
+      <a href="../articles/provider-cbs.html">CBS</a>
+    </li>
+    <li>
+      <a href="../articles/provider-databank.html">DATABANK</a>
+    </li>
+    <li>
       <a href="../articles/provider-genesis.html">GENESIS</a>
     </li>
     <li>
       <a href="../articles/provider-ine.html">INE</a>
+    </li>
+    <li>
+      <a href="../articles/provider-scb.html">SCB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-ssb.html">SSB</a>
+    </li>
+    <li>
+      <a href="../articles/provider-statat.html">STATAT</a>
     </li>
   </ul>
 </li>
@@ -65,7 +83,7 @@
       <h1>GENESIS Destatis</h1>
                         <h4 class="author">Bo Werth</h4>
             
-            <h4 class="date">2017-06-27</h4>
+            <h4 class="date">2017-06-28</h4>
           </div>
 
     
@@ -248,7 +266,8 @@ knitr::<span class="kw">kable</span>(data_df[<span class="dv">1</span>:n_table,]
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(ggradar)
 
-data_df %&gt;%
+p &lt;-
+<span class="st">  </span>data_df %&gt;%
 <span class="st">  </span><span class="kw">left_join</span>(meta_df$label, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"UNIT"</span> =<span class="st"> "code"</span>)) %&gt;%
 <span class="st">  </span><span class="kw">select</span>(-DINSG, -UNIT) %&gt;%
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">year =</span> <span class="st">`</span><span class="dt">ZI-WERT</span><span class="st">`</span>) %&gt;%
@@ -263,14 +282,21 @@ data_df %&gt;%
           <span class="dt">group.point.size =</span> <span class="dv">1</span>,
           <span class="dt">group.line.width =</span> <span class="dv">1</span>,
           <span class="dt">plot.extent.x.sf =</span> <span class="fl">1.8</span>) +
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual">scale_color_manual</a></span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"#d2223e"</span>, <span class="st">"#000000"</span>, <span class="st">"#ffc20e"</span>)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual">scale_color_manual</a></span>(<span class="dt">values =</span> <span class="kw">c</span>(
+                       ## "#d2223e", # red
+                                <span class="st">"#000000"</span>, <span class="co"># black</span>
+                                <span class="st">"gold"</span>, <span class="co"># black</span>
+                                ## "#ffc20e",  # yellow
+                                <span class="st">"#F92672"</span>
+                                )) +
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme">theme</a></span>(
-  <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>),
-  <span class="dt">legend.justification =</span> <span class="st">"left"</span>,
+  <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>),
+  <span class="dt">legend.justification =</span> <span class="st">"center"</span>,
   <span class="dt">legend.direction =</span> <span class="st">"horizontal"</span>,
-  <span class="dt">legend.text =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">size =</span> <span class="dv">8</span>),
+  <span class="dt">legend.text =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_text</a></span>(<span class="dt">size =</span> <span class="dv">10</span>),
   <span class="dt">legend.background =</span> <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/element">element_rect</a></span>(<span class="dt">fill =</span> <span class="ot">NULL</span>)
-)</code></pre></div>
+)
+p</code></pre></div>
 <p><img src="provider-genesis_files/figure-html/genesis-radar-plot-1.png" width="864"></p>
 </div>
 </div>

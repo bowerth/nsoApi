@@ -2,8 +2,8 @@
 % Please edit documentation in R/wdsAPI.R
 \name{wdsAPI}
 \alias{wdsAPI}
-\alias{wdsChangeDates}
 \alias{wdsDFtoXTS}
+\alias{wdsChangeDates}
 \title{API WDS}
 \usage{
 wdsAPI(dataset = stop("'dataset' must be provided"), query = FALSE,
@@ -39,4 +39,3 @@ data.xts <- wdsDFtoXTS(data = data.df)
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{SOAP}
-

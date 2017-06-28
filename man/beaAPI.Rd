@@ -2,8 +2,8 @@
 % Please edit documentation in R/beaAPI.R
 \name{beaAPI}
 \alias{beaAPI}
-\alias{beaChangeDates}
 \alias{beaDFtoXTS}
+\alias{beaChangeDates}
 \title{API Bureau of Economic Analysis}
 \usage{
 beaAPI(api.param = stop("'api.param' must be specified"), curl = NULL,
@@ -50,4 +50,3 @@ df <- beaJSONtoDF(List = List, third = 1)
 Bo Werth <bo.werth@gmail.com>
 }
 \keyword{JSON}
-

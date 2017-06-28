@@ -34,11 +34,10 @@ list.df <- apply(df, 2, unique)
 selectInputs(list = list.df, prefix = "dim_")
 }
 }
-\author{
-Bo Werth <bo.werth@gmail.com>
-}
 \seealso{
 \code{https://github.com/rstudio/shiny}
 }
+\author{
+Bo Werth <bo.werth@gmail.com>
+}
 \keyword{shiny}
-
