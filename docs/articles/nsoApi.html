@@ -83,7 +83,7 @@
       <h1>nsoApi</h1>
                         <h4 class="author">Bo Werth</h4>
             
-            <h4 class="date">2017-06-28</h4>
+            <h4 class="date">2017-07-09</h4>
           </div>
 
     
@@ -185,11 +185,11 @@ nsoApi::<span class="kw"><a href="../reference/nsoApiGPG.html">nsoApiGPG</a></sp
 tablelist &lt;-<span class="st"> </span><span class="kw"><a href="../reference/beaAPI.html">beaAPI</a></span>(<span class="dt">api.param =</span> api.param, <span class="dt">curl =</span> curl)
 tablelist$BEAAPI$Request$RequestParam</code></pre></div>
 <pre><code>##   ParameterName                       ParameterValue
-## 1        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439
-## 2  RESULTFORMAT                                 JSON
+## 1  RESULTFORMAT                                 JSON
+## 2 PARAMETERNAME                              TABLEID
 ## 3   DATASETNAME                        GDPBYINDUSTRY
-## 4 PARAMETERNAME                              TABLEID
-## 5        METHOD                   GETPARAMETERVALUES</code></pre>
+## 4        METHOD                   GETPARAMETERVALUES
+## 5        USERID 7023E825-15FF-488D-B8D9-D70E6F67D439</code></pre>
 <p>Show first 5 tables</p>
 <table class="table">
 <thead><tr class="header">
@@ -339,7 +339,7 @@ DSD &lt;-<span class="st"> "82572ENG"</span> <span class="co"># Input-Output: "8
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scheme &lt;-<span class="st"> "SectorBranchesSIC2008"</span>
 ## print query
 <span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataAPI</a></span>(<span class="dt">api=</span>api, <span class="dt">DSD=</span>DSD, <span class="dt">scheme=</span>scheme, <span class="dt">query=</span><span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] "http://opendata.cbs.nl/ODataApi/OData/82572ENG/SectorBranchesSIC2008"</code></pre>
+<pre><code>## [1] "https://opendata.cbs.nl/ODataApi/OData/82572ENG/SectorBranchesSIC2008"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbs_dimension &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataAPI</a></span>(<span class="dt">api=</span>api, <span class="dt">DSD=</span>DSD, <span class="dt">scheme=</span>scheme, <span class="dt">query=</span><span class="ot">FALSE</span>)
 knitr::<span class="kw">kable</span>(cbs_dimension[<span class="dv">1</span>:n_table, <span class="dv">1</span>:<span class="dv">2</span>])</code></pre></div>
 <table class="table">
@@ -378,7 +378,7 @@ knitr::<span class="kw">kable</span>(cbs_dimension[<span class="dv">1</span>:n_t
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">scheme &lt;-<span class="st"> "TypedDataSet"</span>
 <span class="co"># print query</span>
 <span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataAPI</a></span>(<span class="dt">api=</span>api, <span class="dt">DSD=</span>DSD, <span class="dt">scheme=</span>scheme, <span class="dt">query=</span><span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] "http://opendata.cbs.nl/ODataApi/OData/82572ENG/TypedDataSet"</code></pre>
+<pre><code>## [1] "https://opendata.cbs.nl/ODataApi/OData/82572ENG/TypedDataSet"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cbs_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cbsODataAPI.html">cbsODataAPI</a></span>(<span class="dt">api=</span>api, <span class="dt">DSD=</span>DSD, <span class="dt">scheme=</span>scheme, <span class="dt">query=</span><span class="ot">FALSE</span>)
 knitr::<span class="kw">kable</span>(cbs_data[<span class="dv">1</span>:n_table, <span class="dv">1</span>:<span class="dv">6</span>])</code></pre></div>
 <table class="table">
@@ -394,42 +394,42 @@ knitr::<span class="kw">kable</span>(cbs_data[<span class="dv">1</span>:n_table,
 <tr class="odd">
 <td align="right">0</td>
 <td align="left">300025</td>
-<td align="left">1995JJ00</td>
-<td align="right">587866</td>
-<td align="right">292992</td>
-<td align="right">294874</td>
+<td align="left">1969JJ00</td>
+<td align="right">100408</td>
+<td align="right">50951</td>
+<td align="right">49457</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">300025</td>
-<td align="left">1996JJ00</td>
-<td align="right">624009</td>
-<td align="right">316394</td>
-<td align="right">307615</td>
+<td align="left">1970JJ00</td>
+<td align="right">114420</td>
+<td align="right">58772</td>
+<td align="right">55648</td>
 </tr>
 <tr class="odd">
 <td align="right">2</td>
 <td align="left">300025</td>
-<td align="left">1997JJ00</td>
-<td align="right">671992</td>
-<td align="right">343515</td>
-<td align="right">328477</td>
+<td align="left">1971JJ00</td>
+<td align="right">128110</td>
+<td align="right">65307</td>
+<td align="right">62803</td>
 </tr>
 <tr class="even">
 <td align="right">3</td>
 <td align="left">300025</td>
-<td align="left">1998JJ00</td>
-<td align="right">714756</td>
-<td align="right">364847</td>
-<td align="right">349909</td>
+<td align="left">1972JJ00</td>
+<td align="right">139553</td>
+<td align="right">68681</td>
+<td align="right">70872</td>
 </tr>
 <tr class="odd">
 <td align="right">4</td>
 <td align="left">300025</td>
-<td align="left">1999JJ00</td>
-<td align="right">762732</td>
-<td align="right">390927</td>
-<td align="right">371805</td>
+<td align="left">1973JJ00</td>
+<td align="right">160025</td>
+<td align="right">79055</td>
+<td align="right">80970</td>
 </tr>
 </tbody>
 </table>
@@ -782,31 +782,31 @@ statat_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">A10-1976</td>
+<td align="left">1976-01-01</td>
 <td align="left">VGRW04-1</td>
 <td align="left">F_ISIS_4575</td>
 <td align="right">41853.8</td>
 </tr>
 <tr class="even">
-<td align="left">A10-1976</td>
+<td align="left">1976-01-01</td>
 <td align="left">VGRW04-2</td>
 <td align="left">F_ISIS_4575</td>
 <td align="right">14974.9</td>
 </tr>
 <tr class="odd">
-<td align="left">A10-1976</td>
+<td align="left">1976-01-01</td>
 <td align="left">VGRW04-3</td>
 <td align="left">F_ISIS_4575</td>
 <td align="right">16556.6</td>
 </tr>
 <tr class="even">
-<td align="left">A10-1976</td>
+<td align="left">1976-01-01</td>
 <td align="left">VGRW04-4</td>
 <td align="left">F_ISIS_4575</td>
 <td align="right">17803.1</td>
 </tr>
 <tr class="odd">
-<td align="left">A10-1976</td>
+<td align="left">1976-01-01</td>
 <td align="left">VGRW04-5</td>
 <td align="left">F_ISIS_4575</td>
 <td align="right">-150.7</td>
@@ -826,24 +826,24 @@ knitr::<span class="kw">kable</span>(df[<span class="dv">1</span>:n_table, ])</c
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">OGD_konjidxhan10_Konjunktur_Handel_1</td>
+<td align="left">Konjunkturindizes Handel Basis 2010</td>
+</tr>
+<tr class="even">
+<td align="left">OGD_f1531neu_Aussenhandel_1</td>
+<td align="left">Außenhandelsdaten Jährlich</td>
+</tr>
+<tr class="odd">
+<td align="left">OGD_ahlgrhs_Aussenhandel_3</td>
+<td align="left">Außenhandelsdaten Jährlich nach Ländergruppen</td>
+</tr>
+<tr class="even">
+<td align="left">OGD_ahlgrhs_Aussenhandel_2</td>
+<td align="left">Außenhandelsdaten Jährlich nach SITC</td>
+</tr>
+<tr class="odd">
 <td align="left">OGD_touextsai_Tour_HKL_1</td>
 <td align="left">Nächtigungsstatistik ab November 1973 - Nächtigungen nach Herkunftsländern und Bundesländern</td>
-</tr>
-<tr class="even">
-<td align="left">OGD_touextsai_Tour_UA_1</td>
-<td align="left">Nächtigungsstatistik ab November 1973 - Nächtigungen nach Unterkunftsarten und Bundesländern</td>
-</tr>
-<tr class="odd">
-<td align="left">OGD_vpi15_VPI_2015_1</td>
-<td align="left">Verbraucherpreisindex Basis 2015</td>
-</tr>
-<tr class="even">
-<td align="left">OGD_vpi10_VPI_2010_1</td>
-<td align="left">Verbraucherpreisindex Basis 2010</td>
-</tr>
-<tr class="odd">
-<td align="left">OGD_vpi05_VPI_2005_1</td>
-<td align="left">Verbraucherpreisindex Basis 2005</td>
 </tr>
 </tbody>
 </table>
@@ -947,84 +947,84 @@ knitr::<span class="kw">kable</span>(pxweb_data[<span class="dv">1</span>:<span 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
 <td align="left">Current prices</td>
-<td align="left">1976</td>
+<td align="left">1982</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
 <td align="left">Current prices</td>
-<td align="left">1987</td>
-<td align="right">NA</td>
+<td align="left">2000</td>
+<td align="right">5.0</td>
 </tr>
 <tr class="odd">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
 <td align="left">Current prices</td>
-<td align="left">1990</td>
-<td align="right">NA</td>
+<td align="left">2003</td>
+<td align="right">7.0</td>
 </tr>
 <tr class="even">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
-<td align="left">Changes in volume indices, %</td>
-<td align="left">1976</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
+<td align="left">At year 2010 prices</td>
+<td align="left">1982</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
+<td align="left">At year 2010 prices</td>
+<td align="left">2000</td>
+<td align="right">5.0</td>
+</tr>
+<tr class="even">
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
+<td align="left">At year 2010 prices</td>
+<td align="left">2003</td>
+<td align="right">7.0</td>
+</tr>
+<tr class="odd">
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
 <td align="left">Changes in volume indices, %</td>
-<td align="left">1987</td>
+<td align="left">1982</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
 <td align="left">Changes in volume indices, %</td>
-<td align="left">1990</td>
+<td align="left">2000</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
-<td align="left">Ar previous year’s prices</td>
-<td align="left">1976</td>
-<td align="right">NA</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
+<td align="left">P2K Intermediate consumption</td>
+<td align="left">Changes in volume indices, %</td>
+<td align="left">2003</td>
+<td align="right">16.7</td>
 </tr>
 <tr class="even">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
-<td align="left">Ar previous year’s prices</td>
-<td align="left">1987</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
-<td align="left">P131R Sales of non-market products</td>
-<td align="left">Ar previous year’s prices</td>
-<td align="left">1990</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="left">03 Fishing</td>
-<td align="left">S1 Total economy</td>
+<td align="left">0 Industries total</td>
+<td align="left">S129 Pension funds</td>
 <td align="left">P51CK Consumption of fixed capital</td>
 <td align="left">Current prices</td>
-<td align="left">1976</td>
-<td align="right">7</td>
+<td align="left">1982</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1128,73 +1128,73 @@ knitr::<span class="kw">kable</span>(pxweb_data[<span class="dv">1</span>:<span 
 <tbody>
 <tr class="odd">
 <td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">other taxes on production (-)</td>
-<td align="left">1997</td>
+<td align="left">value added at basic prices</td>
+<td align="left">1999</td>
 <td align="left">Current prices, SEK million</td>
-<td align="right">1936</td>
+<td align="right">15831</td>
+</tr>
+<tr class="even">
+<td align="left">A01 crop and animal production, hunting and related service activities</td>
+<td align="left">value added at basic prices</td>
+<td align="left">2000</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">15628</td>
+</tr>
+<tr class="odd">
+<td align="left">A01 crop and animal production, hunting and related service activities</td>
+<td align="left">value added at basic prices</td>
+<td align="left">2002</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">17098</td>
 </tr>
 <tr class="even">
 <td align="left">A01 crop and animal production, hunting and related service activities</td>
 <td align="left">other taxes on production (-)</td>
-<td align="left">2009</td>
+<td align="left">1999</td>
 <td align="left">Current prices, SEK million</td>
-<td align="right">3248</td>
+<td align="right">2271</td>
 </tr>
 <tr class="odd">
 <td align="left">A01 crop and animal production, hunting and related service activities</td>
 <td align="left">other taxes on production (-)</td>
-<td align="left">2012</td>
+<td align="left">2000</td>
 <td align="left">Current prices, SEK million</td>
-<td align="right">2888</td>
+<td align="right">2714</td>
 </tr>
 <tr class="even">
 <td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">value added at factor values</td>
-<td align="left">1997</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">17808</td>
-</tr>
-<tr class="odd">
-<td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">value added at factor values</td>
-<td align="left">2009</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">16879</td>
-</tr>
-<tr class="even">
-<td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">value added at factor values</td>
-<td align="left">2012</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">19064</td>
-</tr>
-<tr class="odd">
-<td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">consumption of fixed capital</td>
-<td align="left">1997</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">6372</td>
-</tr>
-<tr class="even">
-<td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">consumption of fixed capital</td>
-<td align="left">2009</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">10202</td>
-</tr>
-<tr class="odd">
-<td align="left">A01 crop and animal production, hunting and related service activities</td>
-<td align="left">consumption of fixed capital</td>
-<td align="left">2012</td>
-<td align="left">Current prices, SEK million</td>
-<td align="right">10549</td>
-</tr>
-<tr class="even">
-<td align="left">C17 manufacture of paper and paper products</td>
 <td align="left">other taxes on production (-)</td>
-<td align="left">1997</td>
+<td align="left">2002</td>
 <td align="left">Current prices, SEK million</td>
-<td align="right">2652</td>
+<td align="right">3109</td>
+</tr>
+<tr class="odd">
+<td align="left">A01 crop and animal production, hunting and related service activities</td>
+<td align="left">wages and salaries</td>
+<td align="left">1999</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">6004</td>
+</tr>
+<tr class="even">
+<td align="left">A01 crop and animal production, hunting and related service activities</td>
+<td align="left">wages and salaries</td>
+<td align="left">2000</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">6363</td>
+</tr>
+<tr class="odd">
+<td align="left">A01 crop and animal production, hunting and related service activities</td>
+<td align="left">wages and salaries</td>
+<td align="left">2002</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">6852</td>
+</tr>
+<tr class="even">
+<td align="left">I55-I56 hotels and restaurants</td>
+<td align="left">value added at basic prices</td>
+<td align="left">1999</td>
+<td align="left">Current prices, SEK million</td>
+<td align="right">29507</td>
 </tr>
 </tbody>
 </table>
@@ -1299,73 +1299,73 @@ knitr::<span class="kw">kable</span>(pxweb_data[<span class="dv">1</span>:<span 
 <tbody>
 <tr class="odd">
 <td align="left">Output</td>
-<td align="left">00000 Total</td>
+<td align="left">00 Total</td>
+<td align="left">2007</td>
+<td align="left">Current prices (NOK million)</td>
+<td align="right">67774.0</td>
+</tr>
+<tr class="even">
+<td align="left">Output</td>
+<td align="left">00 Total</td>
 <td align="left">2009</td>
 <td align="left">Current prices (NOK million)</td>
 <td align="right">78814.0</td>
 </tr>
+<tr class="odd">
+<td align="left">Output</td>
+<td align="left">00 Total</td>
+<td align="left">2014</td>
+<td align="left">Current prices (NOK million)</td>
+<td align="right">103001.0</td>
+</tr>
 <tr class="even">
 <td align="left">Output</td>
-<td align="left">00000 Total</td>
-<td align="left">2011</td>
-<td align="left">Current prices (NOK million)</td>
-<td align="right">86821.0</td>
+<td align="left">00 Total</td>
+<td align="left">2007</td>
+<td align="left">Annual change (per cent)</td>
+<td align="right">7.9</td>
 </tr>
 <tr class="odd">
 <td align="left">Output</td>
-<td align="left">00000 Total</td>
-<td align="left">2013</td>
-<td align="left">Current prices (NOK million)</td>
-<td align="right">97121.0</td>
-</tr>
-<tr class="even">
-<td align="left">Output</td>
-<td align="left">00000 Total</td>
+<td align="left">00 Total</td>
 <td align="left">2009</td>
 <td align="left">Annual change (per cent)</td>
 <td align="right">7.0</td>
 </tr>
-<tr class="odd">
-<td align="left">Output</td>
-<td align="left">00000 Total</td>
-<td align="left">2011</td>
-<td align="left">Annual change (per cent)</td>
-<td align="right">6.3</td>
-</tr>
 <tr class="even">
 <td align="left">Output</td>
-<td align="left">00000 Total</td>
-<td align="left">2013</td>
+<td align="left">00 Total</td>
+<td align="left">2014</td>
 <td align="left">Annual change (per cent)</td>
 <td align="right">6.1</td>
 </tr>
 <tr class="odd">
 <td align="left">Output</td>
-<td align="left">07 Law, advocacy and politics</td>
-<td align="left">2009</td>
+<td align="left">04000c Social services. Substance abuse-related care</td>
+<td align="left">2007</td>
 <td align="left">Current prices (NOK million)</td>
-<td align="right">7116.0</td>
+<td align="right">1120.0</td>
 </tr>
 <tr class="even">
 <td align="left">Output</td>
-<td align="left">07 Law, advocacy and politics</td>
-<td align="left">2011</td>
+<td align="left">04000c Social services. Substance abuse-related care</td>
+<td align="left">2009</td>
 <td align="left">Current prices (NOK million)</td>
-<td align="right">8157.0</td>
+<td align="right">1280.0</td>
 </tr>
 <tr class="odd">
 <td align="left">Output</td>
-<td align="left">07 Law, advocacy and politics</td>
-<td align="left">2013</td>
+<td align="left">04000c Social services. Substance abuse-related care</td>
+<td align="left">2014</td>
 <td align="left">Current prices (NOK million)</td>
-<td align="right">9261.0</td>
+<td align="right">1518.0</td>
 </tr>
 <tr class="even">
 <td align="left">Output</td>
-<td align="left">07 Law, advocacy and politics</td>
-<td align="left">2009</td>
+<td align="left">04000c Social services. Substance abuse-related care</td>
+<td align="left">2007</td>
 <td align="left">Annual change (per cent)</td>
-<td align="right">12.4</td>
+<td align="right">16.7</td>
 </tr>
 </tbody>
 </table>

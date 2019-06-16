@@ -2,6 +2,14 @@
 % Please edit documentation in R/sdmxRead.R
 \name{sdmxRead}
 \alias{sdmxRead}
+\alias{splitSdmxRead}
+\alias{exportCodes}
+\alias{loadJSON}
+\alias{transformData}
+\alias{factorLevels}
+\alias{names2df}
+\alias{assignFactors}
+\alias{processFile}
 \title{Query Data OECD.Stat}
 \usage{
 sdmxRead(api = "http://stats.oecd.org/SDMX-JSON", scheme = "data",
@@ -10,6 +18,22 @@ sdmxRead(api = "http://stats.oecd.org/SDMX-JSON", scheme = "data",
   c("VALUE")), append = paste0("/all?", paste("json-lang=en", "detail=Full",
   "dimensionAtObservation=AllDimensions", "startPeriod=2000", "endPeriod=2010",
   sep = "&")), query = FALSE)
+
+splitSdmxRead(id, split_dim, codelist, destdir, start, end)
+
+exportCodes(codelist, destdir, prefix)
+
+loadJSON(loc)
+
+transformData(x, elem = "dataSets", extractNames = FALSE)
+
+factorLevels(x, elem = "structure")
+
+names2df(names, factor_levels)
+
+assignFactors(data, factor_levels)
+
+processFile(loc)
 }
 \arguments{
 \item{api}{an API address}
@@ -29,13 +53,40 @@ e.g. "CL_ECO_ISIC4".}
 \item{append}{append string to the dimension url.}
 
 \item{query}{logical to return SDMX http url only.}
+
+\item{id}{member of \code{split_dim}}
+
+\item{split_dim}{dimension to be split}
+
+\item{codelist}{created by \code{sdmxRead} using \code{{codelist}} scheme}
+
+\item{destdir}{local directory to export results}
+
+\item{start}{integer value query start year}
+
+\item{end}{integer value query end year}
+
+\item{prefix}{character string appended to export file}
+}
+\value{
+exporting one json file per dimension member of \code{{split_dim}}
+
+a tab-separated codelist file for each dimension
 }
 \description{
 Query data from OECD.Stat using SDMX
+
+\code{splitSdmxRead}: create query for part of dataset and write to disk
+
+\code{exportCodes}: write codelist to disk
 }
 \details{
 Helper function to efficiently query data from OECD.Stat Extracts using
 SDMX-JSON API.
+
+splitSdmxRead(loc, split_dim, codelist, destdir, start, end)
+
+exportCodes(codelist, destdir, prefix)
 }
 \examples{
 \dontrun{
@@ -55,6 +106,16 @@ url.append <- paste0("/all?",
                            sep = "&"))
 test.data <- sdmxRead(DSD = "BTDIXE_I4", filter = filter.list)
 }
+library(doMC)
+registerDoMC(detectCores(logical = TRUE) - 1)
+flow <- "TEC7_REV4"
+src_id <- tolower(flow)
+codelist <- nsoApi::sdmxRead(DSD = flow, scheme = "codelist")
+split_dim <- "REPORTER"
+namecou <- codelist[[split_dim]][["id"]]
+foreach(cou = namecou) \%dopar\% splitSdmxRead(id = cou, codelist = codelist, destdir = file.path(origdir, src_id))
+codelist <- nsoApi::sdmxRead(DSD = "TEC7_REV4", scheme = "codelist")
+exportCodes(codelist = codelist, destdir = ".", prefix = paste0("_"))
 }
 \seealso{
 https://data.oecd.org/api/sdmx-json-documentation
